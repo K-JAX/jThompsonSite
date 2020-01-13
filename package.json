@@ -8,5 +8,8 @@
   "scripts": {
     "postinstall": "docker-compose run --rm wp-headless install_wordpress",
     "start": "docker-compose up"
+  },
+  "devDependencies": {
+    "react-social-icons": "^4.1.0"
   }
 }

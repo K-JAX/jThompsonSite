@@ -1,5 +1,6 @@
 FROM wordpress
 
+
 RUN sed -i 's/80/8080/' /etc/apache2/ports.conf /etc/apache2/sites-enabled/000-default.conf
 
 RUN mv "$PHP_INI_DIR"/php.ini-development "$PHP_INI_DIR"/php.ini
@@ -28,6 +29,7 @@ RUN sudo -u www-data composer global require \
 	phpcompatibility/phpcompatibility-wp \
 	automattic/vipwpcs
 
+RUN chown -R www-data:www-data /var/www/html
 # include composer-installed executables in $PATH
 ENV PATH="/var/www/.composer/vendor/bin:${PATH}"
 
