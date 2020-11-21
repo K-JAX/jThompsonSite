@@ -1,5 +1,5 @@
 [submodule "frontend-graphql"]
-	path = frontend-graphql
+	path = old-frontend-graphql
 	url = https://github.com/K-JAX/degrawanddehaan-front-end.git
 [submodule "wordpress"]
 	path = wordpress
