@@ -4,7 +4,7 @@ services:
     node-web-app:
         build: .
         image: kjax/node-web-app
-        command: npm run start
+        command: yarn start
         volumes:
             - ./frontend/public:/usr/src/public:Z
         ports:
