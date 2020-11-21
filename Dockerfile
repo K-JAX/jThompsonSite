@@ -14,7 +14,7 @@ RUN yarn
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY frontend/ ./
 
 # RUN /bin/bash -c 'chmod -R 777 /usr/src/public'
 EXPOSE 8080

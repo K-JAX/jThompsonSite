@@ -6,6 +6,6 @@ services:
         image: kjax/node-web-app
         command: yarn start
         volumes:
-            - ./frontend/public:/usr/src/public:Z
+            - ./frontend/dist:/usr/src/dist:Z
         ports:
             - "49160:8080"
