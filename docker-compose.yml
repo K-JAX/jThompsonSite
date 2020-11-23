@@ -4,8 +4,9 @@ services:
     node-web-app:
         build: .
         image: kjax/node-web-app
-        command: yarn start
+        command: yarn webpack -w
         volumes:
             - ./frontend/dist:/usr/src/dist:Z
+            - ./frontend/src:/usr/src/src:Z
         ports:
             - "49160:8080"
