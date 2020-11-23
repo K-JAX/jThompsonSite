@@ -16,10 +16,10 @@ RUN yarn install
 # Bundle app source
 COPY frontend/dist /usr/src/
 COPY frontend/src /usr/src/
-COPY webpack.config.js /usr/src/
-COPY .babelrc /usr/src/
+COPY frontend/webpack.config.js /usr/src/
+COPY frontend/.babelrc /usr/src/
 
-# RUN /bin/bash -c 'chmod -R 777 /usr/src/dist'
+RUN /bin/bash -c 'chmod -R 777 /usr/src/dist'
 EXPOSE 8080
 USER node
 # RUN chown -Rh $user:$user 
