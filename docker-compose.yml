@@ -4,9 +4,8 @@ services:
     node-web-app:
         build: .
         image: kjax/node-web-app
-        command: yarn webpack -w
+        command: npm uninstall sharp && npm clean && npm install && npm install typescript && npm run start
         volumes:
-            - ./frontend/dist:/usr/src/dist:Z
-            - ./frontend/src:/usr/src/src:Z
+            - ./frontend/src:/home/node/app/src:Z
         ports:
-            - "49160:8080"
+            - "49160:8000"

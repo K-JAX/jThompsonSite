@@ -1,26 +1,27 @@
-FROM node:12
+FROM node:lts
 
+RUN mkdir -p /home/node/app && chown -R node:node /home/node/app 
 # Create app directory
-WORKDIR /usr/src/
+WORKDIR /home/node/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY frontend/package.json  /usr/src/
-COPY frontend/yarn.lock /usr/src/
+COPY --chown=node:node frontend/package.json .
+# COPY frontend/yarn.lock .
 
-RUN yarn install
+RUN /bin/bash -c 'chmod 775 /home/node/app/package.json'
+USER node
+
+RUN npm i
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY frontend/dist /usr/src/
-COPY frontend/src /usr/src/
-COPY frontend/webpack.config.js /usr/src/
-COPY frontend/.babelrc /usr/src/
+COPY --chown=node:node frontend/. .
+RUN /bin/bash -c 'chmod -R 775 /home/node/app/src'
 
-RUN /bin/bash -c 'chmod -R 777 /usr/src/dist'
-EXPOSE 8080
-USER node
+
+EXPOSE 8000
 # RUN chown -Rh $user:$user 
-CMD [ "yarn", "start" ]
+CMD [ "npm", "run", "start" ]
