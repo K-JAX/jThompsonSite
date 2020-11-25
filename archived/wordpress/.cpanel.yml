@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home3/superpq8/public_html/degrawanddehaan/
+    - /bin/cp -R wp-content $DEPLOYPATH 

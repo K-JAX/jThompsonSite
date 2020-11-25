@@ -1,0 +1,29 @@
+/*
+Theme Name:Degraw & Dehaan WP Backend Theme 
+Theme URI: https://degrawanddehaan.com
+Author: Kevin Garubba
+Author URI: https://kevingarubba.com
+Description: 
+*/
+
+
+.big{
+    font-size: 48px;
+}
+
+.grayed{
+    color: #808080;
+}
+
+.inline .editor-rich-text{
+    display: inline-block;
+    min-width: 200px;
+    width: auto;
+    text-indent: 2em;
+}
+
+
+
+.underline .rich-text{
+    border-bottom: 1px solid black;
+}

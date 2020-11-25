@@ -1,0 +1,33 @@
+{
+  "name": "wp-graphql/wp-graphql-jwt-authentication",
+  "description": "JWT Authentication for WPGraphQL",
+  "type": "wordpress-plugin",
+  "version": "0.3.1",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "jasonbahl",
+      "email": "jasonbahl@mac.com"
+    }
+  ],
+  "require": {
+    "firebase/php-jwt": "^4.0"
+  },
+  "require-dev": {
+    "satooshi/php-coveralls": "~1.0",
+    "lucatume/wp-browser": "^1.21",
+    "codeception/c3": "2.*",
+    "phpunit/phpcov": "^4.0"
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "WPGraphQL\\JWT_Authentication\\": "src/"
+    },
+    "classmap": [
+      "src/"
+    ]
+  }
+}

@@ -4,8 +4,10 @@ services:
     node-web-app:
         build: .
         image: kjax/node-web-app
-        command: npm uninstall sharp && npm clean && npm install && npm install typescript && npm run start
+        command: npm run start
         volumes:
             - ./frontend/src:/home/node/app/src:Z
         ports:
             - "49160:8000"
+    wp-headless:
+        
