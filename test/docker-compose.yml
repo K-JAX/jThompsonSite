@@ -20,7 +20,7 @@ services:
         - db-headless
     env_file: ./.env
     volumes:
-      - ./wordpress:/var/www/html
+      - ./wordpress:/var/www/html:Z
     ports:
       - '8080:8080'
     restart: always

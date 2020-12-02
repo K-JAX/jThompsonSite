@@ -35,7 +35,7 @@
 			<div class="header-inner section-inner">
 
 				<div class="header-titles-wrapper">
-
+asdfasdf
 					<?php
 
 					// Check whether the header search is activated in the customizer.

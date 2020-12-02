@@ -21,7 +21,10 @@ then
     exit
 fi
 
-wp core download --force
+if [! wp core verify-checksums ]
+then
+    wp core download --force
+fi
 
 [ -f wp-config.php ] || wp config create \
     --dbhost="$WORDPRESS_DB_HOST" \
