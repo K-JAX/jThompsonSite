@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db-headless:
+      container_name: db-headless
+      environment:
+          - MYSQL_RANDOM_ROOT_PASSWORD=yes
+          - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+          - MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}
+          - MYSQL_USER=${WORDPRESS_DB_USER}
+      image: mariadb
+      ports:
+          - '3307:3306'
+  wp-headless:
+    build: .
+    # image: wordpress
+    user: www-data
+    command: bash -c 'install_wordpress && apache2-foreground'
+    depends_on:
+        - db-headless
+    env_file: ./.env
+    volumes:
+      - ./wordpress:/var/www/html
+    ports:
+      - '8080:8080'
+    restart: always
