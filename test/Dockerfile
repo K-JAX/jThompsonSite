@@ -26,10 +26,12 @@ RUN mv install_wordpress.sh install_wordpress; \
     chmod +x /usr/local/bin/install_wordpress; \
     chown -R www-data:www-data /usr/local/bin ;
 
-RUN chown -R www-data:www-data /var/www
-RUN find /var/www/ -type d -exec chmod 0755 {} \;
-RUN find /var/www/ -type f -exec chmod 644 {} \;
+RUN chown -R www-data:www-data /var/www/html
+# RUN find /var/www/ -type d -exec chmod 0755 {} \;
+# RUN find /var/www/ -type f -exec chmod 644 {} \;
 
-USER www-data
+# RUN chmod -R 777 /var/www/html
+
+# USER www-data
 
 EXPOSE 8080

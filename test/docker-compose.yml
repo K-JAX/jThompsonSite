@@ -14,13 +14,13 @@ services:
   wp-headless:
     build: .
     # image: wordpress
-    user: www-data
-    command: bash -c 'install_wordpress && apache2-foreground'
+    command: bash -c 'install_wordpress'
+    user: root
     depends_on:
         - db-headless
     env_file: ./.env
     volumes:
-      - ./wordpress:/var/www/html:Z
+      - ./wordpress:/var/www/html:z
     ports:
       - '8080:8080'
     restart: always
