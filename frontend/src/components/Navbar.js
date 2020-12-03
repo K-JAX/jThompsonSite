@@ -25,6 +25,7 @@ const Navbar = () => (
               <figure className="image">
                 <img src={logo} alt="Kaldi" style={{ width: '88px' }} />
               </figure>
+              asdf
             </Link>
           </div>
           <div className="navbar-start">

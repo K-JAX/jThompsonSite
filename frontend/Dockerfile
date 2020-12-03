@@ -7,7 +7,7 @@ WORKDIR /home/node/app
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY --chown=node:node frontend/package*.json .
+COPY --chown=node:node ./package*.json .
 # COPY frontend/yarn.lock .
 
 # RUN /bin/bash -c 'chmod 775 /home/node/app/package.json'
@@ -18,7 +18,7 @@ RUN npm i -f
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY --chown=node:node frontend/ .
+COPY --chown=node:node ./ .
 RUN chmod -R 777 /home/node/app/
 
 

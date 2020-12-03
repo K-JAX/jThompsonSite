@@ -2,13 +2,14 @@ version: '3.3'
 
 services:
     node-web-app:
-        build: .
+        build: ./frontend
         image: kjax/node-web-app
         command: npm run start
         volumes:
             - ./frontend/src:/home/node/app/src:Z
         ports:
             - "49160:8000"
+        restart: always
     db-headless:
         container_name: db-headless
         environment:
@@ -19,18 +20,19 @@ services:
         image: mariadb
         ports:
             - '3307:3306'
+        restart: always
     wp-headless:
-        build: .
-        container_name: wp-headless
+        build: ./wordpress
+        # image: kjax/wp-headless
+        # image: wordpress
+        command: bash -c 'ls /usr/local/bin && install_wordpress'
+        user: root
         depends_on:
             - db-headless
         env_file: ./.env
-        ports:
-            - '8080:8080'
-        user: www-data
         volumes:
-            - ./wordpress:/var/www/html
-            - ./docker/install_wordpress.sh:/usr/local/bin/install_wordpress:z
-            - ./docker/migratedb_import.sh:/usr/local/bin/migratedb_import
-            - ./docker/postlightheadlesswpstarter.wordpress.xml:/var/www/postlightheadlesswpstarter.wordpress.xml
+            - ./wordpress:/var/www/html:z
             - ./docker/plugins:/var/www/plugins 
+        ports:
+        - '8080:8080'
+        restart: always
