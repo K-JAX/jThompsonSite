@@ -5,6 +5,8 @@ RUN npm install --global gatsby-cli
 # Create app directory
 WORKDIR /home/node/app
 
+RUN chown -R node:node /home/node/app
+
 COPY --chown=node:node ./package*.json ./
 
 USER node
