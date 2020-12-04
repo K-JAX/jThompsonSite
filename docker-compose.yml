@@ -4,7 +4,7 @@ services:
     node-web-app:
         build: ./frontend
         image: kjax/node-web-app
-        command: npm run start
+        command: gatsby develop -H 0.0.0.0
         volumes:
             - ./frontend/src:/home/node/app/src:Z
         ports:

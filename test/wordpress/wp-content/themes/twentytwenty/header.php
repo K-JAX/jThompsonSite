@@ -31,7 +31,7 @@
 		?>
 
 		<header id="site-header" class="header-footer-group" role="banner">
-asdfasdf
+Things and stuff
 			<div class="header-inner section-inner">
 
 				<div class="header-titles-wrapper">
