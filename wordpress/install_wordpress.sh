@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-# chmod -R 777 .
-# whoami
-chown -R www-data:www-data /var/www/html
-ls -l
-
 chsh -s /bin/bash www-data
 
 set -e

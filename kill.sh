@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Redhat/Fedora/CentOS
-if [ -f /etc/redat-release ]
+if [ -f /etc/redhat-release ]
 then
     SOFTWARE='podman'
+# Debian/Ubuntu/Mint/MacOS
 elif [[ -f /etc/debian_version || "$OSTYPE" == "darwin"* ]]
 then
     SOFTWARE='docker'
