@@ -21,8 +21,8 @@ services:
         #     - MYSQL_USER=${WORDPRESS_DB_USER}
         image: mariadb
         # command: bash -c 
-        volume:
-            - ./data:/var/lib/mysql
+        volumes:
+            - ./data/wordpress-4.8.2-clean.sql:/docker-entrypoint-initdb.d/dump.sql
         ports:
             - '3307:3306'
         restart: always
