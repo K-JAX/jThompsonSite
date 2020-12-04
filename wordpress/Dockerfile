@@ -19,13 +19,6 @@ WORKDIR /var/www/html
 
 COPY --chown=www-data:www-data ./install_wordpress.sh .
 
-# Make install wordpress to be executable
-# RUN mv install_wordpress.sh install_wordpress; \
-#     chmod +x /var/www/html/install_wordpress; \
-#     mv /var/www/html/install_wordpress /usr/local/bin/ ; \
-#     chmod +x /usr/local/bin/install_wordpress; \
-#     chown -R www-data:www-data /usr/local/bin ;
-
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 8080
