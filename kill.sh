@@ -15,3 +15,5 @@ fi
 "$SOFTWARE"-compose down && \
 yes | $SOFTWARE system prune && \
 yes | $SOFTWARE volume prune
+
+[[ $SOFTWARE = 'podman' ]] && yes | podman pod stop --all && yes | podman pod prune
