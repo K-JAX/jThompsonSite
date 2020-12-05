@@ -17,6 +17,15 @@ then
     echo
 fi
 # su - www-data
+if wp core is-installed
+then
+    echo "WordPress is already installed, exiting."
+    wp server --host=0.0.0.0
+
+    # exit
+fi
+
+
 sudo -i -u www-data bash << EOF
 
     whoami
@@ -24,11 +33,6 @@ sudo -i -u www-data bash << EOF
 
 
 
-    if wp core is-installed
-    then
-        echo "WordPress is already installed, exiting."
-        exit
-    fi
 
     wp core download
 
