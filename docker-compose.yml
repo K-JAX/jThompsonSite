@@ -12,6 +12,7 @@ services:
         restart: always
     db-headless:
         container_name: db-headless
+        user: "1000:1000"
         environment:
             - MYSQL_RANDOM_ROOT_PASSWORD=yes
             - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
