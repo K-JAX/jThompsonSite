@@ -16,12 +16,13 @@ import _times from 'lodash/times';
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { compose } = wp.compose;
+const { dispatch } = wp.data;
 const {
 	BlockControls,
 	BlockAlignmentToolbar,
 	InnerBlocks,
 	withColors
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	Placeholder,
 	ButtonGroup,
@@ -45,6 +46,12 @@ class Edit extends Component {
 		this.state = {
 			selectLayout: true
 		};
+	}
+
+	componentDidUpdate( prevProps ) {
+		if ( this.props.attributes.columns !== prevProps.attributes.columns ) {
+			dispatch( 'core/block-editor' ).synchronizeTemplate();
+		}
 	}
 
 	render() {
@@ -106,7 +113,7 @@ class Edit extends Component {
 					key="placeholder"
 					icon="editor-table"
 					label={ attributes.columns ? __( 'Column Layout', 'atomic-blocks' ) : __( 'Column Number', 'atomic-blocks' ) }
-					instructions={ attributes.columns ? sprintf( __( 'Select a layout for this column.', 'atomic-blocks' ) ) : __( 'Select the number of columns for this layout.', 'atomic-blocks' ) }
+					instructions={ attributes.columns ? __( 'Select a layout for this column.', 'atomic-blocks' ) : __( 'Select the number of columns for this layout.', 'atomic-blocks' ) }
 					className={ 'ab-column-selector-placeholder' }
 				>
 					{ ! attributes.columns ?
@@ -122,7 +129,7 @@ class Edit extends Component {
 											isSmall
 											onClick={ () => {
 												setAttributes({
-													columns: columns,
+													columns,
 													layout: 1 === columns || 5 === columns || 6 === columns ? key : null
 												});
 
@@ -161,18 +168,18 @@ class Edit extends Component {
 										</div>
 									</Tooltip>
 								) ) }
-								<Button
-									className="ab-column-selector-button-back"
-									onClick={ () => {
-										setAttributes({
-											columns: null
-										});
-										this.setState({ 'selectLayout': true });
-									} }
-								>
-									{ __( 'Return to Column Selection', 'atomic-blocks' ) }
-								</Button>
 							</ButtonGroup>
+							<Button
+								className="ab-column-selector-button-back"
+								onClick={ () => {
+									setAttributes({
+										columns: null
+									});
+									this.setState({ 'selectLayout': true });
+								} }
+							>
+								{ __( 'Return to Column Selection', 'atomic-blocks' ) }
+							</Button>
 						</Fragment>
 					}
 				</Placeholder>

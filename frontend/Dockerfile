@@ -1,6 +1,9 @@
 FROM node:12-alpine
 
-RUN npm install --global gatsby-cli
+RUN npm install --global gatsby-cli && \
+    /bin/sh -c "apk add --no-cache bash"
+
+RUN apk add --no-cache curl
     
 # Create app directory
 WORKDIR /home/node/app

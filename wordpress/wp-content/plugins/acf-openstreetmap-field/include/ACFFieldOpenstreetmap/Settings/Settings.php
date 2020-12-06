@@ -15,7 +15,7 @@ abstract class Settings extends Core\Singleton {
 	 */
 	protected function __construct(){
 
-		add_action( 'admin_init' , array( $this, 'register_settings' ) );
+		add_action( 'admin_init' , [ $this, 'register_settings' ] );
 
 		parent::__construct();
 
@@ -36,13 +36,13 @@ abstract class Settings extends Core\Singleton {
 		$option_value = get_option( $option_name );
 
 		?><label>
-			<input type="hidden" name="<?php echo $option_name ?>" value="0" />
-			<input type="checkbox" <?php checked( boolval( $option_value ), true, true ); ?> name="<?php echo $option_name ?>" value="1" />
-			<?php echo $label ?>
+			<input type="hidden" name="<?php echo esc_attr( $option_name ) ?>" value="0" />
+			<input type="checkbox" <?php checked( boolval( $option_value ), true, true ); ?> name="<?php echo esc_attr( $option_name ); ?>" value="1" />
+			<?php echo esc_html( $label ); ?>
 		</label>
 		<?php
 			if ( ! empty( $description ) ) {
-				printf( '<p class="description">%s</p>', $description );
+				printf( '<p class="description">%s</p>', esc_html($description) );
 			}
 		?>
 		<?php

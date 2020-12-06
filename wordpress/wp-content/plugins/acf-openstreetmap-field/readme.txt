@@ -4,8 +4,8 @@ Donate link: https://donate.openstreetmap.org/
 Tags: map acf openstreetmap leaflet
 Requires at least: 4.8
 Requires PHP: 5.6
-Tested up to: 5.3
-Stable tag: 1.1.8
+Tested up to: 5.5
+Stable tag: 1.2.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -103,15 +103,32 @@ No.
 1. ACF Field Group Editor
 2. Editing the Field Value
 3. Display in the Frontend
+4. Settings page. Configure API access keys and disable specific tile layers.
 
 
 == Changelog ==
+
+= 1.2.2 =
+ - Fix: Duplicated Row (ACF 5.9+)
+
+= 1.2.1 =
+ - Upgrade FreeMapSK, CyclOSM
+
+= 1.2.0 =
+ - Feature: Settings page allowing you to disable specific map tile providersw
+ - Feature: Fit markers in view (backend)
+ - Upgrade: leaflet-providers, leaflet-control-geocoder, leaflet.locatecontrol
+
+= 1.1.9 =
+ - UI: Add Settings link on plugins list table
+ - Fix: hide map provider with unconfigured api key from layer selection
+ - Upgrade: leaflet-control-geocoder, leaflet.locatecontrol, leaflet-providers
+ - Security hardening
 
 = 1.1.8 =
  - Feature: make marker address formats localizable.
  - JS: pass map init object along with acf-os-map-create event
  - UI: hide add marker at my location button if markers cant be added
-
 
 = 1.1.7 =
  - Feature: Add locate me button to backend

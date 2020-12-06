@@ -22,11 +22,25 @@ function atomic_blocks_render_block_core_latest_posts( $attributes ) {
 	 */
 	global $post;
 
+	/* Get the post categories */
 	$categories = isset( $attributes['categories'] ) ? $attributes['categories'] : '';
 
-	/* Setup the query */
-	$grid_query = new WP_Query(
-		array(
+	/* Get the selected pages */
+	$page_selection = isset( $attributes['selectedPages'] ) ? array_column( $attributes['selectedPages'], 'value' ) : [];
+
+	if ( isset( $attributes['postType'] ) && 'page' === $attributes['postType'] ) {
+		/* Page query args */
+		$args = array(
+			'post_status'    => 'publish',
+			'orderby'        => 'post__in',
+			'post__in'       => $page_selection,
+			'post_type'      => 'page',
+			'posts_per_page' => count( $page_selection ),
+		);
+
+	} else {
+		/* Post query args */
+		$args = array(
 			'posts_per_page'      => $attributes['postsToShow'],
 			'post_status'         => 'publish',
 			'order'               => $attributes['order'],
@@ -35,9 +49,12 @@ function atomic_blocks_render_block_core_latest_posts( $attributes ) {
 			'offset'              => $attributes['offset'],
 			'post_type'           => $attributes['postType'],
 			'ignore_sticky_posts' => 1,
-			'post__not_in'        => array( $post->ID ), // Exclude the current post from the grid.
-		)
-	);
+			'post__not_in'        => array( $post->ID ),
+		);
+	}
+
+	/* Setup the query */
+	$grid_query = new WP_Query( $args );
 
 	$post_grid_markup = '';
 
@@ -95,12 +112,12 @@ function atomic_blocks_render_block_core_latest_posts( $attributes ) {
 				'<div class="ab-block-post-grid-text">'
 			);
 
-				$post_grid_markup .= sprintf(
-					'<header class="ab-block-post-grid-header">'
-				);
+			$post_grid_markup .= sprintf(
+				'<header class="ab-block-post-grid-header">'
+			);
 
-					/* Get the post title */
-					$title = get_the_title( $post_id );
+			/* Get the post title */
+			$title = get_the_title( $post_id );
 
 			if ( ! $title ) {
 				$title = __( 'Untitled', 'atomic-blocks' );
@@ -139,11 +156,11 @@ function atomic_blocks_render_block_core_latest_posts( $attributes ) {
 
 				/* Get the post date */
 				if ( isset( $attributes['displayPostDate'] ) && $attributes['displayPostDate'] ) {
-						$post_grid_markup .= sprintf(
-							'<time datetime="%1$s" class="ab-block-post-grid-date" itemprop="datePublished">%2$s</time>',
-							esc_attr( get_the_date( 'c', $post_id ) ),
-							esc_html( get_the_date( '', $post_id ) )
-						);
+					$post_grid_markup .= sprintf(
+						'<time datetime="%1$s" class="ab-block-post-grid-date" itemprop="datePublished">%2$s</time>',
+						esc_attr( get_the_date( 'c', $post_id ) ),
+						esc_html( get_the_date( '', $post_id ) )
+					);
 				}
 
 				/* Close the byline content */
@@ -158,44 +175,47 @@ function atomic_blocks_render_block_core_latest_posts( $attributes ) {
 			);
 
 			/* Wrap the excerpt content */
-			$post_grid_markup .= sprintf(
-				'<div class="ab-block-post-grid-excerpt">'
-			);
+			$post_grid_markup .= '<div class="ab-block-post-grid-excerpt">';
 
 			/* Get the excerpt */
+			if ( isset( $attributes['displayPostExcerpt'] ) && $attributes['displayPostExcerpt'] ) {
 
-			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket
-			$excerpt = apply_filters( 'the_excerpt',
-				get_post_field(
+				// Check for a manual excerpt.
+				$excerpt = get_post_field(
 					'post_excerpt',
 					$post_id,
 					'display'
-				)
-			);
-
-			if ( empty( $excerpt ) && isset( $attributes['excerptLength'] ) ) {
-				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket  -- Running the_excerpt directly, Previous rule doesn't take without the_excerpt being moved up a line
-				$excerpt = apply_filters( 'the_excerpt',
-					wp_trim_words(
-						preg_replace(
-							array(
-								'/\<figcaption>.*\<\/figcaption>/',
-								'/\[caption.*\[\/caption\]/',
-							),
-							'',
-							get_the_content()
-						),
-						$attributes['excerptLength']
-					)
 				);
-			}
 
-			if ( ! $excerpt ) {
-				$excerpt = null;
-			}
+				/**
+				 * Create an automatic excerpt
+				 * if a manual one does not exist.
+				 */
+				if ( empty( $excerpt ) ) {
+					$excerpt = preg_replace(
+						array(
+							'/\<figcaption>.*\<\/figcaption>/',
+							'/\[caption.*\[\/caption\]/',
+						),
+						'',
+						get_the_content()
+					);
+				}
 
-			if ( isset( $attributes['displayPostExcerpt'] ) && $attributes['displayPostExcerpt'] ) {
-				$post_grid_markup .= wp_kses_post( $excerpt );
+				// Trim the excerpt if necessary.
+				if ( isset( $attributes['excerptLength'] ) ) {
+					$excerpt = wp_trim_words(
+						$excerpt,
+						$attributes['excerptLength']
+					);
+				}
+
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is a WP core filter.
+				$excerpt = apply_filters( 'the_excerpt', $excerpt );
+
+				if ( ! empty( $excerpt ) ) {
+					$post_grid_markup .= wp_kses_post( $excerpt );
+				}
 			}
 
 			/* Get the read more link */
@@ -208,18 +228,8 @@ function atomic_blocks_render_block_core_latest_posts( $attributes ) {
 				);
 			}
 
-			/* Close the excerpt content */
-			$post_grid_markup .= sprintf(
-				'</div>'
-			);
-
-			/* Close the text content */
-			$post_grid_markup .= sprintf(
-				'</div>'
-			);
-
-			/* Close the post */
-			$post_grid_markup .= "</article>\n";
+			/* Close the excerpt content, text, and post wrappers */
+			$post_grid_markup .= "</div></div></article>\n";
 		}
 
 		/* Restore original post data */
@@ -376,6 +386,13 @@ function atomic_blocks_register_block_core_latest_posts() {
 					'type'    => 'string',
 					'default' => 'post',
 				),
+				'selectedPages'       => array(
+					'type'    => 'array',
+					'default' => array(),
+					'items'   => [
+						'type' => 'object',
+					],
+				),
 				'sectionTag'          => array(
 					'type'    => 'string',
 					'default' => 'section',
@@ -461,7 +478,9 @@ function atomic_blocks_get_image_src_landscape( $object, $field_name, $request )
 		'ab-block-post-grid-landscape',
 		false
 	);
-	return $feat_img_array[0];
+	if ( is_array( $feat_img_array ) ) {
+		return $feat_img_array[0];
+	}
 }
 
 /**
@@ -477,7 +496,9 @@ function atomic_blocks_get_image_src_square( $object, $field_name, $request ) {
 		'ab-block-post-grid-square',
 		false
 	);
-	return $feat_img_array[0];
+	if ( is_array( $feat_img_array ) ) {
+		return $feat_img_array[0];
+	}
 }
 
 /**

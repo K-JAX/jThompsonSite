@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP-REST-API V2 Menus
-Version: 0.7.3
+Version: 0.8
 Description: Adding menus endpoints on WP REST API v2
 Author: Claudio La Barbera
 Author URI: https://thebatclaud.io
@@ -26,8 +26,8 @@ function wp_api_v2_menus_get_all_menus() {
 			}
 		}
 	}
-
-	return $menus;
+	
+	return apply_filters('wp_api_v2_menus__menus', $menus);
 }
 
 /**
@@ -48,7 +48,7 @@ function wp_api_v2_menu_get_all_locations() {
 		$locations->{$location_slug}->menu = get_term( $menu_id );
 	}
 
-	return $locations;
+	return apply_filters('wp_api_v2_menus__locations', $locations);
 }
 
 /**
@@ -82,7 +82,7 @@ function wp_api_v2_locations_get_menu_data( $data ) {
 		}
 	}
 
-	return $menu;
+	return apply_filters('wp_api_v2_menus__menu', $menu);
 }
 
 /**
@@ -114,6 +114,19 @@ function wp_api_v2_menus_dna_test( &$parents, $child ) {
 }
 
 /**
+ * Search object in an array by ID
+ */
+function wp_api_v2_find_object_by_id( $array, $id ) {
+	foreach ( $array as $element ) {
+		if ( $id == $element->ID ) {
+				return $element;
+		}
+	}
+
+	return false;
+}
+
+/**
  * Retrieve items for a specific menu
  *
  * @param $id Menu id
@@ -122,6 +135,7 @@ function wp_api_v2_menus_dna_test( &$parents, $child ) {
  */
 function wp_api_v2_menus_get_menu_items( $id ) {
 	$menu_items = wp_get_nav_menu_items( $id );
+	$all_menu_items = $menu_items;
 
 	// check if there is acf installed
 	if ( class_exists( 'acf' ) ) {
@@ -146,7 +160,7 @@ function wp_api_v2_menus_get_menu_items( $id ) {
 			$slug = basename( get_permalink($item->object_id) );
 			$item->slug = $slug;
 		} else if($item->type == 'taxonomy') {
-			$cat = get_category($item->object_id);
+			$cat = get_term($item->object_id);
 			$item->slug = $cat->slug;
 		} else if($item->type == 'post_type_archive') {
 			$post_type_data = get_post_type_object($item->object);
@@ -156,22 +170,36 @@ function wp_api_v2_menus_get_menu_items( $id ) {
 			}
 		}
 
+		if (isset($item->thumbnail_id) && $item->thumbnail_id) {
+			$item->thumbnail_src = wp_get_attachment_image_url(intval($item->thumbnail_id), 'post-thumbnail');
+		}
+		if (isset($item->thumbnail_hover_id) && $item->thumbnail_hover_id) {
+			$item->thumbnail_hover_src = wp_get_attachment_image_url(intval($item->thumbnail_hover_id), 'post-thumbnail');
+		}
+
 		if ( $item->menu_item_parent ) {
 			array_push( $child_items, $item );
 			unset( $menu_items[ $key ] );
 		}
+
 	}
 
 	// push child items into their parent item in the original object
 	do {
 		foreach($child_items as $key => $child_item) {
-			if(wp_api_v2_menus_dna_test($menu_items, $child_item)) {
+			$parent = wp_api_v2_find_object_by_id( $all_menu_items, $child_item->menu_item_parent );
+
+			if ( empty( $parent ) ) {
+				unset($child_items[$key]);
+			}
+
+			else if (wp_api_v2_menus_dna_test($menu_items, $child_item)) {
 				unset($child_items[$key]);
 			}
 		}
 	} while(count($child_items));
 
-	return array_values($menu_items);
+	return apply_filters('wp_api_v2_menus__menu_items', array_values($menu_items));
 }
 
 /**
@@ -211,27 +239,31 @@ function wp_api_v2_menus_get_menu_data( $data ) {
 		}
 	}
 
-	return $menu;
+	return apply_filters('wp_api_v2_menus__menu', $menu);
 }
 
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'menus/v1', '/menus', array(
 		'methods'  => 'GET',
 		'callback' => 'wp_api_v2_menus_get_all_menus',
+		'permission_callback' => '__return_true'
 	) );
 
 	register_rest_route( 'menus/v1', '/menus/(?P<id>[a-zA-Z0-9_-]+)', array(
 		'methods'  => 'GET',
 		'callback' => 'wp_api_v2_menus_get_menu_data',
+		'permission_callback' => '__return_true'
 	) );
 
 	register_rest_route( 'menus/v1', '/locations/(?P<id>[a-zA-Z0-9_-]+)', array(
 		'methods'  => 'GET',
 		'callback' => 'wp_api_v2_locations_get_menu_data',
+		'permission_callback' => '__return_true'
 	) );
 
 	register_rest_route( 'menus/v1', '/locations', array(
 		'methods'  => 'GET',
 		'callback' => 'wp_api_v2_menu_get_all_locations',
+		'permission_callback' => '__return_true'
 	) );
 } );

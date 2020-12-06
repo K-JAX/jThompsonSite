@@ -1,15 +1,6 @@
 version: '3.3'
 
 services:
-    node-web-app:
-        build: ./frontend
-        image: kjax/node-web-app
-        command: gatsby develop -H 0.0.0.0
-        volumes:
-            - ./frontend/src:/home/node/app/src:Z
-        ports:
-            - "3000:8000"
-        restart: always
     db-headless:
         container_name: db-headless
         user: "${USERID}:${GROUPID}"
@@ -37,4 +28,17 @@ services:
             - ./docker/plugins:/var/www/plugins 
         ports:
         - '8080:8080'
+        restart: always
+    node-web-app:
+        depends_on:
+            - wp-headless
+        build: ./frontend
+        image: kjax/node-web-app
+        command: gatsby develop -H 0.0.0.0
+        volumes:
+            - ./frontend/src:/home/node/app/src:Z
+        ports:
+            - "3000:8000"
+        expose:
+            - '8000'
         restart: always

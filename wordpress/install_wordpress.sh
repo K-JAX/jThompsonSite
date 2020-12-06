@@ -14,25 +14,12 @@ then
         printf '.'
         sleep 1
     done
-    echo
-fi
-# su - www-data
-if wp core is-installed
-then
-    echo "WordPress is already installed, exiting."
-    wp server --host=0.0.0.0
-
-    # exit
 fi
 
 
 sudo -i -u www-data bash << EOF
 
-    whoami
     cd /var/www/html
-
-
-
 
     wp core download
 
@@ -50,56 +37,28 @@ sudo -i -u www-data bash << EOF
         --admin_email="$WORDPRESS_ADMIN_EMAIL" \
         --skip-email
 
+    wp option update blogdescription "$WORDPRESS_DESCRIPTION"
+    
+    wp rewrite structure "$WORDPRESS_PERMALINK_STRUCTURE"
+
+    wp theme activate Degraw-Dehaan-backend-theme
+
+    wp theme delete twentysixteen twentyseventeen twentynineteen twentytwenty
+
+    wp plugin delete akismet hello
+
+    wp plugin install --activate --force \
+        acf-to-wp-api \
+        advanced-custom-fields \
+        custom-post-type-ui \
+        wordpress-importer \
+        wp-rest-api-v2-menus \
+        jwt-authentication-for-wp-rest-api \
+        https://github.com/wp-graphql/wp-graphql/archive/master.zip \
+        https://github.com/wp-graphql/wp-graphql-jwt-authentication/archive/v0.3.1.zip \
+        /var/www/plugins/*.zip
 
     wp server --host=0.0.0.0
 
 EOF
 
-
-# set -e
-
-# mysql_ready='nc -z db-headless 3306'
-
-# if ! $mysql_ready
-# then
-#     printf 'Waiting for MySQL.'
-#     while ! $mysql_ready
-#     do
-#         printf '.'
-#         sleep 1
-#     done
-#     echo
-# fi
-
-# if wp core is-installed
-# then
-#     echo "WordPress is already installed, exiting."
-#     exit
-# fi
-
-# # if [ ! $(wp core verify-checksums) ]
-# # then
-# #     wp core download --force
-# # fi
-
-# # ls -l
-
-# wp core download --force
-
-
-# [ -f wp-config.php ] || wp config create \
-#     --dbhost="$WORDPRESS_DB_HOST" \
-#     --dbname="$WORDPRESS_DB_NAME" \
-#     --dbuser="$WORDPRESS_DB_USER" \
-#     --dbpass="$WORDPRESS_DB_PASSWORD"
-
-# wp core install \
-#     --url="$WORDPRESS_URL" \
-#     --title="$WORDPRESS_TITLE" \
-#     --admin_user="$WORDPRESS_ADMIN_USER" \
-#     --admin_password="$WORDPRESS_ADMIN_PASSWORD" \
-#     --admin_email="$WORDPRESS_ADMIN_EMAIL" \
-#     --skip-email
-
-
-# wp server --host=0.0.0.0

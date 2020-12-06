@@ -1,9 +1,4 @@
 <?php
-/**
- *	@package ACFFieldOpenstreetmap\Core
- *	@version 1.0.0
- *	2018-09-22
- */
 
 namespace ACFFieldOpenstreetmap\Core;
 
@@ -23,8 +18,11 @@ class Plugin extends PluginComponent {
 	/** @var array metadata from plugin file */
 	private $plugin_meta;
 
+	/** @var string version */
+	private $_version = null;
+
 	/** @var string plugin components which might need upgrade */
-	private static $components = array();
+	private static $components = [];
 
 	/**
 	 *	@inheritdoc
@@ -33,14 +31,14 @@ class Plugin extends PluginComponent {
 
 		$this->plugin_file = $file;
 
-		register_activation_hook( $this->get_plugin_file(), array( $this , 'activate' ) );
-		register_deactivation_hook( $this->get_plugin_file(), array( $this , 'deactivate' ) );
-		register_uninstall_hook( $this->get_plugin_file(), array( __CLASS__, 'uninstall' ) );
+		register_activation_hook( $this->get_plugin_file(), [ $this , 'activate' ] );
+		register_deactivation_hook( $this->get_plugin_file(), [ $this , 'deactivate' ] );
+		register_uninstall_hook( $this->get_plugin_file(), [ __CLASS__, 'uninstall' ] );
 
-		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
-		add_filter( 'extra_plugin_headers', array( $this, 'add_plugin_header' ) );
+		add_action( 'admin_init', [ $this, 'maybe_upgrade' ] );
+		add_filter( 'extra_plugin_headers', [ $this, 'add_plugin_header' ] );
 
-		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
+		add_action( 'plugins_loaded', [ $this , 'load_textdomain' ] );
 
 		parent::__construct();
 	}
@@ -59,6 +57,35 @@ class Plugin extends PluginComponent {
 	public function get_plugin_file() {
 		return $this->plugin_file;
 	}
+
+
+	/**
+	 *	@param string $file Path within plugin directory
+	 *	@return boolean|string file contents, false on failure
+	 */
+	public function read_file( $file ) {
+
+		global $wp_filesystem;
+
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		$core = Core::instance();
+
+		if ( ! \WP_Filesystem() ) {
+			return false;
+		}
+
+		$path = wp_normalize_path( $core->get_plugin_dir() . '/' . $file );
+
+		if ( $wp_filesystem->exists( $path ) ) {
+			return $wp_filesystem->get_contents( $path );
+		}
+
+		return false;
+	}
+
 
 	/**
 	 *	@return string full plugin file path
@@ -85,7 +112,10 @@ class Plugin extends PluginComponent {
 	 *	@return string current plugin version
 	 */
 	public function get_version() {
-		return $this->get_plugin_meta( 'Version' );
+		if ( is_null( $this->_version ) ) {
+			$this->_version = include_once $this->get_plugin_dir() . '/include/version.php';
+		}
+		return $this->_version;
 	}
 
 	/**
@@ -162,10 +192,10 @@ class Plugin extends PluginComponent {
 	 */
 	public function upgrade( $new_version, $old_version ) {
 
-		$result = array(
+		$result = [
 			'success'	=> true,
-			'messages'	=> array(),
-		);
+			'messages'	=> [],
+		];
 
 		foreach ( self::$components as $component ) {
 			$comp = $component::instance();

@@ -6,14 +6,14 @@
     margin-bottom: 0;
 }
 
-.editor-block-list__layout [data-type="atomic-blocks/ab-profile-box"] {
+.block-editor-block-list__layout [data-type="atomic-blocks/ab-profile-box"] {
     margin-bottom: 1.2em;
 }
 
 .ab-profile-image-wrap {
     svg {
         pointer-events: none;
-        margin: 0 auto;
+        margin: auto;
     }
 
     .components-button:not(:disabled):not([aria-disabled=true]):focus {

@@ -2,9 +2,9 @@
 Contributors: atomicblocks, mindctrl, arrayhq, wpengine, studiopress, marksabbath
 Donate link: https://atomicblocks.com
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block, WP Engine
-Requires at least: 5.2
-Tested up to: 5.3
-Stable tag: 2.4.0
+Requires at least: 5.3
+Tested up to: 5.5
+Stable tag: 2.9.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,6 +12,10 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 A collection of beautiful, customizable Gutenberg blocks for the new block editor.
 
 == Description ==
+
+Atomic Blocks has moved!
+
+Same powerful blocks, same beautiful designs, same innovative team. Atomic Blocks has been renamed to Genesis Blocks. [Learn more about Genesis Blocks](https://studiopress.com/genesis-blocks/). With our migration tool built right into Genesis Blocks, the transition between plugins will be simple and seamless - plus you'll be ready to receive the new blocks and features we're releasing soon.
 
 Atomic Blocks is a collection of page building blocks for the new [Gutenberg](https://atomicblocks.com/beginners-guide-gutenberg/?utm_source=WP.org%20Description%20Gberg%20Link&utm_campaign=wporg_desc_gberg_link) block editor. Building pages with the block editor and Atomic Blocks gives you more control to quickly create and launch any kind of site you want!
 
@@ -127,6 +131,68 @@ Yes, you will need to have WordPress 5.0 or later installed to take advantage of
 17. Spacer and Divider Block
 
 == Changelog ==
+= 2.9.0 =
+* Atomic Blocks has moved! Same powerful blocks, same beautiful designs, same innovative team. Atomic Blocks has been renamed to Genesis Blocks. Update now to learn more!
+
+= 2.8.6 =
+* Fixed issue with the Post & Page Grid block where automatic excerpts did not show under certain conditions.
+* Removed unnecessary padding in the editor on full-width Container, Pricing, and Advanced Column blocks.
+* Advanced Columns and Pricing blocks now show new columns when the column count is increased in WordPress 5.5.
+* Placeholder text in the Advanced Columns block is now visible in WordPress 5.5.
+
+= 2.8.5 =
+* Fixes issue where all pages selected in the Post and Page Grid block might not be displayed.
+* Fixes issue where column setting was not visible when working with pages in the Post and Page Grid block.
+* Fixes issue with block styles not loading on the front end under certain conditions.
+
+= 2.8.4 =
+* Improves styles for improved editor preview.
+* Introduce fluid typography styles for use in future releases.
+
+= 2.8.3 =
+* Improves the Layouts block usability by making the library window wider.
+* Improves the Layouts library window performance by optimizing the preview images.
+
+= 2.8.2 =
+* Fixes issue with link colors in Notices block.
+
+= 2.8.1 =
+* Improve editor padding on nested blocks.
+
+= 2.8.0 =
+* Added support for selecting specific pages in the Post and Page Grid block.
+* Improve display of inline toolbars on Container, Columns, and Pricing Table.
+* Improve display of focus/select styles on blocks.
+
+= 2.7.1 =
+* Added file that was missing in 2.7.0. Sorry, folks!
+
+= 2.7.0 =
+* Improved compatibility with WordPress 5.4 changes.
+* Improved performance by reducing JavaScript file sizes.
+* Updated the Getting Started page with improved help and documentation info.
+
+= 2.6.0 =
+* Added support for Shortcode block in the Pricing Table block.
+* Improved MailChimp list caching in the Newsletter block.
+* Fixed minimum Spacer Height allowed in Spacer block.
+* Fixed Notice block compatibility issue with IE 11.
+* Fixed issue with 4 column layout in Post Grid block.
+
+= 2.5.2 =
+* Fixes an issue where front-end styles weren't loading due to conflicts with other plugins.
+* Fixes a conflict with other Font Awesome plugins.
+
+= 2.5.1 =
+* Fixes an issue where the Layout block would show zero items in the library under certain conditions.
+
+= 2.5.0 =
+* Add styles for users who are experimenting with the latest Gutenberg plugin.
+* Change wp.editor reference to wp.blockEditor to fix deprecation notices.
+* Fix PHP notice that shows when image for post grid is not available.
+* Fix issue where FontAwesome icons show intermittently in the editor.
+* Improve CSS Grid styles for IE.
+
 = 2.4.0 =
 * Fixed issue with Container block that happened when clearing the "Inside Container Max Width" setting.
 * Fixed warning message related to Accordion block font size.
