@@ -12,9 +12,9 @@ RUN chown -R node:node /home/node/app
 
 COPY --chown=node:node ./package*.json ./
 
-USER node
+# USER node
 
-RUN npm i
+# RUN npm i
 
 # Bundle app source
 COPY --chown=node:node ./ .

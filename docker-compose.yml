@@ -34,7 +34,7 @@ services:
             - wp-headless
         build: ./frontend
         image: kjax/node-web-app
-        command: gatsby develop -H 0.0.0.0
+        command: bash -c 'bash install_gatsby.sh'
         volumes:
             - ./frontend/src:/home/node/app/src:Z
         ports:
