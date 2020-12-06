@@ -19,5 +19,7 @@ COPY --chown=node:node ./package*.json ./
 # Bundle app source
 COPY --chown=node:node ./ .
 
+RUN ls .
+
 EXPOSE 8000
 
