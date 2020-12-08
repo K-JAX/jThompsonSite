@@ -1,3 +1,5 @@
 #content
 wp-content/uploads
 ai1wm-backups
+wp-content/plugins/
+plugins/**

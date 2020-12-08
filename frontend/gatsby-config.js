@@ -1,4 +1,5 @@
 console.log('\n \n \n Env is:' + process.env.NODE_ENV + ' \n \n \n !');
+
 module.exports = {
   siteMetadata: {
     title: 'Gatsby + WordPress Starter',
@@ -10,11 +11,11 @@ module.exports = {
       resolve: 'gatsby-source-wordpress',
       options: {
         // The base url to your WP site.
-        baseUrl: 'http://wp-headless:8080/',
+        baseUrl: process.env.NODE_ENV == 'production' ? 'https://jthompsonarch.wordexpressapi.com/' : 'http://wp-headless:8080/',
         // WP.com sites set to true, WP.org set to false
         hostingWPCOM: false,
         // The protocol. This can be http or https.
-        protocol: 'http',
+        protocol: process.env.NODE_ENV == 'production' ? 'https' : 'http',
         // Use 'Advanced Custom Fields' Wordpress plugin
         useACF: false,
         auth: {},
