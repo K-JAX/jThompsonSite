@@ -4,7 +4,7 @@
 
 echo "checking wordpress"
 # wordpress_ready='nc -z wp-headless 8080'
-wordpress_ready='curl -s --head  --request GET localhost:8080'
+wordpress_ready='curl -s --head  --request GET wp-headless:8080'
 
 if ! $wordpress_ready
 then
