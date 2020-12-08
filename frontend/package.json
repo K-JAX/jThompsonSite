@@ -35,9 +35,9 @@
   "scripts": {
     "start": "npm run develop",
     "clean": "rimraf .cache public",
-    "build": "npm run clean && gatsby build",
-    "develop": "npm run clean && gatsby develop",
-    "serve": "gatsby serve",
+    "build": "NODE_ENV=production npm run clean && gatsby build",
+    "develop": "NODE_ENV=development npm run clean && gatsby develop",
+    "serve": "NODE_ENV=production gatsby serve",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

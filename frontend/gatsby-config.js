@@ -1,3 +1,4 @@
+console.log('\n \n \n Env is:' + process.env.NODE_ENV + ' \n \n \n !');
 module.exports = {
   siteMetadata: {
     title: 'Gatsby + WordPress Starter',
