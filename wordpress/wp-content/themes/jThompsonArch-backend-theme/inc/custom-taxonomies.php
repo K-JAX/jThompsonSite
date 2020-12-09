@@ -118,30 +118,30 @@ function team_member_taxonomy_init() {
     );
     register_taxonomy( 'team_member_role', array('team_member'), $member_args);
 
-    // Skills tags
-    $skills_labels = array(
-        'name'  => _x( 'Skill', 'taxonomy general name'),
-        'singular_name'  => _x( 'Skill', 'taxonomy singular name' ),
-        'search_items'  => __( 'Search Team Skills'),
-        'all_items'     => __('All team member skills'),
-        'edit_item'     => __( 'Edit Team Skill'),
-        'update_item'   => __( 'Update Team Skill'),
-        'add_new_item'  => __( 'Add Team Skill'),
-        'new_item_name' => __( 'New Team Skill')
-    );
-    $skills_args = array(
-        'hierarchical'  => false,
-        'labels'        => $skills_labels,
-        'show_ui'       => true,
-        'show_in_rest'      => true,
-        'show_admin_column' => true,
-        'show_in_graphql'       => true,
-        'graphql_single_name' => 'Material',
-        'graphql_plural_name' => 'Materials',
-        'query_var' => true,
-        'rewrite' => array( 'slug' => 'skill'),
-    );
-    register_taxonomy( 'skill', array('team_member'), $skills_args);
+    // // Skills tags
+    // $skills_labels = array(
+    //     'name'  => _x( 'Skill', 'taxonomy general name'),
+    //     'singular_name'  => _x( 'Skill', 'taxonomy singular name' ),
+    //     'search_items'  => __( 'Search Team Skills'),
+    //     'all_items'     => __('All team member skills'),
+    //     'edit_item'     => __( 'Edit Team Skill'),
+    //     'update_item'   => __( 'Update Team Skill'),
+    //     'add_new_item'  => __( 'Add Team Skill'),
+    //     'new_item_name' => __( 'New Team Skill')
+    // );
+    // $skills_args = array(
+    //     'hierarchical'  => false,
+    //     'labels'        => $skills_labels,
+    //     'show_ui'       => true,
+    //     'show_in_rest'      => true,
+    //     'show_admin_column' => true,
+    //     'show_in_graphql'       => true,
+    //     'graphql_single_name' => 'Skill',
+    //     'graphql_plural_name' => 'Skills',
+    //     'query_var' => true,
+    //     'rewrite' => array( 'slug' => 'skill'),
+    // );
+    // register_taxonomy( 'skill', array('team_member'), $skills_args);
     
 
 }

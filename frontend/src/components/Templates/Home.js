@@ -10,7 +10,7 @@ import Config from '../../config';
 
 
 // Components
-// import ProjectSingle from '../Templates/Project-Single';
+import ProjectSingle from '../Templates/Project-Single';
 
 
 /**
@@ -168,20 +168,21 @@ class Home extends Component {
 
   render() {
     // const authToken = localStorage.getItem(AUTH_TOKEN);
-    const { page, /* posts, pages, userId */ } = this.state;
+    const { page/*,  posts, pages, userId */ } = this.state;
 
     return (
       <div style={{ marginLeft: '315px' }}>
         <div className="pa2">
 
           <h1>{page.title}</h1>
-          {/* <span
+          <span
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: page.content,
             }}
-          /> */}
+          />
           {/* <ProjectSingle /> */}
+          Does it work?
         </div>
       </div>
     );

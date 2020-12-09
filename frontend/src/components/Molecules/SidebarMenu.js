@@ -12,7 +12,8 @@ class SidebarMenu extends Component {
 
         return ( 
             <SidebarMenuElem>
-                <Nav className="menuBox"/>
+                {/* <Nav className="menuBox"/> */}
+                This is where the menu would be lol
                 <br/>
                 <SocialMenu />
             </SidebarMenuElem>
