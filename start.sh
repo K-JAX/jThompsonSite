@@ -13,4 +13,5 @@ fi
 export USERID=${UID} 
 export GROUPID=$(id -g $whoami)
 chmod -R 777 data/
+chmod -R 777 frontend/src/
 "$SOFTWARE"-compose up -d --build

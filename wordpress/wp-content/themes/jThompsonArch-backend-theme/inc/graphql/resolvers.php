@@ -8,7 +8,7 @@
 // check if WPGraphQL plugin is active.
 if ( function_exists( 'register_graphql_field' ) ) {
 	// Add header menu resolver.
-    require_once 'resolvers/header-menu.php';
+    // require_once 'resolvers/header-menu.php';
     
     // Add project type resolver
     require_once 'resolvers/project-type.php';

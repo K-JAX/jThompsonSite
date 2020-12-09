@@ -1,55 +1,46 @@
 {
-  "name": "gatsby-starter-wordpress",
-  "description": "Gatsby v2 starter for WordPress",
+  "name": "hackernews-react-apollo",
   "version": "0.1.0",
-  "author": "GatsbyCentral.com",
-  "dependencies": {
-    "bulma": "^0.7.5",
-    "gatsby": "^2.18.1",
-    "gatsby-awesome-pagination": "^0.3.3",
-    "gatsby-plugin-lodash": "^3.1.7",
-    "gatsby-plugin-netlify": "^2.1.12",
-    "gatsby-plugin-purgecss": "^4.0.1",
-    "gatsby-plugin-react-helmet": "^3.1.7",
-    "gatsby-plugin-sass": "^2.1.14",
-    "gatsby-plugin-sharp": "^2.2.21",
-    "gatsby-remark-images": "^3.1.21",
-    "gatsby-source-filesystem": "^2.1.22",
-    "gatsby-source-wordpress": "^3.1.31",
-    "gatsby-transformer-remark": "^2.6.22",
-    "gatsby-transformer-sharp": "^2.2.14",
-    "lodash": "^4.17.5",
-    "node-sass": "^4.12.0",
-    "parcel-bundler": "^1.12.3",
-    "prop-types": "^15.6.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-helmet": "^5.2.1",
-    "uuid": "^3.3.3"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "main": "n/a",
-  "scripts": {
-    "start": "npm run develop",
-    "clean": "rimraf .cache public",
-    "build": "NODE_ENV=production npm run clean && gatsby build",
-    "develop": "NODE_ENV=development npm run clean && gatsby develop",
-    "serve": "NODE_ENV=production gatsby serve",
-    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{gatsby-*.js,src/**/*.js}\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "private": true,
   "devDependencies": {
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.3.0",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.0"
+    "babel-eslint": "9.0.0",
+    "eslint": "5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "node-sass": "^4.13.0",
+    "prettier": "^1.16.4",
+    "react-social-icons": "^4.1.0",
+    "styled-components": "^4.4.1"
   },
-  "prettier": {
-    "trailingComma": "es5",
-    "semi": false,
-    "singleQuote": true
+  "dependencies": {
+    "apollo-boost": "^0.1.27",
+    "apollo-cache-inmemory": "^1.4.2",
+    "apollo-link-context": "^1.0.14",
+    "apollo-link-http": "^1.5.11",
+    "apollo-link-ws": "^1.0.14",
+    "axios": "^0.19.2",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "markdown-to-jsx": "^6.10.3",
+    "react": "^16.8.1",
+    "react-apollo": "^2.4.1",
+    "react-dom": "^16.8.1",
+    "react-render-html": "^0.6.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "2.1.4",
+    "recompose": "^0.30.0",
+    "sanitize-html": "^1.21.1",
+    "subscriptions-transport-ws": "^0.9.15"
+  },
+  "scripts": {
+    "start": "PORT=3001 CHOKIDAR_USEPOLLING=true react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }

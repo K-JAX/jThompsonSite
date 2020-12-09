@@ -30,15 +30,14 @@ services:
         - '8080:8080'
         restart: always
     node-web-app:
-        depends_on:
-            - wp-headless
+        command: bash -c 'yarn start'
+        container_name: node-web-app
+        expose:
+            - '3001'
         build: ./frontend
-        image: kjax/node-web-app
-        command: bash -c 'bash install_gatsby.sh'
+        ports:
+            - '3001:3001'
+        user: "${USERID}:${GROUPID}"
         volumes:
             - ./frontend/src:/home/node/app/src:Z
-        ports:
-            - "3000:8000"
-        expose:
-            - '8000'
-        restart: always
+        working_dir: /home/node/app

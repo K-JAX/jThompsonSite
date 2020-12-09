@@ -1,25 +1,20 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
-RUN npm install --global gatsby-cli && \
-    /bin/sh -c "apk add --no-cache bash"
+RUN apk update && apk add bash
 
-RUN apk add --no-cache curl
-    
-# Create app directory
 WORKDIR /home/node/app
+
+COPY --chown=node:node package.json .
+# COPY --chown=node:node yarn.lock .
 
 RUN chown -R node:node /home/node/app
 
-COPY --chown=node:node ./package*.json ./
-
 # USER node
 
-# RUN npm i
+RUN yarn install
 
-# Bundle app source
 COPY --chown=node:node ./ .
 
-RUN ls .
+RUN chmod -R 777 /home/node/app
 
-EXPOSE 8000
-
+EXPOSE 3001

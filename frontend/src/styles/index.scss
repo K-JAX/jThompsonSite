@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css?family=Cardo:400,400i,700|Cinzel:400,700,900&display=swap');
+
+@import './variables/all';
+@import './components/all';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Cardo", serif;
+  font-size: 18px;
+  background: $GRAD-warm-white;
+  /* font-family: Verdana, Geneva, sans-serif; */
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: "Cinzel", serif;  
+}
+
+input {
+  max-width: 500px;
+}
+
+.gray {
+  color: #828282;
+}
+
+div {
+  box-sizing: unset;
+}
+
+.orange {
+  background-color: #ff6600;
+}
+
+.login {
+  width: 300px;
+}
+
+.items-start {
+  margin-top: 20px;
+}
+
+.background-gray {
+  background-color: rgb(246, 246, 239);
+}
+
+.search {
+  margin-left: 30px;
+}
+
+.padding {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.input-padding {
+  padding: 0px 20px;
+}
+
+.table {
+  display: table;
+}
+
+.pa1 {
+  height: 50px;
+  line-height: 50px;
+}
+
+.bottomborder {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.topborder {
+  border-top: 1px solid #f1f1f1;
+}
+
+.pa2 {
+  line-height: 30px;
+  padding-left: 0px;
+}
+
+.f11 {
+  font-size: 11px;
+}
+
+.ml1 {
+  padding-right: 20px;
+}
+
+.button {
+  font-family: monospace;
+  font-size: 10pt;
+  color: black;
+  background-color: buttonface;
+  text-align: center;
+  padding: 2px 6px 3px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  cursor: pointer;
+  max-width: 250px;
+}
+
+d-block{
+  display: block !important;
+}
+
+.menuBox{
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(249,243,240, 0.7);
+  width: 300px;
+  margin-left: -50px;
+  padding: 50px;
+}
+
+.menuBox a {
+  font-size: 32px;
+  font-family: 'Cinzel', serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 15px 0;
+}
+
+.bottomsDown{
+  // position: absolute;
+  z-index: 0;
+  width: 100%;
+  bottom: 0;
+}
+
+.template-container{
+  display: grid;
+}
+
+.offset-header{
+  margin-top: 175px;
+}
+
+
+.branch{
+
+}
+
+.trunk {
+  &:after{
+    content: '';
+    position: absolute;
+    grid-column-start: 2;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: black;
+  }
+  &:nth-child(odd){
+    .branch.left{
+      margin-top: 100px;
+    }
+  }
+  &:nth-child(even){
+    .branch.right{
+      margin-top: 100px;
+    }
+  }      
+  .branch{
+    grid-row-start: 1;
+    width: 50%;
+    height: 50px;
+    margin-top: 70px;
+    border: 1px solid black;
+  }
+  &.left .branch{
+    justify-self: end;
+    border-bottom: none;
+    border-right: none;
+  }
+  &.right .branch{
+      justify-self: start;
+      border-bottom: none;
+      border-left: none;
+  }
+}
+
+

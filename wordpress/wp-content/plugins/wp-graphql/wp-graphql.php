@@ -39,7 +39,6 @@ if ( file_exists( __DIR__ . '/c3.php' ) ) {
  * Run this function when WPGraphQL is de-activated
  */
 register_deactivation_hook( __FILE__, 'graphql_deactivation_callback' );
-register_activation_hook( __FILE__, 'graphql_activation_callback' );
 
 /**
  * This plugin brings the power of GraphQL (http://graphql.org/) to WordPress.
@@ -234,7 +233,6 @@ if ( ! class_exists( 'WPGraphQL' ) ) :
 
 			// Required non-autoloaded classes.
 			require_once WPGRAPHQL_PLUGIN_DIR . 'access-functions.php';
-			require_once WPGRAPHQL_PLUGIN_DIR . 'activation.php';
 			require_once WPGRAPHQL_PLUGIN_DIR . 'deactivation.php';
 
 		}
@@ -259,16 +257,6 @@ if ( ! class_exists( 'WPGraphQL' ) ) :
 		 * Sets up actions to run at certain spots throughout WordPress and the WPGraphQL execution cycle
 		 */
 		private function actions() {
-
-			$tracker = new \WPGraphQL\Telemetry\Tracker( 'WPGraphQL' );
-			add_action( 'plugins_loaded', [ $tracker, 'init' ] );
-			add_action( 'graphql_activate', function() use ( $tracker ) {
-				$tracker->track_event( 'PLUGIN_ACTIVATE' );
-			} );
-			add_action( 'graphql_deactivate', function() use ( $tracker ) {
-				$tracker->track_event( 'PLUGIN_DEACTIVATE' );
-				$tracker->delete_timestamp();
-			} );
 
 			/**
 			 * Init WPGraphQL after themes have been setup,
@@ -392,6 +380,28 @@ if ( ! class_exists( 'WPGraphQL' ) ) :
 		public function init_admin() {
 			$admin = new \WPGraphQL\Admin\Admin();
 			$admin->init();
+		}
+
+		/**
+		 * Function to execute when the user activates the plugin.
+		 *
+		 * @since  0.0.17
+		 */
+		public function activate() {
+			flush_rewrite_rules();
+			// Save the version of the plugin as an option in order to force actions
+			// on upgrade.
+			update_option( 'wp_graphql_version', WPGRAPHQL_VERSION, 'no' );
+		}
+
+		/**
+		 * Function to execute when the user deactivates the plugin.
+		 *
+		 * @since  0.0.17
+		 */
+		public function deactivate() {
+			flush_rewrite_rules();
+			delete_option( 'wp_graphql_version' );
 		}
 
 		/**
@@ -687,6 +697,7 @@ if ( ! function_exists( 'graphql_init' ) ) {
 	 * @since 0.0.1
 	 */
 	function graphql_init() {
+
 		/**
 		 * Return an instance of the action
 		 */
