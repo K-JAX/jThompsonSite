@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withApollo } from 'react-apollo';
 import styled from 'styled-components';
 
 class TripleArrow extends Component {

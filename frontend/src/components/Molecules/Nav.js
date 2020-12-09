@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import gql from 'graphql-tag';
-import { AUTH_TOKEN } from '../../constants';
+// import { AUTH_TOKEN } from '../../constants';
 
 /**
  * GraphQL menu query
@@ -46,8 +45,8 @@ class Nav extends Component {
 
   
     render() { 
-      const authToken = localStorage.getItem(AUTH_TOKEN);
-      const { className, history } = this.props;      
+      // const authToken = localStorage.getItem(AUTH_TOKEN);
+      const { className /*, history*/ } = this.props;      
       const { menus } = this.state;
       const { pathname } = this.props;
       let isHome;
@@ -64,7 +63,7 @@ class Nav extends Component {
                   <Link
                     key={menu.label}
                     to={menu.url}
-                    className="ml1 no-underline black"
+                    className={`ml1 no-underline black ${isHome ? 'active' : ''}`}
                   >
                     {menu.label}
                   </Link>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
-import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 
 /**

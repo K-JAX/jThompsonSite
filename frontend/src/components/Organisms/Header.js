@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import { withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import styled from 'styled-components';
@@ -27,7 +26,6 @@ class Header extends Component {
   
   render() {
     const {mobileMenuActive} = this.state;
-    const { pathname } = this.props.location;
     const {isHome} = this.props;
     
     return (

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
-import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 // var sanitizeHtml = require('sanitize-html');
@@ -116,9 +115,11 @@ class ProjectSingle extends Component {
     let colorsArray = Object.entries(project.colorPalette).slice(0,10).map(entry => entry[1])
 
     const colors = colorsArray.map((color, index) => {
+      let colorData;
       if( color !== null && color !== '' ){
-        return <li key={index} className="color-swatch" style={{background: `${color}`}}></li>;
+        colorData = <li key={index} className="color-swatch" style={{background: `${color}`}}></li>;
       }
+      return colorData;
     });
 
     // console.log( Object.values(project.colorPalette) );
@@ -138,7 +139,7 @@ class ProjectSingle extends Component {
   }
   
   render() {
-    const { project, colors, types, materials, styles } = this.state;
+    const { project, colors, /* types, */ materials, styles } = this.state;
 
     // const materials = ['something', 'another', 'holyshit'];
     const year = project.date.slice(0, 4);

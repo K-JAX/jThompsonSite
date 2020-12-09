@@ -85,7 +85,7 @@ class Portfolio extends Component {
   };
 
   executeProjectTypeQuery = async () => {
-    const { match, client } = this.props;
+    const { /*match,*/ client } = this.props;
     const result = await client.query({
       query: PROJ_QUERY,
     });

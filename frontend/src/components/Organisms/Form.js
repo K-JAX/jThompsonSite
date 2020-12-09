@@ -20,7 +20,6 @@ class Form extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const stuff = new FormData(event.target);
 
         fetch('https://degrawanddehaan.wordtestdomain.com/wp-json/contact-form-7/v1/contact-forms/42/feedback', {
             method: 'POST',
@@ -44,7 +43,7 @@ class Form extends Component {
                         let type = field.field_type;
                         return (
                             <div>
-                                { type == 'text_area' ? 
+                                { type === 'text_area' ? 
                                 <Ta /> : 
                                 <input id={`cb${index}`} name={field.name} type={`${type}`} />
                                 }

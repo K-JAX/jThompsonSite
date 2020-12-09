@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
     db-headless:
-        container_name: db-headless
+        container_name: db
         user: "${USERID}:${GROUPID}"
         environment:
             - MYSQL_RANDOM_ROOT_PASSWORD=yes
@@ -17,6 +17,7 @@ services:
         restart: always
     wp-headless:
         build: ./wordpress
+        container_name: wp
         command: bash -c 'bash install_wordpress.sh'
         user: root
         env_file: ./.env
@@ -31,7 +32,7 @@ services:
         restart: always
     node-web-app:
         command: bash -c 'yarn start'
-        container_name: node-web-app
+        container_name: node
         expose:
             - '3001'
         build: ./frontend

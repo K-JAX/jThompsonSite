@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-boost';
@@ -10,7 +10,7 @@ import Config from '../../config';
 
 
 // Components
-import ProjectSingle from '../Templates/Project-Single';
+// import ProjectSingle from '../Templates/Project-Single';
 
 
 /**
@@ -167,8 +167,8 @@ class Home extends Component {
   };
 
   render() {
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-    const { page, posts, pages, userId } = this.state;
+    // const authToken = localStorage.getItem(AUTH_TOKEN);
+    const { page, /* posts, pages, userId */ } = this.state;
 
     return (
       <div style={{ marginLeft: '315px' }}>
