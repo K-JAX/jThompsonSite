@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/public_html/jThompsonArch
+    - /wordpress -R wp-content $DEPLOYPATH 
