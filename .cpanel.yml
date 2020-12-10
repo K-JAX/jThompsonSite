@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/public_html/jThompsonArch
-    - /wordpress -R wp-content $DEPLOYPATH 
+    - export DEPLOYPATH=/home3/superpq8/public_html/jThompsonArch
+    - /bin/cp -R wordpress $DEPLOYPATH 
