@@ -7,7 +7,7 @@ const blockStyle = {
     padding: '20px',
 };
  
-registerBlockType( 'dd/project-location', {
+registerBlockType( 'jta/project-location', {
     title: 'Project Location',
     icon: 'admin-site',
     category: 'project-blocks',

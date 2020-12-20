@@ -1,7 +1,7 @@
 const { registerBlockType } = wp.blocks;
 const { RichText } = wp.blockEditor;
 
-registerBlockType( 'dd/project-budget', {
+registerBlockType( 'jta/project-budget', {
     title: 'Project Budget',
     icon: 'chart-pie',
     category: 'project-blocks',

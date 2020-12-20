@@ -6,6 +6,9 @@ Author URI: https://kevingarubba.com
 Description: 
 */
 
+html,body{
+    font-family: 'Arial', sans-serif;
+}
 
 .big{
     font-size: 48px;

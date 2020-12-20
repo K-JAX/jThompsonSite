@@ -1,36 +1,36 @@
 <?php
 /**
- * @package Degraw & Dehaan
+ * @package JTA
  */
 
 add_action( 'graphql_register_types', 'register_project_type_srcset' );
 function register_project_type_srcset() {
     register_graphql_object_type( 'srcset', [
-      'description' => __( "All images that exist for featured image", 'dd' ),
+      'description' => __( "All images that exist for featured image", 'jta' ),
       'fields' => [
         'thumbnail' => [
             'type' => 'String',
-            'description' => __( '150px square for thumbnails', 'dd' ),
+            'description' => __( '150px square for thumbnails', 'jta' ),
         ],
         'medium' => [
             'type' => 'String',
-            'description' => __( '300px width image', 'dd' ),
+            'description' => __( '300px width image', 'jta' ),
         ],
         'medium_large' => [
             'type' => 'String',
-            'description' => __( '768px max-width image', 'dd' ),
+            'description' => __( '768px max-width image', 'jta' ),
         ],
         'large' => [
             'type' => 'String',
-            'description' => __( '1024px max-width image', 'dd' ),
+            'description' => __( '1024px max-width image', 'jta' ),
         ],
         'full' => [
             'type' => 'String',
-            'description' => __( 'Original image size', 'dd' ),
+            'description' => __( 'Original image size', 'jta' ),
         ],
         'default' => [
             'type' => 'String',
-            'description' => __( 'Default image size', 'dd' ),
+            'description' => __( 'Default image size', 'jta' ),
         ],
       ],
     ] );

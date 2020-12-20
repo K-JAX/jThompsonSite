@@ -41,4 +41,5 @@ services:
         user: "${USERID}:${GROUPID}"
         volumes:
             - ./frontend/src:/home/node/app/src:Z
+            - ./frontend/.eslintrc.json:/home/node/app/.eslintrc:Z
         working_dir: /home/node/app

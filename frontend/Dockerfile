@@ -9,12 +9,13 @@ COPY --chown=node:node package.json .
 
 RUN chown -R node:node /home/node/app
 
-# USER node
-
 RUN yarn install
 
 COPY --chown=node:node ./ .
 
-RUN chmod -R 777 /home/node/app
+RUN chmod -R 775 /home/node/app && \
+	chown node:node .
+
+USER node
 
 EXPOSE 3001

@@ -5,17 +5,17 @@ const { InnerBlocks } = wp.editor;
 const BLOCKS_TEMPLATE = [
     [ 'core/columns', { className: "project-feature tree-trunk" }, [
         ['core/column', { className: "trunk left" }, [
-            ['dd/project-branch-placeholder', {}, []],
+            ['jta/project-branch-placeholder', {}, []],
             ['core/group', { className: "box" }, []]
         ]],
         ['core/column', { className: "trunk right" }, [
-            ['dd/project-branch-placeholder', {}, []],
+            ['jta/project-branch-placeholder', {}, []],
             ['core/group', { className: "box" }, []]
         ]]
     ] ]
 ];
 
-registerBlockType( 'dd/project-image-caption', {
+registerBlockType( 'jta/project-image-caption', {
     title: 'Project Image & Caption',
     icon: 'analytics',
     category: 'project-blocks',

@@ -68,6 +68,7 @@ define('JWT_AUTH_CORS_ENABLE', true);
 
 define('FS_METHOD','direct');
 define('WP_DEBUG', true);
+define( 'GRAPHQL_DEBUG', true );
 
 /* That's all, stop editing! Happy publishing. */
 

@@ -3,16 +3,15 @@ import { withApollo } from 'react-apollo';
 import styled from 'styled-components';
 
 class BranchLine extends Component {
-    state = {  }
 
-    render() { 
-        const {
-            direction
-        } = this.props;
-        return ( 
-            <BranchLineDiv className={`branch ${direction}`}></BranchLineDiv>
-         );
-    }
+	render() { 
+		const {
+			direction
+		} = this.props;
+		return ( 
+			<BranchLineDiv className={`branch ${direction}`} />
+		);
+	}
 }
 
 export default withApollo(BranchLine);

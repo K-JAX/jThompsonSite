@@ -7,18 +7,17 @@
  
 function register_blocks() {
     wp_enqueue_script( 
-        'dd_blocks', 
+        'jta_blocks', 
         get_stylesheet_directory_uri() . '/block.min.js', 
 		array( 'wp-blocks',  'wp-element', 'wp-editor', 'wp-components', 'wp-i18n' ),
 		false,
 		true
-
     );
     
 }
 add_action( 'init', 'register_blocks');
 
-function dd_block_category( $categories, $post ) {
+function jta_block_category( $categories, $post ) {
     return array_merge(
         $categories,
         array(
@@ -33,28 +32,17 @@ function dd_block_category( $categories, $post ) {
         )
     );
 }
-add_filter( 'block_categories', 'dd_block_category', 10, 2);
+add_filter( 'block_categories', 'jta_block_category', 10, 2);
 
 // Template Blocks for Project
 function register_project_template() {
     $post_type_object = get_post_type_object( 'project' );
     $post_type_object -> template = array(
-        array( 'dd/project-location' ),
-        array( 'dd/project-budget' ),
-        array( 'dd/project-summary' )
+        // array( 'jta/project-location' ), <-- this is now handled by the Google Maps API
+        // array( 'jta/project-budget' ),
+        array( 'jta/project-summary' )
     );
 }
 add_action( 'init', 'register_project_template' );
 
 
-// Create backend template blocks for Team members
-function register_team_template() {
-    $post_type_object = get_post_type_object( 'team' );
-    $post_type_object -> template = array(
-        array( 'dd/project-budget' ),
-        array( 'dd/materials' ),
-        array( 'dd/color-palette' ),
-        array( 'dd/project-summary' ),
-        array( 'dd/project-image-caption')
-    );
-}

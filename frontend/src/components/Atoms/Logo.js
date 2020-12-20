@@ -1,29 +1,73 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../../static/images/logo.png';
-import styled from 'styled-components';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import logo from "../../static/images/logo.png";
 
 const Logo = (props) => {
-  const {isHome} = props;
-  return(
-    <Link to="/" className="no-underline black">
-      <LogoElement src={logo} alt="logo" className={`${isHome ? 'home-logo' : 'normal-logo'}`}/>
-    </Link>
-  )
+	const { isHome } = props;
+	return (
+		<Link
+			to="/"
+			style={{ alignSelf: "start" }}
+			className="no-underline black"
+		>
+			<LogoElement
+				src={logo}
+				alt="Logo and Site Title"
+				className={`${isHome ? "home-logo" : "normal-logo"}`}
+			>
+				<h1 className="initials">JTA</h1>
+				<p className="name">Joseph Thompson</p>
+				<p className="title">Architect</p>
+			</LogoElement>
+		</Link>
+	);
 };
 export default Logo;
 
-const LogoElement = styled.img`
-  max-width: 100%;
-  transition: 0.125s;
-  &.home-logo{
-    width: 215px;
-    margin-top: 50px;
-  }
-  &.normal-logo{
-    width: 184px;
-    margin-top: 0;
-    padding: 33px 30px;
-    background-color: rgba(227, 224, 224,0.85);
-  }
-`
+const LogoElement = styled.div`
+	font-family: "Hind Siliguri", sans-serif;
+	width: 165px;
+	margin-left: 50px;
+	white-space: nowrap;
+	text-align: center;
+	text-transform: uppercase;
+	.initials {
+		position: relative;
+		font-size: 115px;
+		font-weight: 100;
+		color: #464853;
+		margin-bottom: 0.29em;
+		&:before,
+		&:after {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 4px;
+			left: 0;
+			background: #464853;
+		}
+		&:before {
+			top: -0.24em;
+		}
+		&:after {
+			bottom: -0.185em;
+		}
+	}
+	p {
+		font-size: 18px;
+		margin-top: 0.7em;
+		line-height: 0.5;
+	}
+	.name {
+		opacity: 0.65;
+		font-weight: 100;
+		margin-bottom: 0.2em;
+		letter-spacing: 0.05em;
+	}
+	.title {
+		font-weight: 600;
+		letter-spacing: 0.5em;
+		margin-left: 0.125em;
+	}
+`;

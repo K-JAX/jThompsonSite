@@ -1,77 +1,81 @@
 <?php
 /**
- * @package Degraw & Dehaan
+ * @package JTA
  */
 
 add_action( 'graphql_register_types', 'restister_project_color_set' );
-function restister_project_color_set() {
-    register_graphql_object_type( 'color_set', [
-      'description' => __( "All images that exist for featured image", 'dd' ),
-      'fields' => [
-        'colorone' => [
-            'type' => 'String',
-            'description' => __( '150px square for thumbnails', 'dd' ),
+if ( ! function_exists('restister_project_color_set' ) ){
+    function restister_project_color_set() {
+        register_graphql_object_type( 'color_set', [
+        'description' => __( "All images that exist for featured image", 'jta' ),
+        'fields' => [
+            'colorone' => [
+                'type' => 'String',
+                'description' => __( '150px square for thumbnails', 'jta' ),
+            ],
+            'colortwo' => [
+                'type' => 'String',
+                'description' => __( '300px width image', 'jta' ),
+            ],
+            'colorthree' => [
+                'type' => 'String',
+                'description' => __( '768px max-width image', 'jta' ),
+            ],
+            'colorfour' => [
+                'type' => 'String',
+                'description' => __( '1024px max-width image', 'jta' ),
+            ],
+            'colorfive' => [
+                'type' => 'String',
+                'description' => __( 'Original image size', 'jta' ),
+            ],
+            'colorsix' => [
+                'type' => 'String',
+                'description' => __( 'Default image size', 'jta' ),
+            ],
+            'colorseven' => [
+                'type' => 'String',
+                'description' => __( 'Default image size', 'jta' ),
+            ],
+            'coloreight' => [
+                'type' => 'String',
+                'description' => __( 'Default image size', 'jta' ),
+            ],
+            'colornine' => [
+                'type' => 'String',
+                'description' => __( 'Default image size', 'jta' ),
+            ],
+            'colorten' => [
+                'type' => 'String',
+                'description' => __( 'Default image size', 'jta' ),
+            ],
         ],
-        'colortwo' => [
-            'type' => 'String',
-            'description' => __( '300px width image', 'dd' ),
-        ],
-        'colorthree' => [
-            'type' => 'String',
-            'description' => __( '768px max-width image', 'dd' ),
-        ],
-        'colorfour' => [
-            'type' => 'String',
-            'description' => __( '1024px max-width image', 'dd' ),
-        ],
-        'colorfive' => [
-            'type' => 'String',
-            'description' => __( 'Original image size', 'dd' ),
-        ],
-        'colorsix' => [
-            'type' => 'String',
-            'description' => __( 'Default image size', 'dd' ),
-        ],
-        'colorseven' => [
-            'type' => 'String',
-            'description' => __( 'Default image size', 'dd' ),
-        ],
-        'coloreight' => [
-            'type' => 'String',
-            'description' => __( 'Default image size', 'dd' ),
-        ],
-        'colornine' => [
-            'type' => 'String',
-            'description' => __( 'Default image size', 'dd' ),
-        ],
-        'colorten' => [
-            'type' => 'String',
-            'description' => __( 'Default image size', 'dd' ),
-        ],
-      ],
-    ] );
+        ] );
+    }
 }
-
 
 add_action( 'graphql_register_types', 'project_meta_graphql_register');
 function project_meta_graphql_register() {
     
-    register_graphql_field( 'project', 'location', [
-        'type'  =>  'String',
-        'description' => __( 'Where the project was created.' ),
-        'resolve'       => function( $post ) {
-            $location = get_post_meta( $post->ID, 'project_location_block_field')[0];
-            return $location;
-        }
-    ]);
-    register_graphql_field( 'project', 'budget', [
-        'type'  =>  'String',
-        'description' => __( 'Where the project was created.' ),
-        'resolve'       => function( $post ) {
-            $budget = get_post_meta( $post->ID, 'project_budget_field')[0];
-            return $budget;
-        }
-    ]);
+    // This is now handled by the Google Maps API
+    // register_graphql_field( 'project', 'location', [
+    //     'type'  =>  'String',
+    //     'description' => __( 'Where the project was created.' ),
+    //     'resolve'       => function( $post ) {
+    //         $location = get_post_meta( $post->ID, 'project_location_block_field')[0];
+    //         return $location;
+    //     }
+    // ]);
+
+    // This is now moot as it's not desired to put this out to the public
+    // register_graphql_field( 'project', 'budget', [
+    //     'type'  =>  'String',
+    //     'description' => __( 'Where the project was created.' ),
+    //     'resolve'       => function( $post ) {
+    //         $budget = get_post_meta( $post->ID, 'project_budget_field')[0];
+    //         return $budget;
+    //     }
+    // ]);
     register_graphql_field( 'project', 'projectSummary', [
         'type'  =>  'String',
         'description' => __( 'Where the project was created.' ),
@@ -113,16 +117,17 @@ function project_meta_graphql_register() {
 
 function printstuff(){
 
-    $postmeta = get_post_meta( 7 );
+    $postmeta = get_post_meta( 69 );
 
-    foreach($postmeta as $key => $value){
-        $exp_key = explode('palette_', $key);
-        if($exp_key[0] == 'color_'){
-             $arr_result[] = $value;
-        }
-    }    
+    // foreach($postmeta as $key => $value){
+    //     $exp_key = explode('palette_', $key);
+    //     if($exp_key[0] == 'color_'){
+    //          $arr_result[] = $value;
+    //     }
+    // }    
 
-    print_r( $arr_result[0][0] );
+    // print_r( $postmeta );
+    // print_r('anythang workin?');
     
     // $json = $postmeta['location'][0];
     // $json = $postmeta['location'];
@@ -147,4 +152,4 @@ function printstuff(){
     
 }
 
-// add_action( 'init', 'printstuff' );
+add_action( 'init', 'printstuff' );

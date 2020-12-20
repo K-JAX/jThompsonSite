@@ -2,7 +2,7 @@
 /**
  * Add GraphQL resolvers
  *
- * @package  Degraw and Dehaan
+ * @package  JTA
  */
  
 // check if WPGraphQL plugin is active.

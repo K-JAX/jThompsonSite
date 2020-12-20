@@ -8,10 +8,10 @@ import gql from 'graphql-tag';
  */
 const PAGE_QUERY = gql`
   query PageQuery($uri: String!) {
-    pageBy(uri: $uri) {
-      title
-      content
-    }
+	pageBy(uri: $uri) {
+	  title
+	  content
+	}
   }
 `;
 
@@ -19,59 +19,62 @@ const PAGE_QUERY = gql`
  * Fetch and display a Page
  */
 class Page extends Component {
-  state = {
-    page: {
-      title: '',
-      content: '',
-    },
-  };
+	constructor(props){
+		super(props)
+		this.state = {
+			page: {
+				title: '',
+				content: '',
+			},
+		};
+	}
 
-  componentDidMount() {
-    this.executePageQuery();
-  }
+	componentDidMount() {
+		this.executePageQuery();
+	}
 
-  componentDidUpdate( prevProps ) {
-    let { props } = this;
-    if(props.match.params.slug !== prevProps.match.params.slug){
-      this.executePageQuery();
-    }
-  }  
-  
-  /**
-   * Execute page query, process the response and set the state
-   */
-  executePageQuery = async () => {
-    const { match, client } = this.props;
-    let uri = match.params.slug;
-    if (!uri) {
-      uri = 'welcome';
-    }
-    const result = await client.query({
-      query: PAGE_QUERY,
-      variables: { uri },
-    });
-    const page = result.data.pageBy;
-    this.setState({ page });
-  };
+	componentDidUpdate( prevProps ) {
+		const { props } = this;
+		if(props.match.params.slug !== prevProps.match.params.slug){
+			this.executePageQuery();
+		}
+	}  
+	
+	/**
+	 * Execute page query, process the response and set the state
+	 */
+	executePageQuery = async () => {
+		const { match, client } = this.props;
+		let uri = match.params.slug;
+		if (!uri) {
+			uri = 'welcome';
+		}
+		const result = await client.query({
+			query: PAGE_QUERY,
+			variables: { uri },
+		});
+		const page = result.data.pageBy;
+		this.setState({ page });
+	};
 
-  render() {
-    const { page } = this.state;
+	render() {
+		const { page } = this.state;
 
-    return (
-      <div style={{marginLeft: '315px'}}>
-        <p>{JSON.stringify(page)}</p>
-        <div className="pa2">
-          <h1>{page.title}</h1>
-        </div>
-        <div
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: page.content,
-          }}
-        />
-      </div>
-    );
-  }
+		return (
+			<div style={{marginLeft: '315px'}}>
+				<p>{JSON.stringify(page)}</p>
+				<div className="pa2">
+					<h1>{page.title}</h1>
+				</div>
+				<div
+				// eslint-disable-next-line react/no-danger
+					dangerouslySetInnerHTML={{
+						__html: page.content,
+					}}
+				/>
+			</div>
+		);
+	}
 }
 
 export default withApollo(Page);

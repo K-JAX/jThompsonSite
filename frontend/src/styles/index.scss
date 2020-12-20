@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Cardo:400,400i,700|Cinzel:400,700,900&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700|Cinzel:400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 @import './variables/all';
 @import './components/all';
@@ -6,14 +7,14 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Cardo", serif;
+  font-family: "Roboto", serif;
   font-size: 18px;
   background: $GRAD-warm-white;
   /* font-family: Verdana, Geneva, sans-serif; */
 }
 
 h1, h2, h3, h4, h5, h6{
-  font-family: "Cinzel", serif;  
+  font-family: "Hind Siliguri", serif;  
 }
 
 input {
@@ -108,15 +109,17 @@ d-block{
 .menuBox{
   display: flex;
   flex-direction: column;
-  background-color: rgba(249,243,240, 0.7);
+  background-color: rgba(249,243,240, 0.8);
   width: 300px;
-  margin-left: -50px;
+  margin-left: 0px;
   padding: 50px;
+  padding-right: 5px;
 }
 
 .menuBox a {
   font-size: 32px;
-  font-family: 'Cinzel', serif;
+  font-family: 'Hind Siliguri', serif;
+  font-weight: 100;
   -webkit-font-smoothing: antialiased;
   margin: 15px 0;
 }

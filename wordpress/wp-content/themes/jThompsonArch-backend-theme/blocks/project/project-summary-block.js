@@ -7,7 +7,7 @@ const blockStyle = {
     padding: '20px',
 };
  
-registerBlockType( 'dd/project-summary', {
+registerBlockType( 'jta/project-summary', {
     title: 'Project Summary',
     icon: 'media-text',
     category: 'project-blocks',

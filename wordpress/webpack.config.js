@@ -9,7 +9,7 @@ const externals = {
     'react-dom': 'ReactDOM',
 };
 
-const THEME = 'wp-content/themes/Degraw-Dehaan-backend-theme';
+const THEME = 'wp-content/themes/jThompsonArch-backend-theme';
 const ENTRY = THEME + '/block.js';
 
 module.exports = {

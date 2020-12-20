@@ -1,0 +1,47 @@
+{
+    "key": "group_5fdce27fa8120",
+    "title": "Page :: Home",
+    "fields": [
+        {
+            "key": "field_5fdce296f2041",
+            "label": "Slideshow Timer",
+            "name": "slideshow_timer",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "default_value": 4,
+            "min": "",
+            "max": 10,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page",
+                "operator": "==",
+                "value": "12"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_graphql": 1,
+    "graphql_field_name": "sliderTimer",
+    "modified": 1608312424
+}

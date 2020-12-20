@@ -49,3 +49,16 @@ function my_admin_scripts() {
     wp_enqueue_style( 'style', get_stylesheet_uri() );
 }
 add_action( 'admin_enqueue_scripts', 'my_admin_scripts');
+
+define( 'GRAPHQL_JWT_AUTH_SECRET_KEY', 'JTA-secret-power-token' );
+
+function jwt_google_map_api(  ){
+    $args = array(
+        'libraries' => 'places',
+        'key' => 'AIzaSyB3NzXkaZYw7LMSI0Vxn8ALFFowlIPGLLY',
+        'client' => ''
+    );
+    return $args;
+}
+
+add_filter( 'acf/fields/google_map/api', 'jwt_google_map_api' );
