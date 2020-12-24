@@ -9,6 +9,9 @@
 if ( function_exists( 'register_graphql_field' ) ) {
 	// Add header menu resolver.
     // require_once 'resolvers/header-menu.php';
+
+    // Add favicon
+    require_once 'resolvers/favicon.php';
     
     // Add project type resolver
     require_once 'resolvers/project-type.php';

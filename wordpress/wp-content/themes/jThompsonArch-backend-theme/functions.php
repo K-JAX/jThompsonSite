@@ -46,7 +46,8 @@ require_once 'inc/custom-taxonomies.php';
 add_theme_support('post-thumbnails');
 
 function my_admin_scripts() {
-    wp_enqueue_style( 'style', get_stylesheet_uri() );
+    wp_register_style( 'style', get_stylesheet_directory_uri() . '/style.css', array() , '', 'all' );
+    wp_enqueue_style( 'style', get_stylesheet_directory_uri() . '/style.css' );
 }
 add_action( 'admin_enqueue_scripts', 'my_admin_scripts');
 
@@ -62,3 +63,14 @@ function jwt_google_map_api(  ){
 }
 
 add_filter( 'acf/fields/google_map/api', 'jwt_google_map_api' );
+
+function register_gutenberg(){
+    add_theme_support('wp-block-styles');
+}
+add_action ('after_setup_theme','register_gutenberg');
+
+wp_register_style( 'my-block-css', '/wp-includes/css/dist/block-library/style.min.css', array() , '', 'all' );
+wp_enqueue_style( 'my-block-css');
+
+// wp_register_script( 'enqueue_block_assets', '/wp-includes/js/dist/block-library.min.js', false, '1.0', true);
+// wp_enqueue_script( 'enqueue_block_assets');

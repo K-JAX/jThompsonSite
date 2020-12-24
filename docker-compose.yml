@@ -25,7 +25,7 @@ services:
             - db-headless
         env_file: ./.env
         volumes:
-            - ./wordpress:/var/www/html:z
+            - ./wordpress:/var/www/html:Z
             - ./docker/plugins:/var/www/plugins 
         ports:
         - '8080:8080'

@@ -1,6 +1,7 @@
 // @import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700|Cinzel:400,700,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
 @import './variables/all';
 @import './components/all';
 
@@ -21,12 +22,16 @@ input {
   max-width: 500px;
 }
 
-.gray {
-  color: #828282;
-}
-
 div {
   box-sizing: unset;
+}
+
+img{
+  height: auto;
+}
+
+.gray {
+  color: #828282;
 }
 
 .orange {
@@ -139,11 +144,6 @@ d-block{
   margin-top: 175px;
 }
 
-
-.branch{
-
-}
-
 .trunk {
   &:after{
     content: '';
@@ -184,4 +184,40 @@ d-block{
   }
 }
 
+// wp class tweaks
 
+.wp-block-column{
+  h2{
+    position: relative;
+    margin-bottom: 2em;
+  }    
+  &:first-child{
+    h2{
+      &:after{
+        content: '';
+        position: absolute;
+        width: 35%;
+        height: 1px;
+        background: black;
+        top: 0;
+        bottom: 0;
+        margin: auto 10px;
+      }
+  }
+}
+  &:last-child{
+    h2{
+      &:before{
+        content: '';
+        position: absolute;
+        width: 35%;
+        left: -35%;
+        height: 1px;
+        background: black;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+      }
+    }
+  }
+}
