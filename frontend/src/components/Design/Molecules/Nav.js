@@ -8,6 +8,9 @@ import Config from "../../../config";
 
 // import { AUTH_TOKEN } from '../../constants';
 
+// Components
+import Loader from "../Atoms/Loader";
+
 /**
  * GraphQL menu query
  * Gets the labels, types (internal or external) and URLs
@@ -68,7 +71,14 @@ class Nav extends Component {
 		let isHome;
 
 		if (isLoaded === false) {
-			return <p>Loading menu</p>;
+			return (
+				<div
+					className="d-flex justify-content-center align-items-center"
+					style={{ height: "300px" }}
+				>
+					<Loader />
+				</div>
+			);
 		}
 
 		if (pathname === "/") {

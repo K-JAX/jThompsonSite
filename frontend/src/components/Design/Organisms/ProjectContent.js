@@ -44,12 +44,18 @@ class ProjectContent extends Component {
 						</div>
 						{/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
 						{content}
-						<CTAStrip text={`See more projects.`} url="/projects" />
+						<CTAStrip
+							text={`See more projects.`}
+							url="/portfolio"
+						/>
 					</div>
 				) : (
 					<div>
 						{isSingle ? <SlideStrip /> : ""}
-						<CTAStrip text={`See more projects.`} url="/projects" />
+						<CTAStrip
+							text={`See more projects.`}
+							url="/portfolio"
+						/>
 					</div>
 				)}
 			</ProjectContentSection>

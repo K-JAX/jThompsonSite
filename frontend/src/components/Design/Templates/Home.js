@@ -55,7 +55,7 @@ class Home extends Component {
 			transitionSpeed: transitionSpeed,
 		});
 		if (!isLoaded) {
-			return <p>Loading</p>;
+			return "";
 		}
 		return (
 			<div style={{ float: "right", width: "78%" }}>

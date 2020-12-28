@@ -7,6 +7,8 @@ import styled from "styled-components";
 // Component
 import Headline from "../Atoms/Headline";
 import FigureLink from "../Organisms/FigureLink";
+import ProjectSingle from "./Project-Single";
+import Loader from "../Atoms/Loader";
 /**
  * GraphQL page query that takes a page slug as a uri
  * Returns the title and content of the page
@@ -15,27 +17,33 @@ const PAGE_QUERY = gql`
 	query PageQuery {
 		pageBy(uri: "portfolio") {
 			title
-			content
 		}
 	}
 `;
 
-const PROJ_QUERY = gql`
-	query ProjectQuery {
+const PROJ_TYPE_QUERY = gql`
+	query ProjectTypeQuery {
 		projectTypes {
 			edges {
 				node {
 					id
 					slug
 					name
-					featured_image {
-						thumbnail
-						medium
-						medium_large
-						large
-						full
-						default
-					}
+				}
+			}
+		}
+	}
+`;
+
+const PROJ_QUERY = gql`
+	query ProjectQuery {
+		projects {
+			edges {
+				node {
+					id
+					slug
+					title
+					link
 				}
 			}
 		}
@@ -53,12 +61,15 @@ class Portfolio extends Component {
 				title: "",
 				content: "",
 			},
+			isLoaded: false,
 			projectTypes: [],
+			projects: [],
 		};
 	}
 
 	componentDidMount() {
 		this.executePageQuery();
+		this.executeProjectQuery();
 		this.executeProjectTypeQuery();
 	}
 
@@ -66,6 +77,7 @@ class Portfolio extends Component {
 		const { props } = this;
 		if (props.match.params.slug !== prevProps.match.params.slug) {
 			this.executePageQuery();
+			this.executeProjectQuery();
 			this.executeProjectTypeQuery();
 		}
 	}
@@ -87,10 +99,24 @@ class Portfolio extends Component {
 		this.setState({ page });
 	};
 
-	executeProjectTypeQuery = async () => {
+	executeProjectQuery = async () => {
 		const { client } = this.props;
 		const result = await client.query({
 			query: PROJ_QUERY,
+		});
+		let projects = result.data.projects.edges;
+		projects = projects.map((project) => {
+			const finalLink = `/portfolio/${project.node.slug}`;
+			const modifiedProject = { ...project };
+			modifiedProject.node.link = finalLink;
+			return modifiedProject;
+		});
+		this.setState({ projects, isLoaded: true });
+	};
+	executeProjectTypeQuery = async () => {
+		const { client } = this.props;
+		const result = await client.query({
+			query: PROJ_TYPE_QUERY,
 		});
 		let projectTypes = result.data.projectTypes.edges;
 		projectTypes = projectTypes.map((project) => {
@@ -103,40 +129,39 @@ class Portfolio extends Component {
 	};
 
 	render() {
-		const { page, projectTypes } = this.state;
-		const { loaded } = this.props;
+		const { page, projectTypes, projects, isLoaded } = this.state;
 
-		console.log(page.content);
+		if (!isLoaded) return <Loader />;
+		console.log(`projects`);
 
 		return (
 			<PortfolioTemplate className="template-container">
-				<Headline text={page.title} loaded={loaded} />
+				<h1>{page.title}</h1>
 				<nav>
 					<ul>
-						{projectTypes.map((project, index) => (
-							<li key={project.node.id}>
-								<Link to={project.node.link}>
-									<FigureLink
-										alignment={index % 2 ? "right" : "left"}
-										img={
-											project.node.featured_image.default
-										}
-										captionTitle={project.node.name}
-									/>
-									{/* <img 
-                  src={project.node.featured_image.medium_large}
-                  srcSet={
-                    project.node.featured_image.thumbnail + ', ' +
-                    project.node.featured_image.medium + ', ' +
-                    project.node.featured_image.medium_large + ', ' +
-                    project.node.featured_image.large + ', ' +
-                    project.node.featured_image.full
-                  }
-                  alt={`Figure for ${project.node.name}`}
-                  /> */}
-								</Link>
+						{projectTypes.map((type, index) => (
+							<li key={type.node.id}>
+								<button className="no-style">
+									{type.node.name}
+								</button>
 							</li>
 						))}
+					</ul>
+				</nav>
+				<nav>
+					<ul>
+						{projects.map((project, index) => {
+							return (
+								<li key={project.node.id}>
+									<Link
+										to={project.node.link}
+										alt={`View the ${project.node.title} project.`}
+									>
+										{project.node.title}
+									</Link>
+								</li>
+							);
+						})}
 					</ul>
 				</nav>
 			</PortfolioTemplate>
@@ -147,26 +172,10 @@ class Portfolio extends Component {
 export default withApollo(Portfolio);
 
 const PortfolioTemplate = styled.main`
-	grid-template-areas:
-		". body marginR"
-		". body .";
-	grid-template-columns: 50px auto 50px;
-	.page-heading {
-		grid-area: marginR;
-		justify-self: end;
-	}
 	nav {
-		grid-column-start: 1;
-		grid-column-end: 4;
 		ul {
-			display: grid;
-			grid-template-columns: 50% 50%;
-			grid-template-rows: 700px;
-			padding-left: 0;
 			list-style: none;
 			li {
-				width: auto;
-				height: 100%;
 				a {
 					text-decoration: none;
 				}

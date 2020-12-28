@@ -9,7 +9,6 @@ export const SINGLE_PROJ_QUERY = gql`
 			projectId
 			featuredImage {
 				sourceUrl
-				srcSet
 				altText
 			}
 			content

@@ -41,20 +41,15 @@ export default () => {
 					<Route exact path="/search" component={Search} />
 					<Route
 						exact
-						path="/page/portfolio"
+						path="/portfolio"
 						component={Portfolio}
 						loaded={loaded}
 					/>
-					<Route exact path="/page/about" component={About} />
-					<Route exact path="/page/contact" component={Contact} />
+					<Route exact path="/about" component={About} />
+					<Route exact path="/contact" component={Contact} />
 					<Route
 						exact
 						path="/portfolio/:slug"
-						component={ProjectType}
-					/>
-					<Route
-						exact
-						path="/portfolio/:taxonomy/:slug"
 						component={ProjectSingle}
 					/>
 					<Route exact path="/page/:slug" component={Page} />

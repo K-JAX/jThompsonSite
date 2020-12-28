@@ -13,7 +13,7 @@ import {
 
 // Components
 import Hero from "../Organisms/Hero";
-// import StatBox from "../Organisms/StatBox";
+import Loader from "../Atoms/Loader";
 
 /**
  * Fetch and display a Page
@@ -71,8 +71,10 @@ class ProjectSingle extends Component {
 		const { title } = projectPost;
 		const { featuredSlideshow } = this.props;
 		if (!isLoaded) {
-			return <p>Loading project</p>;
+			return <Loader />;
 		}
+
+		console.log(data);
 
 		return (
 			<ProjectMain>
@@ -80,13 +82,12 @@ class ProjectSingle extends Component {
 					<title>{title}</title>
 				</Helmet>
 				<Hero
-					captionTitle={title}
-					date={year}
-					location={citySt}
-					img={img}
+					data={data}
+					slider={sliderSpeed}
+					transitionSpeed={transitionSpeed}
+					pause={false}
 					isSingle={isSingle}
 				/>
-				<div>{parsedContent}</div>
 			</ProjectMain>
 		);
 	}

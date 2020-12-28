@@ -5,6 +5,7 @@ import { Parser as HtmlToReactParser } from "html-to-react";
 
 // components
 import ProjectContent from "./ProjectContent";
+import Loader from "../Atoms/Loader";
 
 class Slideshow extends Component {
 	constructor(props) {
@@ -207,7 +208,7 @@ class Slideshow extends Component {
 
 		// const { title, date, location, img } = this.props;
 		const { slides, isSingle, transitionSpeed } = this.props;
-		if (slides === undefined) return <p>Loading</p>;
+		if (slides === undefined) return <Loader />;
 
 		return (
 			<SlideshowComponent>

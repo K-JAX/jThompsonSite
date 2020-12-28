@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
+import { Parser as HtmlToReactParser } from "html-to-react";
 
 /**
  * GraphQL page query that takes a page slug as a uri
@@ -11,25 +12,6 @@ const PAGE_QUERY = gql`
 		pageBy(uri: "about") {
 			title
 			content
-		}
-	}
-`;
-
-const PROJ_QUERY = gql`
-	query ProjectQuery {
-		teamMembers {
-			edges {
-				node {
-					title
-					uri
-					link
-					content
-					featuredImage {
-						srcSet
-						sourceUrl
-					}
-				}
-			}
 		}
 	}
 `;
@@ -45,20 +27,17 @@ class About extends Component {
 				title: "",
 				content: "",
 			},
-			teamMembers: [],
 		};
 	}
 
 	componentDidMount() {
 		this.executePageQuery();
-		this.executeProjectTypeQuery();
 	}
 
 	componentDidUpdate(prevProps) {
 		const { props } = this;
 		if (props.match.params.slug !== prevProps.match.params.slug) {
 			this.executePageQuery();
-			this.executeProjectTypeQuery();
 		}
 	}
 
@@ -79,18 +58,8 @@ class About extends Component {
 		this.setState({ page });
 	};
 
-	executeProjectTypeQuery = async () => {
-		const { client } = this.props;
-		const result = await client.query({
-			query: PROJ_QUERY,
-		});
-		const teamMembers = result.data.teamMembers.edges;
-
-		this.setState({ teamMembers });
-	};
-
 	render() {
-		const { page, teamMembers } = this.state;
+		const { page } = this.state;
 		console.log(page);
 		return (
 			<div style={{ marginLeft: "315px" }}>
@@ -103,10 +72,6 @@ class About extends Component {
 						__html: page.content,
 					}}
 				/>
-				<div>
-					<h2>Lets check some more shit right here then.</h2>
-					<p>{JSON.stringify(teamMembers)}</p>
-				</div>
 			</div>
 		);
 	}

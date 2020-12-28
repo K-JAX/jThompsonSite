@@ -30,6 +30,26 @@ img{
   height: auto;
 }
 
+a:hover{
+  opacity: 0.85;
+  color: initial !important;
+  text-decoration: none !important;
+}
+
+button{
+  padding: 0.5em 2em;
+  border: 1px solid $navy;
+  box-shadow: none;
+}
+
+// util classes
+
+button.no-style{
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
 .gray {
   color: #828282;
 }
@@ -107,14 +127,10 @@ img{
   max-width: 250px;
 }
 
-d-block{
-  display: block !important;
-}
-
 .menuBox{
   display: flex;
   flex-direction: column;
-  background-color: rgba(249,243,240, 0.8);
+  background-color: rgba(240,234,229, 0.8);
   width: 300px;
   margin-left: 0px;
   padding: 50px;

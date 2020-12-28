@@ -14,24 +14,17 @@ class ProjectFeatures extends Component {
 		};
 	}
 
-
-
 	render() {
 		const { data, sliderSpeed, transitionSpeed } = this.props;
 
 		return (
 			<ProjectMain>
 				<Hero
-					captionTitle={`title`}
-					date={`year`}
-					location={`citySt`}
-					img={`img`}
 					data={data}
 					slider={sliderSpeed}
 					transitionSpeed={transitionSpeed}
 					pause={false}
 				/>
-				
 			</ProjectMain>
 		);
 	}

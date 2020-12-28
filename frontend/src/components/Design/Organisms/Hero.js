@@ -25,10 +25,6 @@ class Hero extends Component {
 					<Slideshow
 						slides={data.edges}
 						isSingle={isSingle}
-						// title={captionTitle}
-						// date={date}
-						// location={location}
-						// img={img}
 						timer={slider}
 						transitionSpeed={transitionSpeed}
 						pause={pause}
