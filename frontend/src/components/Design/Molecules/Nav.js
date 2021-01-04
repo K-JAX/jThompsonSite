@@ -88,7 +88,10 @@ class Nav extends Component {
 		return (
 			<MainNav className={`menuBox ${className}`}>
 				{menus.menuItems.edges.map((menu) => {
-					if (menu.node.url.startsWith(Config.baseUrl)) {
+					if (
+						menu.node.url.startsWith(Config.baseUrl) ||
+						menu.node.url.startsWith("/")
+					) {
 						const slugPath = menu.node.url.replace(
 							Config.baseUrl,
 							""

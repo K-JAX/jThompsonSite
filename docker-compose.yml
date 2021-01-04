@@ -23,10 +23,10 @@ services:
         env_file: ./.env
         depends_on:
             - db-headless
-        env_file: ./.env
         volumes:
             - ./wordpress:/var/www/html:Z
             - ./docker/plugins:/var/www/plugins 
+            - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
         ports:
         - '8080:8080'
         restart: always

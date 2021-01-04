@@ -1,6 +1,6 @@
 {
     "key": "group_5e0935bec15b4",
-    "title": "Additional Project Details",
+    "title": "CPT :: Project – Additional Project Details",
     "fields": [
         {
             "key": "field_5fe265e76991e",
@@ -134,5 +134,5 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "additionalProjectDetails",
-    "modified": 1608672776
+    "modified": 1609343998
 }

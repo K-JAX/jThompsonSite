@@ -27,14 +27,17 @@ export default Logo;
 
 const LogoElement = styled.div`
 	font-family: "Hind Siliguri", sans-serif;
-	margin-left: 50px;
+	/* padding-top: 2.75em;
+	padding-right: 1em;
+	padding-bottom: 2.5em;
+	padding-left: 50px; */
+	padding: 2.75em 1em 2.5em 50px;
 	white-space: nowrap;
 	text-align: center;
 	text-transform: uppercase;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	margin-top: 2.75em;
 	transition: 0.35s;
 	&.home-logo {
 		width: 165px;
@@ -48,6 +51,7 @@ const LogoElement = styled.div`
 	}
 	&.normal-logo {
 		width: 400px;
+		background: white;
 		.initials {
 			width: 104px;
 			font-size: 72px;

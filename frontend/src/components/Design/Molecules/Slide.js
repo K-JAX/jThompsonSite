@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import ProjectTitle from "./ProjectTitle";
+import PropTypes from "prop-types";
 
 class Slide extends Component {
 	render() {
+		if (this.props === undefined) return <p>Loading</p>;
+
 		const {
 			title,
 			date,
@@ -12,11 +15,21 @@ class Slide extends Component {
 			active,
 			className,
 			percentage,
+			isSingleEntity,
 			transitionSpeed,
-			isPaused,
 			titleAttachClass,
 		} = this.props;
-
+		if (isSingleEntity) {
+			return (
+				<>
+					<SlideComponent
+						className={className}
+						img={img}
+						transitionSpeed={transitionSpeed}
+					></SlideComponent>
+				</>
+			);
+		}
 		return (
 			<SlideComponent
 				className={className}

@@ -33,7 +33,14 @@ class ProjectTitle extends Component {
 				)}
 				<div className="title-stack">
 					<h1>{title}</h1>
-					<SlideMeter progress={active ? percentage : undefined} />
+					{percentage !== undefined ? (
+						<SlideMeter
+							progress={active ? percentage : undefined}
+						/>
+					) : (
+						""
+					)}
+
 					<h2>
 						<i>{subtitle}</i>
 					</h2>
@@ -54,9 +61,13 @@ const ProjectTitleDiv = styled.div`
 	text-align: center;
 	justify-content: end;
 	&.slideTitle {
-		top: calc(100% - 130px);
+		top: calc(100% - 128px);
+		.title-stack {
+			background: white;
+		}
 	}
 	&.regularTitle {
+		z-index: 1;
 		top: 0;
 		background: linear-gradient(
 			90deg,
@@ -115,7 +126,6 @@ const ProjectTitleDiv = styled.div`
 		align-content: center;
 		min-width: 343px;
 		padding: 1.5em 3em;
-		background: rgb(255, 255, 255);
 	}
 	h1,
 	h2 {

@@ -1,15 +1,19 @@
 import gql from "graphql-tag";
 
 export const SINGLE_PROJ_QUERY = gql`
-	query ProjectQuery($uri: String!) {
-		projectBy(uri: $uri) {
+	query ProjectQuery($slug: ID!) {
+		project(id: $slug, idType: URI) {
 			id
 			slug
 			title
 			projectId
 			featuredImage {
-				sourceUrl
-				altText
+				node {
+					sourceUrl(size: LARGE)
+					srcSet
+					altText
+					id
+				}
 			}
 			content
 			colorPalette {
@@ -27,11 +31,15 @@ export const SINGLE_PROJ_QUERY = gql`
 			projectMainDetails {
 				fieldGroupName
 				galleryOrDescriptive
+				showSlideshowOnProjectPage
+				slideshowTimer
+				transitionSpeed
 			}
 			additionalProjectDetails {
 				featuredImages {
 					id
-					srcSet(size: LARGE)
+					sourceUrl(size: LARGE)
+					srcSet
 					altText
 				}
 				showStatBox

@@ -9,7 +9,7 @@ class Arrow extends Component {
 
 		var arrows = [];
 		for (var i = 0; i < num; i++) {
-			arrows.push(<div className={`arrow arrow-${i}`}></div>);
+			arrows.push(<div key={i} className={`arrow arrow-${i}`}></div>);
 		}
 
 		let rotation;

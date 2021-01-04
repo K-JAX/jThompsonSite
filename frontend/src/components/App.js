@@ -70,5 +70,6 @@ const PageContainerElement = styled.div`
 	/* margin-bottom: 100px; */
 	&.offset-header {
 		margin-top: 175px;
+		padding-right: 5em;
 	}
 `;

@@ -1,10 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, createContext } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 
 // Components
-import ProjectFeatures from "./Project-Features";
-import withProjectData from "../../Functional/withProjectData";
+import ProjectSingle from "./Project-Single";
+// import {
+// 	SlideshowContext,
+// 	SlideshowProvider,
+// } from "../../Functional/SlideshowContext";
 
 /**
  * GraphQL page query
@@ -26,8 +29,7 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			slideshowTimer: 7,
-			transitionSpeed: 0.3,
+			slideshowOptions: {},
 			isLoaded: false,
 		};
 	}
@@ -42,27 +44,20 @@ class Home extends Component {
 			query: HOME_QUERY,
 		});
 		this.setState({
-			slideshowTimer: result.data.page.sliderTimer.slideshowTimer,
-			transitionSpeed: result.data.page.sliderTimer.transitionSpeed,
+			slideshowOptions: result.data.page.sliderTimer,
 			isLoaded: true,
 		});
 	};
 
 	render() {
-		const { isLoaded, slideshowTimer, transitionSpeed } = this.state;
-		const ProjectwithData = withProjectData(ProjectFeatures, {
-			sliderSpeed: slideshowTimer,
-			transitionSpeed: transitionSpeed,
-		});
+		const { isLoaded, slideshowOptions } = this.state;
+
 		if (!isLoaded) {
 			return "";
 		}
 		return (
-			<div style={{ float: "right", width: "78%" }}>
-				<div className="">
-					{/* <ProjectSingle featuredSlideshow={slideshowTimer} /> */}
-					<ProjectwithData />
-				</div>
+			<div style={{ marginLeft: "300px" }}>
+				<ProjectSingle featured={true} options={slideshowOptions} />
 			</div>
 		);
 	}

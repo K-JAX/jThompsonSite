@@ -21,6 +21,7 @@ class ProjectContent extends Component {
 			stats,
 			isSingle,
 		} = this.props;
+		console.log(isSingle);
 		return (
 			<ProjectContentSection>
 				<link
@@ -42,20 +43,23 @@ class ProjectContent extends Component {
 								""
 							)}
 						</div>
-						{/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
 						{content}
-						<CTAStrip
-							text={`See more projects.`}
-							url="/portfolio"
-						/>
+						{!isSingle && (
+							<CTAStrip
+								text={`See more projects.`}
+								url="/portfolio"
+							/>
+						)}
 					</div>
 				) : (
 					<div>
 						{isSingle ? <SlideStrip /> : ""}
-						<CTAStrip
-							text={`See more projects.`}
-							url="/portfolio"
-						/>
+						{!isSingle && (
+							<CTAStrip
+								text={`See more projects.`}
+								url="/portfolio"
+							/>
+						)}
 					</div>
 				)}
 			</ProjectContentSection>
