@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const SINGLE_PROJ_QUERY = gql`
-	query ProjectQuery($slug: ID!) {
+	query SingleProjectQuery($slug: ID!) {
 		project(id: $slug, idType: URI) {
 			id
 			slug
@@ -76,7 +76,7 @@ export const SINGLE_PROJ_QUERY = gql`
 `;
 
 export const FEATURED_PROJ_QUERY = gql`
-	query ProjectQuery {
+	query FeaturedProjectQuery {
 		projects(
 			where: {
 				metaQuery: {
@@ -99,6 +99,7 @@ export const FEATURED_PROJ_QUERY = gql`
 							sourceUrl
 							srcSet
 							altText
+							id
 						}
 					}
 					content

@@ -1,18 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withBreakpoints } from "react-breakpoints";
+import { compose } from "recompose";
 import styled from "styled-components";
 
 const Logo = (props) => {
-	const { isHome } = props;
+	const { isHome, breakpoints, currentBreakpoint } = props;
 	return (
 		<Link
 			to="/"
 			style={{ alignSelf: "start" }}
-			className="no-underline black"
+			className="no-underline black align-self-center align-self-md-start"
 		>
 			<LogoElement
 				alt="Logo and Site Title"
-				className={`${isHome ? "home-logo" : "normal-logo"}`}
+				className={`${
+					isHome && breakpoints[currentBreakpoint] > breakpoints.lg
+						? "home-logo"
+						: "normal-logo"
+				}`}
 			>
 				<h1 className="initials">JTA</h1>
 				<div className="title-text">
@@ -23,14 +29,10 @@ const Logo = (props) => {
 		</Link>
 	);
 };
-export default Logo;
+export default compose(withBreakpoints)(Logo);
 
 const LogoElement = styled.div`
 	font-family: "Hind Siliguri", sans-serif;
-	/* padding-top: 2.75em;
-	padding-right: 1em;
-	padding-bottom: 2.5em;
-	padding-left: 50px; */
 	padding: 2.75em 1em 2.5em 50px;
 	white-space: nowrap;
 	text-align: center;
@@ -50,7 +52,7 @@ const LogoElement = styled.div`
 		}
 	}
 	&.normal-logo {
-		width: 400px;
+		width: 435px;
 		background: white;
 		.initials {
 			width: 104px;
@@ -102,6 +104,26 @@ const LogoElement = styled.div`
 			font-weight: 600;
 			letter-spacing: 0.5em;
 			margin-left: 0.125em;
+		}
+		@media all and (max-width: 767px) {
+			display: none;
+		}
+	}
+
+	@media all and (max-width: 767px) {
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-right: 0;
+		&.normal-logo {
+			width: auto;
+			.initials {
+				width: auto;
+				font-size: 48px;
+				&:before,
+				&:after {
+					height: 3px;
+				}
+			}
 		}
 	}
 `;

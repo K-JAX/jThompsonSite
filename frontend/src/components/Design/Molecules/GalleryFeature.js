@@ -28,25 +28,18 @@ const GalleryDiv = styled.div`
 	display: flex;
 	width: 100%;
 	height: 650px;
-	/* flex-wrap: no-wrap; */
-	/* overflow: hidden; */
 	justify-content: flex-start;
 	img {
 		object-fit: cover;
 	}
 	/* Tile styling */
 	.tile-0 {
-		width: calc(100% - 438px);
+		width: calc(100% - 425px);
 		flex-grow: 0;
-		/* flex-shrink: 3; */
-		/* flex-basis: 300px; */
-		/* flex: 0 1 100%; */
 	}
 	.tile-1 {
-		width: 450px;
+		width: 20%;
 		flex-grow: 2;
 		flex-shrink: 0;
-		flex-basis: 400px;
-		/* flex: 2 0 450px; */
 	}
 `;

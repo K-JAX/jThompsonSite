@@ -11,7 +11,7 @@ class SidebarMenu extends Component {
 			<SidebarMenuElem>
 				<Nav className="menuBox" />
 				<br />
-				<SocialMenu />
+				<SocialMenu className="isHome" />
 			</SidebarMenuElem>
 		);
 	}

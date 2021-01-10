@@ -10,7 +10,7 @@ import { SlideControls } from "../Molecules/SlideControls";
 
 export const SlideshowContext = createContext();
 export const SlideshowProvider = (props) => {
-	const [slideIndex, setIndex] = useState(0);
+	let [slideIndex, setIndex] = useState(0);
 	return (
 		<SlideshowContext.Provider
 			value={{
@@ -20,6 +20,7 @@ export const SlideshowProvider = (props) => {
 				removeIndex: () => setIndex(slideIndex - 1),
 				resetIndex: () => setIndex(slideIndex - slideIndex),
 				setToEnd: (slideNum) => setIndex(slideNum),
+				switchToIndex: (thumbNum) => setIndex(thumbNum),
 			}}
 		>
 			{props.children}
@@ -52,6 +53,17 @@ class Slideshow extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.counterId);
+		this.pauseSlide();
+		this.setState({
+			slides: [],
+			currentSlide: 0,
+			totalSlides: 0,
+			milliseconds: 0,
+			slideDuration: 0,
+			percentage: 0,
+			timeLeft: 0,
+			isPaused: false,
+		});
 	}
 
 	slideShowTimer = () => {
@@ -92,17 +104,15 @@ class Slideshow extends Component {
 			// make sure to reset the the counter if the slide was changed
 			milliseconds =
 				currentSlide !== this.context.slideIndex ? 0 : milliseconds;
-
+			// make sure to reset index to 0 or to max with these checks
+			this.context.slideIndex > totalSlides && this.context.resetIndex();
+			this.context.slideIndex < 0 && this.context.setToEnd(totalSlides);
 			if (milliseconds >= slideDuration) {
 				milliseconds = 0;
 				this.context.slideIndex > totalSlides
 					? this.context.resetIndex()
 					: this.context.addIndex();
 			}
-
-			// make sure to reset index to 0 or to max with these checks
-			this.context.slideIndex > totalSlides && this.context.resetIndex();
-			this.context.slideIndex < 0 && this.context.setToEnd(totalSlides);
 
 			percentage = (milliseconds * 100) / slideDuration;
 			milliseconds += counterStep;
@@ -139,36 +149,52 @@ class Slideshow extends Component {
 		const { percentage, isPaused, totalSlides } = this.state;
 		const { slideIndex } = this.context;
 		const { transitionSpeed } = this.context.props;
-		const { slides, isSingleEntity } = this.props;
+		const { slides, isSingleEntity, contentType } = this.props;
 		if (slides === undefined) return <Loader />;
-
 		return (
 			<SlideshowComponent>
-				<div className="slide-container">
+				<div
+					className={`slide-container ${isSingleEntity && "single"}`}
+				>
 					{isSingleEntity ? (
 						<>
-							{" "}
-							{slides.slideImages.map((image, i) => {
-								return (
-									<Slide
-										key={image.id}
-										location={
-											slides.additionalProjectDetails
-												.location
-										}
-										img={image.sourceUrl}
-										transitionSpeed={transitionSpeed}
-										active={i === slideIndex}
-										className={
-											i === slideIndex
-												? "activeSlide"
-												: ""
-										}
-										isSingleEntity={isSingleEntity}
-									/>
-								);
-							})}
-							<SlideControls total={totalSlides} />
+							<div
+								className={`${
+									contentType === "gallery"
+										? "slide-wrap"
+										: ""
+								}`}
+							>
+								{slides.slideImages.map((image, i) => {
+									return (
+										<Slide
+											key={image.id}
+											location={
+												slides.additionalProjectDetails
+													.location
+											}
+											img={image.sourceUrl}
+											transitionSpeed={transitionSpeed}
+											active={i === slideIndex}
+											className={
+												i === slideIndex
+													? "activeSlide"
+													: ""
+											}
+											isSingleEntity={isSingleEntity}
+										/>
+									);
+								})}
+							</div>
+							<SlideControls
+								total={totalSlides}
+								contentType={contentType}
+								images={
+									contentType === "gallery"
+										? slides.slideImages
+										: ""
+								}
+							/>
 							<ProjectTitle
 								title={slides.title}
 								subtitle={`${slides.date.slice(0, 4)}, ${
@@ -181,10 +207,10 @@ class Slideshow extends Component {
 							/>
 						</>
 					) : (
-						slides.map((slide, i) => {
-							return (
-								<ScrollHeroContext.Consumer>
-									{(context) => (
+						<ScrollHeroContext.Consumer>
+							{(context) =>
+								slides.map((slide, i) => {
+									return (
 										<Slide
 											key={slide.node.id}
 											title={slide.node.title}
@@ -209,10 +235,10 @@ class Slideshow extends Component {
 													: ""
 											}
 										/>
-									)}
-								</ScrollHeroContext.Consumer>
-							);
-						})
+									);
+								})
+							}
+						</ScrollHeroContext.Consumer>
 					)}
 				</div>
 			</SlideshowComponent>
@@ -231,5 +257,12 @@ const SlideshowComponent = styled.div`
 		position: relative;
 		width: 100%;
 		height: 100vh;
+		&.single {
+			height: calc(100vh - 153px);
+		}
+		.slide-wrap {
+			position: relative;
+			height: 70vh;
+		}
 	}
 `;

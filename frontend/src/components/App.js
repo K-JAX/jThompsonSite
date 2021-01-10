@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import ReactBreakpoints from "react-breakpoints";
+import { Media } from "react-breakpoints";
+
+// Components
 import Header from "./Design/Organisms/Header";
 import Footer from "./Design/Molecules/Footer";
 import Home from "./Design/Templates/Home";
@@ -23,6 +27,13 @@ export default () => {
 		isHome = true;
 	}
 
+	const breakpoints = {
+		sm: 576,
+		md: 768,
+		lg: 992,
+		xl: 1200,
+	};
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setLoad(true);
@@ -32,44 +43,94 @@ export default () => {
 
 	return (
 		<BodyContainer className={`center ${loaded ? "loaded" : ""}`}>
-			<Header location={location} isHome={isHome} />
-			<PageContainerElement
-				className={` ${isHome ? "" : "offset-header"}`}
-			>
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/search" component={Search} />
-					<Route
-						exact
-						path="/portfolio"
-						component={Portfolio}
-						loaded={loaded}
-					/>
-					<Route exact path="/about" component={About} />
-					<Route exact path="/contact" component={Contact} />
-					<Route
-						exact
-						path="/portfolio/:slug"
-						component={ProjectSingle}
-					/>
-					<Route exact path="/page/:slug" component={Page} />
-					<Route exact path="/post/:slug" component={Post} />
-					<Route exact path="/category/:slug" component={Category} />
-				</Switch>
-			</PageContainerElement>
-			<Footer isHome={isHome} />
+			<ReactBreakpoints breakpoints={breakpoints}>
+				<Header location={location} isHome={isHome} />
+				<Media>
+					{({ breakpoints, currentBreakpoint }) => {
+						let offsetCondition =
+							(!isHome ||
+								breakpoints[currentBreakpoint] <
+									breakpoints.xl) &&
+							"offset-right";
+						return (
+							<PageContainerElement
+								className={` ${
+									!isHome && "offset-header"
+								} ${offsetCondition}`}
+							>
+								<Switch>
+									<Route exact path="/" component={Home} />
+									<Route
+										exact
+										path="/search"
+										component={Search}
+									/>
+									<Route
+										exact
+										path="/portfolio"
+										component={Portfolio}
+										loaded={loaded}
+									/>
+									<Route
+										exact
+										path="/about"
+										component={About}
+									/>
+									<Route
+										exact
+										path="/contact"
+										component={Contact}
+									/>
+									<Route
+										exact
+										path="/portfolio/:slug"
+										component={ProjectSingle}
+									/>
+									<Route
+										exact
+										path="/page/:slug"
+										component={Page}
+									/>
+									<Route
+										exact
+										path="/post/:slug"
+										component={Post}
+									/>
+									<Route
+										exact
+										path="/category/:slug"
+										component={Category}
+									/>
+								</Switch>
+							</PageContainerElement>
+						);
+					}}
+				</Media>
+				<Footer isHome={isHome} />
+			</ReactBreakpoints>
 		</BodyContainer>
 	);
 };
 
 const BodyContainer = styled.div`
-	display: grid;
+	/* display: grid; */
 `;
 
 const PageContainerElement = styled.div`
 	/* margin-bottom: 100px; */
 	&.offset-header {
-		margin-top: 175px;
-		padding-right: 5em;
+		margin-top: 158px;
+		@media all and (max-width: 767px) {
+			margin-top: 80px;
+		}
+	}
+	@media all and (max-width: 767px) {
+		margin-top: 80px;
+	}
+	&.offset-right {
+		padding-right: 80px;
+		@media all and (max-width: 767px) {
+			padding-right: 0;
+		}
 	}
 `;

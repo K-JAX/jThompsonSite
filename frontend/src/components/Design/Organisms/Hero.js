@@ -10,9 +10,8 @@ import { ScrollHeroContext } from "../../Functional/ScrollHeroCheck";
 
 class Hero extends Component {
 	render() {
-		const { data, isSingle, isSlider } = this.props;
+		const { data, isSingle, isSlider, contentType } = this.props;
 		// let isSlider = !isSingle ? true : false;
-		// console.log(slides);
 		if (isSlider) {
 			return (
 				<>
@@ -27,6 +26,7 @@ class Hero extends Component {
 										slides={data}
 										scroll={context}
 										isSingleEntity={isSingle}
+										contentType={contentType}
 									/>
 								</HeroSection>
 							);

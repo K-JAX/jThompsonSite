@@ -21,26 +21,26 @@ class ProjectContent extends Component {
 			stats,
 			isSingle,
 		} = this.props;
-		console.log(isSingle);
+		// console.log(content);
 		return (
 			<ProjectContentSection>
 				<link
 					rel="stylesheet"
 					href={`${Config.baseUrl}/wp-includes/css/dist/block-library/style.min.css`}
 				/>
-				<GalleryFeature className="container" features={features} />
+				{!isSingle && (
+					<GalleryFeature className="container" features={features} />
+				)}
 				{contentType === "descriptive" ? (
 					<div>
 						<div className="row mb-5">
 							{showStatBox ? <StatBox stats={stats} /> : ""}
-							{summary !== null ? (
+							{summary !== null && (
 								<TitleDescription
 									title="Project Summary"
 									content={summary}
 									className="col my-4"
 								/>
-							) : (
-								""
 							)}
 						</div>
 						{content}
@@ -53,7 +53,13 @@ class ProjectContent extends Component {
 					</div>
 				) : (
 					<div>
-						{isSingle ? <SlideStrip /> : ""}
+						{summary !== null && (
+							<TitleDescription
+								title="Project Summary"
+								content={summary}
+								className="col my-4"
+							/>
+						)}
 						{!isSingle && (
 							<CTAStrip
 								text={`See more projects.`}

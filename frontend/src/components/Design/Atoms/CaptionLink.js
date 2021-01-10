@@ -17,22 +17,22 @@ class CaptionLink extends Component {
 		} = this.props;
 
 		return (
-			<div>
-				{alignment === "left" ? (
-					<LinkBox className={isHovered ? "hovered" : ""}>
-						<Arrow isHovered={isHovered} alignment={alignment} />
-						<Link className={className} to={link} alt={linkAlt}>
-							{children}
-						</Link>
+			<div
+				className={`d-flex ${
+					alignment === "left"
+						? "justify-content-end justify-content-md-start"
+						: "justify-content-md-end"
+				}`}
+			>
+				<Link className={className} to={link} alt={linkAlt}>
+					<LinkBox
+						alignment={alignment}
+						className={isHovered ? "hovered" : ""}
+					>
+						<Arrow direction={alignment} isHovered={isHovered} />
+						{children}
 					</LinkBox>
-				) : (
-					<LinkBox className={isHovered ? "hovered" : ""}>
-						<Link className={className} to={link} alt={linkAlt}>
-							{children}
-						</Link>
-						<Arrow isHovered={isHovered} alignment={alignment} />
-					</LinkBox>
-				)}
+				</Link>
 			</div>
 		);
 	}
@@ -41,23 +41,28 @@ class CaptionLink extends Component {
 export default withApollo(CaptionLink);
 
 const LinkBox = styled.div`
-	display: grid;
-	grid-template-columns: auto auto;
-	height: 100%;
-	background-color: black;
-	align-self: center;
-	align-items: center;
-	margin: 0;
-	font-size: 1.15rem;
-	text-decoration: none;
+	display: inline-flex;
 	color: white;
-	font-weight: 100;
-	padding: 0 8px;
+	background-color: black;
+	margin: 0;
+	font-size: 1rem;
+	text-decoration: none;
+	font-weight: 500;
+	font-variant: small-caps;
+	padding: 1em 1.25em;
+	letter-spacing: 3px;
+	opacity: 0.5;
+	transition: 0.25s;
+	${(props) =>
+		props.alignment === "left"
+			? "flex-direction: row;"
+			: "flex-direction: row-reverse;"}
 	a {
-		color: white;
-		opacity: 0.55;
+		color: white !important;
+		opacity: 0.95;
 	}
-	&.hovered a {
+	&.hovered {
+		color: white;
 		opacity: 1;
 	}
 `;

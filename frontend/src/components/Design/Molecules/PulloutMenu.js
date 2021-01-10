@@ -1,30 +1,31 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 // Components
-import Nav from './Nav';
-import Burger from '../Atoms/Burger'
+import Nav from "./Nav";
+import Burger from "../Atoms/Burger";
 
 class PulloutMenu extends Component {
-	render() { 
+	render() {
 		const { menuActive, burgerOnClick } = this.props;
 
-		return ( 
+		return (
 			<Puller>
 				<Burger onClick={burgerOnClick} burgerIsActive={menuActive} />
-				<Nav className={`pullout ${menuActive ? 'pulled-out' : ''}`} />
+				<Nav className={`pullout ${menuActive ? "pulled-out" : ""}`} />
 			</Puller>
 		);
 	}
 }
- 
+
 export default PulloutMenu;
 
 const Puller = styled.div`
-	justify-self: flex-end;        
+	display: flex;
+	justify-self: flex-end;
 	align-self: center;
 	margin-left: auto;
-	.pullout{
+	.pullout {
 		position: fixed;
 		display: flex;
 		justify-content: center;
@@ -32,10 +33,10 @@ const Puller = styled.div`
 		height: 100%;
 		top: 0;
 		right: -100%;
-		padding:0;
+		padding: 0;
 		opacity: 0;
 		transition: right 0s 1s, opacity 1s;
-		a{
+		a {
 			font-size: 48px;
 			text-align: center;
 		}
@@ -46,4 +47,4 @@ const Puller = styled.div`
 			transition: right 0s, opacity 1s;
 		}
 	}
-`
+`;

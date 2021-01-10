@@ -1,58 +1,71 @@
-import React, { Component } from 'react';
-import { withApollo } from 'react-apollo';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { withApollo } from "react-apollo";
+import styled from "styled-components";
 
 // Components
-import CaptionTitle from '../Atoms/CaptionTitle';
-import CaptionLink from '../Atoms/CaptionLink';
+import CaptionTitle from "../Atoms/CaptionTitle";
+import CaptionLink from "../Atoms/CaptionLink";
 
 class CaptionBox extends Component {
-	render() { 
-		const { 
-			isHovered, 
-			alignment, 
-			children, 
-			link, 
-			linkText, 
-			linkAlt 
-		} = this.props;
-		
-		
-		return(
-			<Box className={alignment === 'left' ? 'left' : 'right'}>
-				{alignment === 'left' ? (
-					<InnerBox className={isHovered ? 'hovering' : 'nothovered'}>
-						<CaptionLink className='link-box' isHovered={isHovered} link={link} alignment={alignment} linkAlt={linkAlt}>{linkText}</CaptionLink>
-						<CaptionTitle>{children}</CaptionTitle>
-					</InnerBox>
-				) : (
-					<InnerBox className={isHovered ? 'hovering' : 'nothovered'}>
-						<CaptionTitle>{children}</CaptionTitle>
-						<CaptionLink alignment="right" className="link-box" isHovered={isHovered} link={link} linkAlt={linkAlt}>{linkText}</CaptionLink>
-					</InnerBox>
-				)}
+	render() {
+		const { className, isHovered, alignment, children, link } = this.props;
+
+		return (
+			<Box
+				className={`${className} ${
+					alignment === "left" ? "left" : "right"
+				}`}
+			>
+				<div
+					className={`py-5 ${isHovered ? "hovering" : "nothovered"}`}
+				>
+					{children}
+				</div>
+				<CaptionLink
+					className="link-box"
+					isHovered={isHovered}
+					alignment={alignment}
+					link={link.url}
+					linkAlt={`Link to my ${link.title} page.`}
+				>
+					{link.title}
+				</CaptionLink>
 			</Box>
 		);
-	};
+	}
 }
- 
+
 export default withApollo(CaptionBox);
 
 const Box = styled.figcaption`
-	height: 50px;
-	align-self: end;
-	&.left{
-		justify-self: start;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	&.left {
+		.link-box {
+			justify-self: flex-start;
+			&:after {
+				right: 0;
+			}
+		}
 	}
-	&.right{
-		justify-self: end;
+	&.right {
+		.link-box {
+			&:after {
+				left: 0;
+			}
+		}
 	}
-`
-
-const InnerBox = styled.div`
-	display: grid;
-	grid-template-columns: auto auto;
-	.link-box{
+	.link-box {
 		background-color: black;
+		position: relative;
+		&:after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			width: 100vw;
+			height: 1px;
+			background: black;
+		}
 	}
-`
+`;

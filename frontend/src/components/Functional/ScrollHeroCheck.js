@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { withBreakpoints } from "react-breakpoints";
+import { compose } from "recompose";
 
-export const ScrollHeroContext = createContext("top");
+export const ScrollHeroContext = createContext();
 
-export const ScrollHeroProvider = (props) => {
-	const [position, setPosition] = useState("top");
+export const ScrollHeroProvider = withBreakpoints((props) => {
+	const [position, setPosition] = useState("hero");
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll);
 
@@ -13,31 +15,37 @@ export const ScrollHeroProvider = (props) => {
 	}, []);
 
 	const handleScroll = () => {
+		const { breakpoints, currentBreakpoint } = props;
+		// console.log(props.breakpoints.md);
+		let scrollPast =
+			breakpoints[currentBreakpoint] > breakpoints.md ? 130 : 80;
+		// let scrollPast = 130;
 		if (window.scrollY === 0) {
 			setPosition("hero");
 		}
-		if (window.scrollY > 0 && window.scrollY < 130) {
+		if (window.scrollY > 0 && window.scrollY < scrollPast) {
 			setPosition("floating");
 		}
-		if (window.scrollY >= 130) {
+		if (window.scrollY >= scrollPast) {
 			setPosition("feature");
 		}
 	};
-
 	return (
 		<ScrollHeroContext.Provider value={position}>
 			{props.children}
 		</ScrollHeroContext.Provider>
 	);
-};
+});
 
 export const ScrollHeroConsumer = (props) => {
 	const value = useContext(ScrollHeroContext);
-	// return <p>value is: {value}</p>;
+
 	return <>{props.children}</>;
 };
 
 export const ScrollHeroCheck = (props) => {
+	console.log("new test");
+
 	return (
 		<ScrollHeroProvider>
 			<ScrollHeroConsumer />
@@ -46,4 +54,4 @@ export const ScrollHeroCheck = (props) => {
 	);
 };
 
-export default ScrollHeroCheck;
+export default compose(withBreakpoints)(ScrollHeroCheck);

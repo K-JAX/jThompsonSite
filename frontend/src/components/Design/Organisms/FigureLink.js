@@ -1,62 +1,102 @@
-import React, { Component } from 'react';
-import {withApollo} from 'react-apollo';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { withApollo } from "react-apollo";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import Config from "../../../config";
 
 // Components
-import CaptionBox from '../Molecules/CaptionBox';
+import CaptionBox from "../Molecules/CaptionBox";
 
 class FigureLink extends Component {
-	constructor(props){
-		super(props)
-		this.state = { 
-			isHovered: false
-		}
+	constructor(props) {
+		super(props);
+		this.state = {
+			isHovered: false,
+		};
 	}
 
 	addHover = () => {
 		this.setState({
-			isHovered: true
-		})
-	}
-	 
+			isHovered: true,
+		});
+	};
+
 	removeHover = () => {
 		this.setState({
-			isHovered: false
-		})
-	}
-	 
-	render() { 
+			isHovered: false,
+		});
+	};
+
+	render() {
 		const { isHovered } = this.state;
-		const { 
-			alignment, 
+		const {
+			alignment,
+			className,
 			captionTitle,
-			img 
-		} = this.props
+			captionDescription,
+			img,
+			link,
+		} = this.props;
 
+		let slugPath;
+		if (link.url.startsWith(Config.baseUrl) || link.url.startsWith("/")) {
+			slugPath = link.url.replace(Config.baseUrl, "");
+		} else {
+			slugPath = link.url;
+		}
 
-		return ( 
-			<Figure className={alignment === 'left' ? 'left' : 'right'} onMouseEnter={() => this.addHover()} onMouseLeave={() => this.removeHover()} onFocus={() => this.addHover()}>
-				<div className="background-category-cover" style={{backgroundImage: `url(${img})`}}>
-					<CaptionBox isHovered={isHovered} alignment={alignment} link="#" linkText="View">{captionTitle}</CaptionBox>
-				</div>
+		return (
+			<Figure
+				className={`row mb-5 ${className} ${
+					alignment === "left" ? "left" : "right"
+				}`}
+				onMouseEnter={() => this.addHover()}
+				onMouseLeave={() => this.removeHover()}
+				onFocus={() => this.addHover()}
+			>
+				<Link
+					className="col-12 col-md-6 px-0 px-md-4 d-flex justify-content-end align-content-end"
+					to={slugPath}
+				>
+					<img className="py-4" src={img} />
+				</Link>
+				<CaptionBox
+					className="col-12 col-md-6 px-0"
+					isHovered={isHovered}
+					alignment={alignment}
+					link={link}
+				>
+					<h3 className="h2 font-weight-lighter">{captionTitle}</h3>
+					<p>{captionDescription}</p>
+				</CaptionBox>
 			</Figure>
-		 );
+		);
 	}
 }
- 
+
 export default withApollo(FigureLink);
 
+FigureLink.propTypes = {
+	alignment: PropTypes.string,
+	captionTitle: PropTypes.string,
+	captionDescription: PropTypes.string,
+	img: PropTypes.string,
+	link: PropTypes.object,
+};
 
 const Figure = styled.figure`
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	min-height: 300px;
-	.background-category-cover{
-		display: grid;
-		width: 100%;
-		height: 100%;
-		background-size: cover
-		background-position: center;
+	img {
+		object-fit: cover;
 	}
-`
+	&.left {
+		flex-direction: row;
+	}
+	&.right {
+		flex-direction: row-reverse;
+	}
+`;

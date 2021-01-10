@@ -91,7 +91,7 @@ class Contact extends Component {
 					<h1>{page.title}</h1>
 				</div>
 				<div>
-					<h2>Lets check some more shit right here then.</h2>
+					<h2>Puppy dogs and stuff.</h2>
 				</div>
 				{/* <div dangerouslySetInnerHTML={{__html: page.content }} /> */}
 				{isLoaded ? <Form data={form} /> : ""}

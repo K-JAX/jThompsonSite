@@ -6,7 +6,7 @@ class TitleDescription extends Component {
 	render() {
 		const { title, content, className } = this.props;
 		return (
-			<TitleDescriptionDiv className={`${className}`}>
+			<TitleDescriptionDiv className={`${className} col-12 col-md-9`}>
 				<h2>{title}</h2>
 				<hr />
 				<div>{content}</div>
@@ -23,8 +23,6 @@ const TitleDescriptionDiv = styled.div`
 	h2 {
 		margin-bottom: 1rem;
 		font-family: "Roboto", serif;
-		/* font-style: italic; */
-		/* font-size: 2.5rem; */
 		font-weight: 300;
 	}
 	hr {

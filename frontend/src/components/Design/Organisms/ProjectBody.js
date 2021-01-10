@@ -27,6 +27,14 @@ class ProjectBody extends Component {
 			featuredImages: [],
 		};
 	}
+
+	componentDidMount() {
+		const { isSingle } = this.props;
+		if (isSingle) {
+			this.getMoreData();
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		if (prevProps !== this.props) {
 			this.handleScrollChange();
@@ -34,12 +42,14 @@ class ProjectBody extends Component {
 	}
 
 	handleScrollChange = () => {
+		const { isSingle } = this.props;
 		const { scroll } = this.props.context;
-
-		if (scroll === "top") {
-			this.removeExtraData();
-		} else {
-			this.getMoreData();
+		if (!isSingle) {
+			if (scroll === "hero") {
+				this.removeExtraData();
+			} else {
+				this.getMoreData();
+			}
 		}
 	};
 
@@ -50,29 +60,31 @@ class ProjectBody extends Component {
 		const { slideshow, scroll } = context;
 		const { slideIndex } = slideshow;
 
-		if (!isSingle && !fetchedMoreData) {
+		let dataItem;
+		if (isSingle) {
+			dataItem = data;
+		} else {
+			dataItem = data[slideIndex].node;
+		}
+
+		if (!fetchedMoreData) {
 			var htmlToReactParser = new HtmlToReactParser();
-			var reactElement = htmlToReactParser.parse(
-				data[slideIndex].node.content
-			);
+			var reactElement = htmlToReactParser.parse(dataItem.content);
 			this.setState({
 				fetchedMoreData: true,
 				gallery_or_descriptive:
-					data[slideIndex].node.projectMainDetails
-						.galleryOrDescriptive,
-				summary: data[slideIndex].node.projectSummary,
+					dataItem.projectMainDetails.galleryOrDescriptive,
+				summary: dataItem.projectSummary,
 				parsedContent: reactElement,
-				showStatBox:
-					data[slideIndex].node.additionalProjectDetails.showStatBox,
+				showStatBox: dataItem.additionalProjectDetails.showStatBox,
 				stats: {
-					materials: data[slideIndex].node.materials,
-					types: data[slideIndex].node.types,
-					styles: data[slideIndex].node.styles,
-					colors: data[slideIndex].node.colorPalette,
+					materials: dataItem.materials,
+					types: dataItem.types,
+					styles: dataItem.styles,
+					colors: dataItem.colorPalette,
 				},
 				featuredImages:
-					data[slideIndex].node.additionalProjectDetails
-						.featuredImages,
+					dataItem.additionalProjectDetails.featuredImages,
 			});
 		}
 	};
@@ -82,7 +94,6 @@ class ProjectBody extends Component {
 		if (fetchedMoreData) {
 			this.setState({
 				fetchedMoreData: false,
-				gallery_or_descriptive: "gallery",
 				summary: "",
 				parsedContent: "",
 				showStatBox: false,
@@ -111,7 +122,12 @@ class ProjectBody extends Component {
 		if (data === undefined) return <p>Loading</p>;
 		return (
 			<>
-				<Hero data={data} isSingle={isSingle} isSlider={isSlider} />
+				<Hero
+					data={data}
+					isSingle={isSingle}
+					isSlider={isSlider}
+					contentType={gallery_or_descriptive}
+				/>
 				{isSingle ? (
 					<ProjectContent
 						contentType={gallery_or_descriptive}

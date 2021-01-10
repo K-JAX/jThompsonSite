@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withApollo } from "react-apollo";
+import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
@@ -61,12 +62,14 @@ class Header extends Component {
 			faviconUrl,
 			mobileMenuActive,
 		} = this.state;
-		const { isHome } = this.props;
+		const { isHome, breakpoints, currentBreakpoint } = this.props;
 		return (
 			<HeaderElement
 				id="site-header"
 				className={`${
-					isHome ? "home" : "normal"
+					isHome && breakpoints[currentBreakpoint] > breakpoints.lg
+						? "home"
+						: "normal"
 				} flex pa1 justify-between`}
 			>
 				<Helmet>
@@ -80,10 +83,10 @@ class Header extends Component {
 					/>
 					<link rel="icon" type="image/png" href={faviconUrl} />
 				</Helmet>
-
-				<div className="flex flex-fixed black">
+				<div className="d-flex flex flex-fixed black">
 					<Logo isHome={isHome} />
-					{isHome ? (
+					{isHome &&
+					breakpoints[currentBreakpoint] > breakpoints.lg ? (
 						<SidebarMenu />
 					) : (
 						<PulloutMenu
@@ -97,11 +100,12 @@ class Header extends Component {
 	}
 }
 
-export default compose(withApollo)(Header);
+export default compose(withApollo, withBreakpoints)(Header);
 
 const HeaderElement = styled.header`
 	z-index: 10;
 	position: fixed;
+	display: flex;
 	top: 0;
 	&.home {
 		float: left;
@@ -110,14 +114,28 @@ const HeaderElement = styled.header`
 		.flex {
 			flex-direction: column;
 		}
+		@media all and (max-width: 992px) {
+			float: none;
+			width: 100%;
+			height: 143px;
+			padding: 0;
+			.flex {
+				width: 100%;
+				flex-direction: row;
+			}
+		}
 	}
 	&.normal {
 		width: 100%;
-		height: 178px;
+		height: 143px;
 		padding: 0;
 		.flex {
 			width: 100%;
 			flex-direction: row;
+		}
+		@media all and (max-width: 767px) {
+			height: 80px;
+			background: white;
 		}
 	}
 `;

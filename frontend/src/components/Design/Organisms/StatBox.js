@@ -13,10 +13,10 @@ class StatBox extends Component {
 			.map((entry) => entry[1]);
 
 		return (
-			<StatBoxDiv className="project-stats box col-3">
-				<dl>
+			<StatBoxDiv className="project-stats box col-12 col-md-3">
+				<dl className="row">
 					{materials !== undefined ? (
-						<div>
+						<div className="col-5 col-md-12">
 							<dt>Material</dt>
 							<dd>
 								{materials.edges.map((material, i) => {
@@ -33,7 +33,7 @@ class StatBox extends Component {
 						""
 					)}
 					{styles !== undefined ? (
-						<div>
+						<div className="col-5 col-md-12">
 							<dt>Style</dt>
 							<dd>
 								{styles.edges.map((style, i) => {
@@ -50,7 +50,7 @@ class StatBox extends Component {
 						""
 					)}
 					{colorsArray[0] !== null ? (
-						<div>
+						<div className="col-12 mt-3 mt-lg-0">
 							<dt className="color-term">Palette</dt>
 							<dd className="color-defintion">
 								<ul>
@@ -81,10 +81,9 @@ class StatBox extends Component {
 export default withApollo(StatBox);
 
 const StatBoxDiv = styled.div`
-	padding: 1em 1em;
+	padding: 1.5em 1.75em;
 	&.project-stats{
 		position: relative;
-		max-width: 316px;
 		background: linear-gradient(180deg, rgba(236,233,233,1) 0%, rgba(245,242,241,1) 100%);
 		box-shadow: 5px 5px 100px -25px rgba(0,0,0,0.25);
 		dl{

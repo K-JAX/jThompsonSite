@@ -3,28 +3,45 @@ import styled from "styled-components";
 
 // components
 import { SlideshowContext } from "../Organisms/Slideshow";
+import SlideStrip from "../Molecules/SlideStrip";
 
-export const SlideControls = (props) => {
-	let total = props.total !== undefined ? `/ 0${props.total + 1}` : "";
+export const SlideControls = React.memo((props) => {
+	const { contentType, images } = props;
+	let total = props.total !== undefined ? `/ ${props.total + 1}` : "";
 	return (
 		<SlideshowContext.Consumer>
 			{(context) => (
-				<ControlsDiv className="controls">
-					<div className="slide-count">
-						<span className="index">0{context.slideIndex + 1}</span>
-						<span className="total">{total}</span>
+				<ControlsDiv className={`controls ${contentType}`}>
+					{contentType === "descriptive" && (
+						<div className="slide-count">
+							<span className="index">
+								{context.slideIndex + 1}
+							</span>
+							<span className="total">{total}</span>
+						</div>
+					)}
+					<div
+						className={`control-buttons ${
+							contentType === "descriptive" ? "arrows" : "thumbs"
+						}`}
+					>
+						<button
+							className="prev arrow"
+							onClick={context.removeIndex}
+						></button>
+						{contentType === "gallery" && (
+							<SlideStrip thumbs={images} />
+						)}
+						<button
+							className="next arrow"
+							onClick={context.addIndex}
+						></button>
 					</div>
-					<button className="prev" onClick={context.removeIndex}>
-						{/* &larr; */}
-					</button>
-					<button className="next" onClick={context.addIndex}>
-						{/* &rarr; */}
-					</button>
 				</ControlsDiv>
 			)}
 		</SlideshowContext.Consumer>
 	);
-};
+});
 
 export default SlideControls;
 
@@ -34,8 +51,15 @@ const ControlsDiv = styled.div`
 	bottom: 0;
 	background: white;
 	display: inline-flex;
-	padding: 20px;
-	button {
+	padding: 20px 4.2em;
+	.control-buttons {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+	}
+	.prev,
+	.next {
+		height: 100%;
 		outline: none;
 		border: none;
 		background: none;
@@ -46,6 +70,8 @@ const ControlsDiv = styled.div`
 		&:after {
 			content: "";
 			position: absolute;
+			opacity: 0.75;
+			transition: 0.25s;
 		}
 		&:before {
 			background: gray;
@@ -69,21 +95,82 @@ const ControlsDiv = styled.div`
 		}
 		&.prev:after {
 			transform: rotate(-135deg);
-			left: 7px;
+			left: 12%;
 		}
 		&.next:after {
 			transform: rotate(45deg);
-			right: 7px;
+			right: 12%;
+		}
+		&:hover {
+			&:before,
+			&:after {
+				opacity: 1;
+			}
 		}
 	}
 	.slide-count {
 		display: flex;
 		margin-right: 2em;
+		align-items: flex-start;
+		align-content: flex-start;
 		.index {
 			font-size: 1.8em;
+			margin-right: 5px;
+			line-height: 1.2;
 		}
 		.total {
 			opacity: 0.5;
+		}
+	}
+	&.gallery {
+		position: relative;
+		width: 100%;
+		justify-content: center;
+		@media all and (max-width: 768px) {
+			position: absolute;
+			/* top: 0; */
+			bottom: 0%;
+		}
+	}
+	@media all and (max-width: 768px) {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		/* padding: 5px 15px; */
+		padding: 0;
+		.slide-count {
+			position: relative;
+			padding: 0.5em 1.5em;
+			white-space: nowrap;
+			&:after {
+				content: "";
+				position: absolute;
+				height: 75%;
+				width: 1px;
+				background: #ccc;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+			}
+		}
+		.control-buttons {
+			width: 100%;
+			display: flex;
+			&.arrows {
+				.arrow {
+					width: 50%;
+					box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.125);
+					&:before {
+						height: 3px;
+					}
+					&:after {
+						width: 14px;
+						height: 14px;
+						border-width: 2px;
+					}
+				}
+			}
 		}
 	}
 `;

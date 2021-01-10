@@ -132,7 +132,6 @@ class Portfolio extends Component {
 		const { page, projectTypes, projects, isLoaded } = this.state;
 
 		if (!isLoaded) return <Loader />;
-		console.log(`projects`);
 
 		return (
 			<PortfolioTemplate className="template-container">

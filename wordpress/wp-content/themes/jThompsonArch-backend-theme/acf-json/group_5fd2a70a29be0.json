@@ -1,46 +1,46 @@
-{
-    "key": "group_5fd2a70a29be0",
-    "title": "Project Main Details",
-    "fields": [
-        {
-            "key": "field_5fd2a7b00e3fe",
-            "label": "Is Project Featured?",
-            "name": "is_project_featured",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "show_in_graphql": 1,
-            "message": "",
-            "default_value": 0,
-            "ui": 0,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        }
-    ],
-    "location": [
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "project"
-            }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "side",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_graphql": 0,
-    "graphql_field_name": "projectMainDetails",
-    "modified": 1607643264
-}
+// {
+//     "key": "group_5fd2a70a29be0",
+//     "title": "Project Main Details",
+//     "fields": [
+//         {
+//             "key": "field_5fd2a7b00e3fe",
+//             "label": "Is Project Featured?",
+//             "name": "is_project_featured",
+//             "type": "true_false",
+//             "instructions": "",
+//             "required": 0,
+//             "conditional_logic": 0,
+//             "wrapper": {
+//                 "width": "",
+//                 "class": "",
+//                 "id": ""
+//             },
+//             "show_in_graphql": 1,
+//             "message": "",
+//             "default_value": 0,
+//             "ui": 0,
+//             "ui_on_text": "",
+//             "ui_off_text": ""
+//         }
+//     ],
+//     "location": [
+//         [
+//             {
+//                 "param": "post_type",
+//                 "operator": "==",
+//                 "value": "project"
+//             }
+//         ]
+//     ],
+//     "menu_order": 0,
+//     "position": "side",
+//     "style": "default",
+//     "label_placement": "top",
+//     "instruction_placement": "label",
+//     "hide_on_screen": "",
+//     "active": true,
+//     "description": "",
+//     "show_in_graphql": 0,
+//     "graphql_field_name": "projectMainDetails",
+//     "modified": 1607643264
+// }

@@ -1,5 +1,7 @@
 import React, { Component, createContext } from "react";
 import { withApollo } from "react-apollo";
+import { withBreakpoints } from "react-breakpoints";
+import { compose } from "recompose";
 import gql from "graphql-tag";
 
 // Components
@@ -51,16 +53,22 @@ class Home extends Component {
 
 	render() {
 		const { isLoaded, slideshowOptions } = this.state;
-
+		const { breakpoints, currentBreakpoint } = this.props;
 		if (!isLoaded) {
 			return "";
 		}
 		return (
-			<div style={{ marginLeft: "300px" }}>
+			<div
+				style={
+					breakpoints[currentBreakpoint] > breakpoints.lg
+						? { marginLeft: "300px" }
+						: {}
+				}
+			>
 				<ProjectSingle featured={true} options={slideshowOptions} />
 			</div>
 		);
 	}
 }
 
-export default withApollo(Home);
+export default compose(withApollo, withBreakpoints)(Home);

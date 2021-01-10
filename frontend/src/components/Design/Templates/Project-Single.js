@@ -55,9 +55,17 @@ class ProjectSingle extends Component {
 		}
 	}
 
-	componenWillUnmount() {
-		window.removeEventListener("scroll", this.handleScroll);
-	}
+	// componentWillUnmount() {
+	// 	console.log("unmounting");
+	// 	this.setState(
+	// 		{
+	// 			slideData: [],
+	// 		},
+	// 		() => {
+	// 			console.log("fuckin anything!??");
+	// 		}
+	// 	);
+	// }
 
 	executeProjectQuery = async () => {
 		const { props } = this;
@@ -101,9 +109,12 @@ class ProjectSingle extends Component {
 				},
 			});
 			slideData = data.project;
+			let mainFeaturedImg = data.project.featuredImage.node;
 			slideData.slideImages =
 				data.project.additionalProjectDetails.featuredImages;
-			slideData.slideImages.unshift(data.project.featuredImage.node);
+			if (!slideData.slideImages.includes(mainFeaturedImg)) {
+				slideData.slideImages.unshift(data.project.featuredImage.node);
+			}
 		} else {
 			slideData = data.projects.edges;
 		}
@@ -136,7 +147,7 @@ class ProjectSingle extends Component {
 							<title>{data.project.title}</title>
 						</Helmet>
 					)}
-					<ScrollHeroProvider>
+					<ScrollHeroProvider >
 						<SlideshowContext.Consumer>
 							{(slideshow) => (
 								<ScrollHeroContext.Consumer>
