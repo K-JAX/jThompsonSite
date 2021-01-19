@@ -55,8 +55,9 @@ class Home extends Component {
 		const { isLoaded, slideshowOptions } = this.state;
 		const { breakpoints, currentBreakpoint } = this.props;
 		if (!isLoaded) {
-			return "";
+			return <p>Loading</p>;
 		}
+		console.log(this.props);
 		return (
 			<div
 				style={

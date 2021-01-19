@@ -120,6 +120,10 @@ button.no-style{
   padding-right: 20px;
 }
 
+.z-10{
+  z-index: 10;
+}
+
 .button {
   font-family: monospace;
   font-size: 10pt;
@@ -137,7 +141,7 @@ button.no-style{
 .menuBox{
   display: flex;
   flex-direction: column;
-  background-color: rgba(240,234,229, 0.8);
+  
   width: 300px;
   margin-left: 0px;
   padding: 50px;

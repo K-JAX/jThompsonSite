@@ -51,6 +51,12 @@ function my_admin_scripts() {
 }
 add_action( 'admin_enqueue_scripts', 'my_admin_scripts');
 
+
+// function add_cors_http_header(){
+//     header("Access-Control-Allow-Origin: *");
+// }
+// add_action('init','add_cors_http_header');
+
 define( 'GRAPHQL_JWT_AUTH_SECRET_KEY', 'JTA-secret-power-token' );
 
 function jwt_google_map_api(  ){
@@ -63,3 +69,47 @@ function jwt_google_map_api(  ){
 }
 
 add_filter( 'acf/fields/google_map/api', 'jwt_google_map_api' );
+
+class Cors_Media {
+
+    const QUERY_VAR = 'cors_media_id';
+
+    public function init() {
+        add_action('init', [$this, 'add_rewrite_rule']);
+        add_filter('query_vars', [$this, 'query_vars']);
+        add_action('template_redirect', [$this, 'template_redirect']);
+    }
+
+    public function query_vars(array $qs) {
+        $qs[] = 'cors_media_id';
+        return $qs;
+    }
+
+    public function add_rewrite_rule() {
+        add_rewrite_rule(
+            '^cors_media_id/([0-9]+)/?',
+            'index.php?cors_media_id=$matches[1]',
+            'top'
+        );
+    }
+
+    public function template_redirect() {
+        $att_id = get_query_var('cors_media_id');
+        if (empty($att_id)) { return; }
+        $url = wp_get_attachment_url($att_id);
+        if ($url) {
+            $this->show_file($url);
+        }
+        exit;
+    }
+
+    protected function show_file($url) {
+        header('Access-Control-Allow-Origin: *');
+        echo file_get_contents($url);
+        exit;
+    }
+
+}
+
+$obj = new Cors_Media;
+$obj->init();

@@ -91,7 +91,7 @@ class About extends Component {
 
 	render() {
 		const { page } = this.state;
-		if (page.title === "") return "";
+		if (page.title === "") return <p>Loading</p>;
 		const { title, content, featuredImage, aboutDetails } = page;
 		const { ctaLinks } = aboutDetails;
 		var htmlToReactParser = new HtmlToReactParser();

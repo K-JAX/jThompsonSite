@@ -67,7 +67,7 @@ class Nav extends Component {
 
 	render() {
 		const { menus, isLoaded } = this.state;
-		const { pathname, className } = this.props;
+		const { pathname, className, children } = this.props;
 		let isHome;
 
 		if (isLoaded === false) {
@@ -87,7 +87,7 @@ class Nav extends Component {
 
 		return (
 			<MainNav className={`menuBox ${className}`}>
-				{menus.menuItems.edges.map((menu) => {
+				{menus.menuItems.edges.map((menu, i) => {
 					if (
 						menu.node.url.startsWith(Config.baseUrl) ||
 						menu.node.url.startsWith("/")
@@ -108,9 +108,10 @@ class Nav extends Component {
 								className={`ml1 no-underline black ${
 									isHome ? "active" : ""
 								}`}
+								style={{ transitionDelay: `${i * 0.2}s` }}
 								title={menu.node.title}
 							>
-								{menu.node.label}
+								<span>{menu.node.label}</span>
 							</Link>
 						);
 					}
@@ -124,12 +125,14 @@ class Nav extends Component {
 									: menu.node.target
 							}
 							className="ml1 no-underline black"
+							style={{ transitionDelay: `${i * 0.1}s` }}
 							title={menu.node.title}
 						>
-							{menu.node.label}
+							<span>{menu.node.label}</span>
 						</a>
 					);
 				})}
+				{children}
 			</MainNav>
 		);
 	}
@@ -141,10 +144,26 @@ export default compose(
 )(Nav);
 
 const MainNav = styled.nav`
+	position: relative;
+	z-index: 3;
+	&.isHome {
+		background-color: rgba(240, 234, 229, 0.8);
+	}
 	a {
+		display: inline;
 		transition: 0.25s;
+		overflow: hidden;
+		span {
+			display: inline-block;
+			/* transform: translateX(-150px); */
+		}
 		&:hover {
 			opacity: 0.4;
+		}
+	}
+	&.pullout {
+		a {
+			color: white !important;
 		}
 	}
 `;

@@ -1,55 +1,57 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 
 class Burger extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state = { 
-			isHovered: false
-		}
-
+		this.state = {
+			isHovered: false,
+		};
 	}
 
 	addHover = () => {
 		this.setState({
-			isHovered: true
-		})
-	}
+			isHovered: true,
+		});
+	};
 
 	removeHover = () => {
 		this.setState({
-			isHovered: false
-		})
-	}
-	
-	render() { 
+			isHovered: false,
+		});
+	};
+
+	render() {
 		const { isHovered } = this.state;
-		const { 
-			onClick, 
-			burgerIsActive 
-		} = this.props;
+		const { onClick, burgerIsActive } = this.props;
 
 		let burgerStatus;
 
-		if ( burgerIsActive === true) {
-			burgerStatus = 'activeBurger';
-		} else if ( burgerIsActive === false) {
-			burgerStatus = 'cancelBurger';
+		if (burgerIsActive === true) {
+			burgerStatus = "activeBurger";
+		} else if (burgerIsActive === false) {
+			burgerStatus = "cancelBurger";
 		} else {
-			burgerStatus = '';
+			burgerStatus = "";
 		}
 
-
-		return ( 
-			<Patty type="button" onMouseEnter={this.addHover} onMouseLeave={this.removeHover} onClick={onClick} className={`burger ${isHovered ? 'hovering' : ''} ${burgerStatus}`}>
+		return (
+			<Patty
+				type="button"
+				onMouseEnter={this.addHover}
+				onMouseLeave={this.removeHover}
+				onClick={onClick}
+				className={`burger ${
+					isHovered ? "hovering" : ""
+				} ${burgerStatus}`}
+			>
 				<div className="bread-ham-cheese" />
 			</Patty>
 		);
 	}
 }
- 
-export default Burger;
 
+export default Burger;
 
 const duration = 1.25;
 
@@ -76,8 +78,9 @@ const Patty = styled.button`
 		height: 100%;
 		border-top: 2px solid black;
 		transition: border 0s ${duration / 2}s, width 0.5s;
-		&:before, &:after {
-			content: '';
+		&:before,
+		&:after {
+			content: "";
 			position: absolute;
 			height: 1px;
 			border-top: 2px solid black;
@@ -86,106 +89,108 @@ const Patty = styled.button`
 			margin: auto;
 			transition: 0.5s;
 		}
-		&:before{
+		&:before {
 			width: 45%;
 			top: 0px;
 		}
-		&:after{
+		&:after {
 			width: 75%;
 		}
 	}
-	&.hovering{
-		.bread-ham-cheese{
+	&.hovering {
+		.bread-ham-cheese {
 			width: 90%;
-			&:before{
+			&:before {
 				width: 65%;
 			}
-			&:after{
-				width:  85%;
+			&:after {
+				width: 85%;
 			}
 		}
 	}
-	&.cancelBurger{
+	&.cancelBurger {
 		animation: ${duration}s hideCancel forwards;
-		.bread-ham-cheese{
-			&:before{
+		.bread-ham-cheese {
+			&:before {
 				animation: ${duration}s reverseBackSlash forwards;
 			}
-			&:after{
+			&:after {
 				animation: ${duration}s reverseForwardSlash forwards;
 			}
 		}
 	}
 
-	&.activeBurger{
+	&.activeBurger {
 		animation: ${duration}s showCancel forwards;
-		.bread-ham-cheese{
+		.bread-ham-cheese {
 			border-top: 0 solid black;
 			transition: border 0s ${duration / 3}s;
-			&:before{
+
+			&:before {
 				animation: ${duration}s rotateBackSlash forwards;
+				border-color: white;
 			}
-			&:after{
+			&:after {
 				animation: ${duration}s rotateForwardSlash forwards;
+				border-color: white;
 			}
 		}
 	}
 
 	@keyframes showCancel {
-		0%{
+		0% {
 			width: 46px;
 		}
-		30%{
+		30% {
 			width: 0;
 			opacity: 1;
 			transform: rotateZ(0);
 		}
-		31%{
-			width: 46px; 
+		31% {
+			width: 46px;
 			opacity: 0;
 			transform: rotateY(60deg) rotateX(-60deg);
 		}
-		100%{
+		100% {
 			opacity: 1;
 			transform: rotateY(0deg) rotateX(0deg);
 		}
 	}
 
 	@keyframes hideCancel {
-		0%{
+		0% {
 			width: 46px;
 			opacity: 1;
 		}
-		50%{
+		50% {
 			width: 46px;
 			opacity: 0;
 		}
-		51%{
-			width: 0;   
+		51% {
+			width: 0;
 			opacity: 1;
 		}
-		100%{
+		100% {
 			width: 46px;
 			opacity: 1;
 		}
 	}
 
-
 	@keyframes rotateBackSlash {
-		0%{
+		0% {
 			transform: rotate(0deg);
 		}
-		30%{
+		30% {
 			width: 45%;
 			transform: rotate(0deg);
 		}
-		31%{
+		31% {
 			top: 0%;
 			bottom: 0;
 			width: 100%;
 			transform: rotate(45deg);
-		}               
-		100%{
+		}
+		100% {
 			top: 0;
 			bottom: 0;
 			width: 100%;
@@ -194,76 +199,75 @@ const Patty = styled.button`
 	}
 
 	@keyframes reverseBackSlash {
-		0%{
+		0% {
 			top: 0;
 			bottom: 0;
 			width: 100%;
 			transform: rotate(45deg);
 		}
-		50%{
+		50% {
 			top: 0%;
 			bottom: 0;
 			width: 100%;
 			transform: rotate(45deg);
 		}
-		51%{
+		51% {
 			bottom: 2px;
 			width: 0%;
 			transform: rotate(0deg);
-		}               
-		100%{
+		}
+		100% {
 			width: 45%;
 			transform: rotate(0deg);
 		}
 	}
 
 	@keyframes rotateForwardSlash {
-		0%{
+		0% {
 			transform: rotate(0deg);
 		}
-		30%{
+		30% {
 			width: 45%;
 			transform: rotate(0deg);
 		}
-		31%{
+		31% {
 			width: 100%;
 			top: 0;
 			bottom: 0;
 			transform: rotate(-45deg);
-		}               
-		100%{
+		}
+		100% {
 			width: 100%;
 			top: 0;
 			bottom: 0;
 			transform: rotate(-45deg);
-		}    
+		}
 	}
 
 	@keyframes reverseForwardSlash {
-		0%{
+		0% {
 			width: 100%;
 			top: 0%;
 			bottom: 0;
 			transform: rotate(-45deg);
 		}
-		50%{
+		50% {
 			width: 100%;
 			top: 0;
 			bottom: 0;
 			transform: rotate(-45deg);
 		}
-		51%{
+		51% {
 			width: 0%;
 			transform: rotate(0deg);
-		}               
-		100%{
+		}
+		100% {
 			width: 75%;
 			transform: rotate(0deg);
 		}
 	}
 
-	&:focus{
+	&:focus {
 		outline: none;
 	}
-`
-
+`;

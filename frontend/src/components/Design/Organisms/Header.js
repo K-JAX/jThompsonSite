@@ -84,7 +84,7 @@ class Header extends Component {
 					<link rel="icon" type="image/png" href={faviconUrl} />
 				</Helmet>
 				<div className="d-flex flex flex-fixed black">
-					<Logo isHome={isHome} />
+					<Logo isHome={isHome} menuActive={mobileMenuActive} />
 					{isHome &&
 					breakpoints[currentBreakpoint] > breakpoints.lg ? (
 						<SidebarMenu />

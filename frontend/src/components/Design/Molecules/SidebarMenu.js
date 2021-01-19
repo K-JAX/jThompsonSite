@@ -9,7 +9,7 @@ class SidebarMenu extends Component {
 	render() {
 		return (
 			<SidebarMenuElem>
-				<Nav className="menuBox" />
+				<Nav className="isHome" />
 				<br />
 				<SocialMenu className="isHome" />
 			</SidebarMenuElem>

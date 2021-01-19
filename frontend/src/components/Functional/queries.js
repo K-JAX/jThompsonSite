@@ -159,3 +159,53 @@ export const FEATURED_PROJ_QUERY = gql`
 		}
 	}
 `;
+
+export const PRESS_QUERY = gql`
+	query PressQuery {
+		__typename
+		pressArticles {
+			edges {
+				node {
+					title
+					link
+					featuredImage {
+						node {
+							altText
+							sourceUrl(size: LARGE)
+						}
+					}
+					acf {
+						fieldGroupName
+						ctaText
+						externalLinkOrPdf
+						externalLink {
+							url
+							title
+						}
+						pdfUpload {
+							mediaItemUrl
+							mediaDetails {
+								file
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const SINGLE_PRESS_QUERY = gql`
+	query SinglePressQuery($slug: ID!) {
+		pressArticle(id: $slug, idType: URI) {
+			id
+			slug
+			title
+			acf {
+				pdfUpload {
+					mediaItemUrl
+				}
+			}
+		}
+	}
+`;

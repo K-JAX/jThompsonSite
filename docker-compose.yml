@@ -18,9 +18,10 @@ services:
     wp-headless:
         build: ./wordpress
         container_name: wp
-        command: bash -c 'bash install_wordpress.sh'
+        command: bash install_wordpress.sh
         user: root
-        env_file: ./.env
+        env_file:
+            - ./.env
         depends_on:
             - db-headless
         volumes:
@@ -31,7 +32,7 @@ services:
         - '8080:8080'
         restart: always
     node-web-app:
-        command: bash -c 'yarn start'
+        command: yarn start
         container_name: node
         expose:
             - '3001'

@@ -5,12 +5,15 @@ import { compose } from "recompose";
 import styled from "styled-components";
 
 const Logo = (props) => {
-	const { isHome, breakpoints, currentBreakpoint } = props;
+	const { isHome, breakpoints, currentBreakpoint, menuActive } = props;
+
 	return (
 		<Link
 			to="/"
 			style={{ alignSelf: "start" }}
-			className="no-underline black align-self-center align-self-md-start"
+			className={`no-underline black align-self-center align-self-md-start ${
+				menuActive ? "position-relative z-10" : ""
+			}`}
 		>
 			<LogoElement
 				alt="Logo and Site Title"
@@ -18,7 +21,7 @@ const Logo = (props) => {
 					isHome && breakpoints[currentBreakpoint] > breakpoints.lg
 						? "home-logo"
 						: "normal-logo"
-				}`}
+				} ${menuActive ? "menu-active" : ""}`}
 			>
 				<h1 className="initials">JTA</h1>
 				<div className="title-text">
@@ -124,6 +127,19 @@ const LogoElement = styled.div`
 					height: 3px;
 				}
 			}
+		}
+	}
+	&.menu-active {
+		background: transparent;
+		.initials {
+			color: white;
+			&:before,
+			&:after {
+				background: white;
+			}
+		}
+		.title-text {
+			color: white;
 		}
 	}
 `;

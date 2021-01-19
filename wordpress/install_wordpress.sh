@@ -41,7 +41,7 @@ sudo -i -u www-data bash << EOF
     
     wp rewrite structure "$WORDPRESS_PERMALINK_STRUCTURE"
 
-    wp theme activate Degraw-Dehaan-backend-theme
+    wp theme activate jThompsonArch-backend-theme
 
     wp theme delete twentysixteen twentyseventeen twentynineteen twentytwenty
 

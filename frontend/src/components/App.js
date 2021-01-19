@@ -3,6 +3,11 @@ import { Switch, Route, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ReactBreakpoints from "react-breakpoints";
 import { Media } from "react-breakpoints";
+import {
+	TransitionGroup,
+	Transition,
+	CSSTransition,
+} from "react-transition-group";
 
 // Components
 import Header from "./Design/Organisms/Header";
@@ -12,13 +17,16 @@ import Portfolio from "./Design/Templates/Portfolio";
 import ProjectType from "./Design/Templates/Project-Type";
 import ProjectSingle from "./Design/Templates/Project-Single";
 import About from "./Design/Templates/About";
+import PressArticles from "./Design/Templates/PressArticles";
+import { PressArticleSingle } from "./Design/Templates/PressArticle-Single";
 import Contact from "./Design/Templates/Contact";
 import Page from "./Design/Templates/Page";
 import Post from "./Design/Templates/Post";
+import { NotFound } from "./Design/Templates/404";
 import Search from "./Design/Templates/Search";
 import Category from "./Design/Templates/Category";
 
-export default () => {
+export default ({ in: inProp }) => {
 	const [loaded, setLoad] = useState(0);
 	const location = useLocation();
 
@@ -58,50 +66,74 @@ export default () => {
 									!isHome && "offset-header"
 								} ${offsetCondition}`}
 							>
-								<Switch>
-									<Route exact path="/" component={Home} />
-									<Route
-										exact
-										path="/search"
-										component={Search}
-									/>
-									<Route
-										exact
-										path="/portfolio"
-										component={Portfolio}
-										loaded={loaded}
-									/>
-									<Route
-										exact
-										path="/about"
-										component={About}
-									/>
-									<Route
-										exact
-										path="/contact"
-										component={Contact}
-									/>
-									<Route
-										exact
-										path="/portfolio/:slug"
-										component={ProjectSingle}
-									/>
-									<Route
-										exact
-										path="/page/:slug"
-										component={Page}
-									/>
-									<Route
-										exact
-										path="/post/:slug"
-										component={Post}
-									/>
-									<Route
-										exact
-										path="/category/:slug"
-										component={Category}
-									/>
-								</Switch>
+								<TransitionGroup>
+									<CSSTransition
+										key={location.key}
+										timeout={3000}
+										unmountOnExit
+										in={inProp}
+									>
+										<Switch location={location}>
+											<Route
+												exact
+												path="/"
+												component={Home}
+											/>
+											<Route
+												exact
+												path="/search"
+												component={Search}
+											/>
+											<Route
+												exact
+												path="/portfolio"
+												component={Portfolio}
+												loaded={loaded}
+											/>
+											<Route
+												exact
+												path="/about"
+												component={About}
+											/>
+											<Route
+												exact
+												path="/press_article"
+												component={PressArticles}
+											/>
+											<Route
+												exact
+												path="/press_article/:slug"
+												component={PressArticleSingle}
+											/>
+											<Route
+												exact
+												path="/contact"
+												component={Contact}
+											/>
+											<Route
+												exact
+												path="/portfolio/:slug"
+												component={ProjectSingle}
+											/>
+											<Route
+												exact
+												path="/page/:slug"
+												component={Page}
+											/>
+											<Route
+												exact
+												path="/post/:slug"
+												component={Post}
+											/>
+											<Route
+												exact
+												path="/category/:slug"
+												component={Category}
+											/>
+											<Route component={NotFound} />
+										</Switch>
+									</CSSTransition>
+								</TransitionGroup>
 							</PageContainerElement>
 						);
 					}}

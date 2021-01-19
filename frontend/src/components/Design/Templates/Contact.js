@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import axios from "axios";
+import { Parser as HtmlToReactParser } from "html-to-react";
 
 // Components
 import Form from "../Organisms/Form";
@@ -19,6 +20,24 @@ const PAGE_QUERY = gql`
 	}
 `;
 
+const SEND_MUTATION = gql`
+	mutation SEND_EMAIL {
+		sendEmail(
+			input: {
+				to: "kevingarubba@gmail.com"
+				from: "test@test.com"
+				subject: "test email"
+				body: "test email"
+				clientMutationId: "test"
+			}
+		) {
+			origin
+			sent
+			message
+		}
+	}
+`;
+
 /**
  * Fetch and display a Page
  */
@@ -32,12 +51,14 @@ class Contact extends Component {
 				content: "",
 			},
 			form: [],
+			sendStatus: {},
 		};
 	}
 
 	componentDidMount() {
 		this.executePageQuery();
-		this.getForm();
+		// this.sendMail();
+		// this.getForm();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -48,13 +69,21 @@ class Contact extends Component {
 		}
 	}
 
+	sendMail = async () => {
+		const { client } = this.props;
+		const result = await client.mutate({
+			mutation: SEND_MUTATION,
+		});
+		this.setState({ sendStatus: result }, console.log(result));
+	};
+
 	getForm = () => {
-		axios
-			.get("http://localhost:8080/wp-json/forms/v1/forms/51")
-			.then((res) => {
-				const form = res.data;
-				this.setState({ isLoaded: true, form });
-			});
+		// axios
+		// 	.get("http://localhost:8080/wp-json/forms/v1/forms/51")
+		// 	.then((res) => {
+		// 		const form = res.data;
+		// 		this.setState({ isLoaded: true, form });
+		// 	});
 	};
 
 	/**
@@ -85,14 +114,15 @@ class Contact extends Component {
 	render() {
 		const { page, form, isLoaded } = this.state;
 
+		var htmlToReactParser = new HtmlToReactParser();
+		const parsedContent = htmlToReactParser.parse(page.content);
+
 		return (
 			<div style={{ marginLeft: "315px" }}>
 				<div className="pa2">
 					<h1>{page.title}</h1>
 				</div>
-				<div>
-					<h2>Puppy dogs and stuff.</h2>
-				</div>
+				{/* <div>{parsedContent}</div> */}
 				{/* <div dangerouslySetInnerHTML={{__html: page.content }} /> */}
 				{isLoaded ? <Form data={form} /> : ""}
 			</div>
