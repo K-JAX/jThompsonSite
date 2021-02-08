@@ -33,6 +33,8 @@ const Footer = (props) => {
 export default compose(withBreakpoints)(Footer);
 
 const FooterElement = styled.footer`
+	position: absolute;
+	top: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

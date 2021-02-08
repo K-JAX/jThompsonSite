@@ -3,6 +3,7 @@ import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { Parser as HtmlToReactParser } from "html-to-react";
 import styled from "styled-components";
+import { TransitionGroup, Transition } from "react-transition-group";
 
 // components
 import Headline from "../Atoms/Headline";
@@ -58,11 +59,13 @@ class About extends Component {
 				featuredImage: {},
 				aboutDetails: {},
 			},
+			isLoaded: false,
 		};
 	}
 
 	componentDidMount() {
 		this.executePageQuery();
+		// console.log(this.props);
 	}
 
 	componentDidUpdate(prevProps) {
@@ -70,27 +73,28 @@ class About extends Component {
 		if (props.match.params.slug !== prevProps.match.params.slug) {
 			this.executePageQuery();
 		}
+		// console.log(this.props.status);
 	}
 
 	/**
 	 * Execute page query, process the response and set the state
 	 */
 	executePageQuery = async () => {
-		const { match, client } = this.props;
-		// console.log(match);
-		let uri = match.params.slug;
-		if (!uri) {
-			uri = "welcome";
-		}
+		const { client } = this.props;
+		// let uri = match.params.slug;
+		// if (!uri) {
+		// 	uri = "welcome";
+		// }
 		const result = await client.query({
 			query: PAGE_QUERY,
 		});
 		const page = result.data.pageBy;
-		this.setState({ page });
+		this.setState({ page, isLoaded: true });
 	};
 
 	render() {
-		const { page } = this.state;
+		const { page, isLoaded } = this.state;
+		const { status, className } = this.props;
 		if (page.title === "") return <p>Loading</p>;
 		const { title, content, featuredImage, aboutDetails } = page;
 		const { ctaLinks } = aboutDetails;
@@ -100,16 +104,20 @@ class About extends Component {
 
 		return (
 			<PageDiv
-				className="container-fluid position-relative px-0"
+				className={`container-fluid px-0`}
 				style={{ overflowX: "hidden", overflowY: "hidden" }}
 			>
-				<div className="container">
+				<div className="container position-relative">
 					<div className="row">
 						<div style={{ width: "450px" }} className="mt-5 pt-3">
 							<img src={featuredImage.node.sourceUrl} />
 						</div>
 						<div className="col ml-xl-5 ml-md-3 ml-0">
-							<Headline className="mb-3" text={page.title} />
+							<Headline
+								className="mb-3"
+								status={status}
+								text={page.title}
+							/>
 							<div>{parsedIntro}</div>
 						</div>
 						<GiantLetters
@@ -126,6 +134,7 @@ class About extends Component {
 					<div className="row justify-content-center">
 						{ctaLinks.map((link) => (
 							<FigureLink
+								key={link.image.sourceUrl}
 								alignment={link.alignment}
 								captionTitle={link.titletext}
 								captionDescription={link.description}

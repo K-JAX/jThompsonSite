@@ -23,15 +23,22 @@ class PressArticles extends Component {
 
 	componentDidMount() {
 		this.executePressQuery();
-		// console.log(this.state);
 	}
+
+	componentDidUpdate() {
+		console.log("checking render timez");
+	}
+	// shouldComponentUpdate() {
+	// 	console.log("Greeting - shouldComponentUpdate lifecycle");
+
+	// 	return false;
+	// }
 
 	executePressQuery = async () => {
 		const { client } = this.props;
 		const result = await client.query({
 			query: PRESS_QUERY,
 		});
-		// console.log(result.data.pressArticles.edges);
 		let pressArticles = result.data.pressArticles.edges;
 		pressArticles = pressArticles.map((article, i) => {
 			let alignment = i % 2 === 0 ? "right" : "left";
@@ -79,83 +86,16 @@ class PressArticles extends Component {
 
 	render() {
 		const { pressArticles } = this.state;
+		const { status } = this.props;
 		if (pressArticles === {}) return <p>Loading</p>;
 		// console.log(Array.isArray(pressArticles));
 		return (
-			<ContainerDiv className="container-fluid">
+			<ContainerDiv className={`container-fluid`}>
 				<div className="hero d-flex">
-					<Headline text="Press" alignment="right" />
+					<Headline text="Press" alignment="right" status={status} />
 				</div>
 				<div className="container" style={{ marginBottom: "35vh" }}>
 					{pressArticles}
-					{/* {pressArticles.map((article, i) => {
-						// let svgCondition = article.node.featuredImage.node.sourceUrl.endsWith(
-						// 	"svg"
-						// );
-						// console.log(article.node.featuredImage.node.sourceUrl.node.sourceUrl );
-
-						return (
-							<div className="row">
-								<div>{article.node.title}</div>
-								{article.node.featuredImage !== null && (
-									<>
-										<img
-											src={
-												article.node.featuredImage.node
-													.sourceUrl
-											}
-										/>
-										<p>
-											{article.node.featuredImage.node.sourceUrl.endsWith(
-												"svg"
-											)
-												? "yup"
-												: "nope"}
-										</p>
-									</>
-								)}
-
-								{
-									article.node.acf.externalLinkOrPdf ===
-									"external" ? (
-										<a
-											href={
-												article.node.acf.externalLink
-													.url
-											}
-											target="_blank"
-										>
-											external
-										</a>
-									) : (
-										<Link
-											to={
-												article.node.acf.pdfUpload
-													.mediaItemUrl
-											}
-										>
-											pdf
-										</Link>
-									)
-
-									// isExternal ? (
-									// 	<a href={article.node.acf.externalLink.url}>
-									// 		{article.node.acf.externalLinkOrPdf}
-									// 	</a>
-									// ) : (
-									// 	<Link
-									// 		to={
-									// 			article.node.acf.pdfUpload
-									// 				.mediaItemUrl
-									// 		}
-									// 	>
-									// 		{article.node.acf.externalLinkOrPdf}
-									// 	</Link>
-									// )
-								}
-							</div>
-						);
-					})} */}
 				</div>
 			</ContainerDiv>
 		);

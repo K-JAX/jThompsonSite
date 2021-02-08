@@ -3,6 +3,7 @@ import { withApollo } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import gql from "graphql-tag";
+import { TransitionGroup, Transition } from "react-transition-group";
 
 // Components
 import ProjectSingle from "./Project-Single";
@@ -38,6 +39,17 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.executePageQuery();
+		// console.log(this.props.status);
+	}
+
+	componentDidUpdate() {
+		// console.log(this.props.status);
+	}
+
+	componentWillUnmount() {
+		// this.state = {
+		// 	bool: false,
+		// };
 	}
 
 	executePageQuery = async () => {
@@ -53,13 +65,15 @@ class Home extends Component {
 
 	render() {
 		const { isLoaded, slideshowOptions } = this.state;
-		const { breakpoints, currentBreakpoint } = this.props;
+		const { breakpoints, currentBreakpoint, status } = this.props;
 		if (!isLoaded) {
 			return <p>Loading</p>;
 		}
-		console.log(this.props);
+
+		// console.log(this.props);
 		return (
 			<div
+				className={`page page-route-${status} container-fluid`}
 				style={
 					breakpoints[currentBreakpoint] > breakpoints.lg
 						? { marginLeft: "300px" }

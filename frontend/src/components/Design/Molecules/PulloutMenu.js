@@ -12,7 +12,10 @@ class PulloutMenu extends Component {
 		return (
 			<Puller>
 				<Burger onClick={burgerOnClick} burgerIsActive={menuActive} />
-				<Nav className={`pullout ${menuActive ? "pulled-out" : ""}`}>
+				<Nav
+					onClick={burgerOnClick}
+					className={`pullout ${menuActive ? "pulled-out" : ""}`}
+				>
 					<div className="transition layer-1" />
 					<div className="transition layer-2" />
 					<div className="transition layer-3" />

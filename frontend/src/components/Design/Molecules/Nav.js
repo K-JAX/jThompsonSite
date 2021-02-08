@@ -67,7 +67,7 @@ class Nav extends Component {
 
 	render() {
 		const { menus, isLoaded } = this.state;
-		const { pathname, className, children } = this.props;
+		const { pathname, className, children, onClick } = this.props;
 		let isHome;
 
 		if (isLoaded === false) {
@@ -110,6 +110,7 @@ class Nav extends Component {
 								}`}
 								style={{ transitionDelay: `${i * 0.2}s` }}
 								title={menu.node.title}
+								onClick={onClick}
 							>
 								<span>{menu.node.label}</span>
 							</Link>

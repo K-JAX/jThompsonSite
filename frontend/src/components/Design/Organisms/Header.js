@@ -91,6 +91,7 @@ class Header extends Component {
 					) : (
 						<PulloutMenu
 							burgerOnClick={this.handleClick}
+							
 							menuActive={mobileMenuActive}
 						/>
 					)}

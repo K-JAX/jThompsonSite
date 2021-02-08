@@ -1,21 +1,14 @@
 // graphql api url
-let url =
-	process.env.NODE_ENV === "development"
-		? "http://localhost:8080"
-		: "https://jthompsonarch.wordexpressapi.com";
+// "http://localhost:8080" is the original dev enpoint
+// based on whether user is using docker or podman
+let usingDocker = process.env.HOME === "/home/node";
+let dev = usingDocker
+	? "http://wp-headless:8080"
+	: "https://wordpress.jthompsonarch.com";
 
-// let url = 'http://localhost:8080/graphql';
-// if(process.env.NODE_ENV === 'development'){
-//   url = 'https://localhost:8080.com/graphql';
-// }else{
-//   url = 'https://degrawanddehaan.wordtestdomain.com/graphql';
+let prod = "https://wordpress.jthompsonarch.com";
+let url = process.env.NODE_ENV === "development" ? dev : prod;
 
-// }
-
-// If we're running on Docker, use the WordPress container hostname instead of localhost.
-if (process.env.HOME === "/home/node") {
-	url = "http://wp-headless:8080";
-}
 const Config = {
 	baseUrl: url,
 	gqlUrl: `${url}/graphql`,

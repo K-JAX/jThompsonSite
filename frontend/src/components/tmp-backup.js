@@ -1,0 +1,80 @@
+
+<Route
+	exact
+	path="/"
+	render={(rest) => (
+		<Home
+			{...rest}
+			status={status}
+		/>
+	)}
+/>
+<Route
+	exact
+	path="/search"
+	component={Search}
+/>
+<Route
+	exact
+	path="/portfolio"
+	component={Portfolio}
+	loaded={loaded}
+/>
+<Route
+	exact
+	path="/about"
+	render={(rest) => (
+		<About
+			{...rest}
+			status={status}
+		/>
+	)}
+/>
+<Route
+	exact
+	path="/press_article"
+	// component={PressArticles}
+	render={(rest) => (
+		<PressArticles
+			{...rest}
+			className={
+				!isHome &&
+				"offset-header"
+			}
+			status={status}
+		/>
+	)}
+/>
+<Route
+	exact
+	path="/press_article/:slug"
+	component={
+		PressArticleSingle
+	}
+/>
+<Route
+	exact
+	path="/contact"
+	component={Contact}
+/>
+<Route
+	exact
+	path="/portfolio/:slug"
+	component={ProjectSingle}
+/>
+<Route
+	exact
+	path="/page/:slug"
+	component={Page}
+/>
+<Route
+	exact
+	path="/post/:slug"
+	component={Post}
+/>
+<Route
+	exact
+	path="/category/:slug"
+	component={Category}
+/>
+<Route component={NotFound} />

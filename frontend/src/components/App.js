@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Router, Route, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ReactBreakpoints from "react-breakpoints";
 import { Media } from "react-breakpoints";
 import {
 	TransitionGroup,
+	SwitchTransition,
 	Transition,
 	CSSTransition,
 } from "react-transition-group";
@@ -25,6 +26,22 @@ import Post from "./Design/Templates/Post";
 import { NotFound } from "./Design/Templates/404";
 import Search from "./Design/Templates/Search";
 import Category from "./Design/Templates/Category";
+import Headline from "./Design/Atoms/Headline";
+
+const routes = [
+	{ path: "/", component: Home },
+	{ path: "/about", component: About },
+	{ path: "/press_article", component: PressArticles },
+	{ path: "/press_article/:slug", component: PressArticleSingle },
+	{ path: "/contact", component: Contact },
+	{ path: "/portfolio", component: Portfolio },
+	{ path: "/portfolio/:slug", component: ProjectSingle },
+	{ path: "/page/:slug", component: Page },
+	{ path: "/post/:slug", component: Post },
+	{ path: "/category/:slug", component: Category },
+	{ path: "/search", component: Search },
+	{ path: "/*", component: NotFound },
+];
 
 export default ({ in: inProp }) => {
 	const [loaded, setLoad] = useState(0);
@@ -49,8 +66,12 @@ export default ({ in: inProp }) => {
 		return () => clearTimeout(timer);
 	});
 
+	const { pathname, key } = location;
+
 	return (
-		<BodyContainer className={`center ${loaded ? "loaded" : ""}`}>
+		<BodyContainer
+			className={`center ${loaded && "loaded"} position-relative`}
+		>
 			<ReactBreakpoints breakpoints={breakpoints}>
 				<Header location={location} isHome={isHome} />
 				<Media>
@@ -62,77 +83,49 @@ export default ({ in: inProp }) => {
 							"offset-right";
 						return (
 							<PageContainerElement
-								className={` ${
-									!isHome && "offset-header"
-								} ${offsetCondition}`}
+								className={` ${offsetCondition}`}
 							>
-								<TransitionGroup>
-									<CSSTransition
-										key={location.key}
-										timeout={3000}
+								{/* <Headline
+									text="Press"
+									alignment="left"
+									status={"entering"}
+								/> */}
+								<TransitionGroup component={null}>
+									<Transition
+										key={key}
+										appear={true}
 										unmountOnExit
-										in={inProp}
+										classNames="page-route"
+										timeout={3000}
 									>
-										<Switch location={location}>
-											<Route
-												exact
-												path="/"
-												component={Home}
-											/>
-											<Route
-												exact
-												path="/search"
-												component={Search}
-											/>
-											<Route
-												exact
-												path="/portfolio"
-												component={Portfolio}
-												loaded={loaded}
-											/>
-											<Route
-												exact
-												path="/about"
-												component={About}
-											/>
-											<Route
-												exact
-												path="/press_article"
-												component={PressArticles}
-											/>
-											<Route
-												exact
-												path="/press_article/:slug"
-												component={PressArticleSingle}
-											/>
-											<Route
-												exact
-												path="/contact"
-												component={Contact}
-											/>
-											<Route
-												exact
-												path="/portfolio/:slug"
-												component={ProjectSingle}
-											/>
-											<Route
-												exact
-												path="/page/:slug"
-												component={Page}
-											/>
-											<Route
-												exact
-												path="/post/:slug"
-												component={Post}
-											/>
-											<Route
-												exact
-												path="/category/:slug"
-												component={Category}
-											/>
-											<Route component={NotFound} />
-										</Switch>
-									</CSSTransition>
+										{(status) => (
+											<Switch location={location}>
+												{routes.map((route, i) => (
+													<Route
+														exact
+														key={route.path}
+														path={route.path}
+														render={(rest) => (
+															<div
+																className={`page page-route-${status} ${
+																	route.path !==
+																		"/" &&
+																	"offset-header"
+																}`}
+															>
+																<route.component
+																	{...rest}
+																	status={
+																		status
+																	}
+																/>
+															</div>
+														)}
+													/>
+												))}
+											</Switch>
+										)}
+									</Transition>
 								</TransitionGroup>
 							</PageContainerElement>
 						);
@@ -149,13 +142,6 @@ const BodyContainer = styled.div`
 `;
 
 const PageContainerElement = styled.div`
-	/* margin-bottom: 100px; */
-	&.offset-header {
-		margin-top: 158px;
-		@media all and (max-width: 767px) {
-			margin-top: 80px;
-		}
-	}
 	@media all and (max-width: 767px) {
 		margin-top: 80px;
 	}

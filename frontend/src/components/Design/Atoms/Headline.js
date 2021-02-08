@@ -2,55 +2,98 @@ import React, { useState, useEffect, useMemo } from "react";
 import { withApollo } from "react-apollo";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Children } from "react";
 import { useSpring, useTrail, animated, useTransition } from "react-spring";
 
 const Headline = (props) => {
 	const { text, loaded, className, alignment } = props;
+	let { status } = props;
+	// status = status === undefined ? "entered" : status;
+
 	const [up, set] = useState(false);
+	const [items, setItems] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
 		setIsLoaded(true);
-		isLoaded && !up ? set((a) => !a) : "";
-	});
+		!up && console.log("running useEffect");
+		// set(true);
+		// console.log(`isLoaded: ${isLoaded}, status: ${status}, up: ${up}`);
+		// inCondition && startAnim();
+		startAnim();
+		outCondition && exitAnim();
+	}, []);
+
+	const inCondition = (status === "entering" || status === "entered") && !up;
+
+	const outCondition = (status === "exiting" || status === "exited") && up;
+
+	const startAnim = () => {
+		console.log("running the start anim");
+		setTimeout(() => {
+			set(true);
+			setItems([0, 1, 2]);
+		}, 1000);
+	};
+
+	const exitAnim = () => {
+		setTimeout(() => {
+			set(false);
+		}, 700);
+		setItems([]);
+	};
 
 	const chars = useMemo(() => text.split(""), [text]);
 
-	const spring = useSpring({
-		from: { opacity: 0 },
-		to: async (next) => {
-			// Create a delayed animation
-			await next({
-				opacity: up ? 1 : 0.5,
-				color: "#fff",
-			}); // 2 seconds
-			await new Promise((resolve) => setTimeout(resolve, 400));
-
-			// Immediately override the width animation
-			await next({ color: "#000" }); // This creates a new animation which starts immediately,
-			// and it prevents the delayed animation from changing
-			// the width. The height will still animate in 2 seconds.
+	const spring = useSpring(
+		{
+			from: { opacity: 0 },
+			to: async (next) => {
+				await next({
+					opacity: up ? 1 : 0,
+					color: "#fff",
+				});
+				await new Promise((resolve) => setTimeout(resolve, 400));
+				await next({ color: "#000" });
+			},
+			config: { tension: 250 },
 		},
-		config: { tension: 250 },
-	});
+		[]
+	);
 
 	const trail = useTrail(chars.length, {
 		config: { mass: 5, tension: 1800, friction: 140 },
 		y: up ? 0 : 50,
 	});
 
-	// const stuff = [0, 1, 2];
-	const [items, setItems] = useState([0, 1, 2]);
-
 	const boxTransitions = useTransition(items, (item) => item, {
 		from: { width: `0%`, left: "-10%", right: "110%" },
 		enter: (item) => async (next, cancel) => {
-			await next({ width: `100%`, left: "0%", right: "100%" });
+			await next({
+				width: `100%`,
+				left: "0%",
+				right: "100%",
+			});
 			await next({ width: `0%`, left: `110%`, right: `0%` });
 		},
-		leave: { width: "100%" },
-		trail: 200,
+		leave: (item) => async (next, cancel) => {
+			await next({
+				width: `0%`,
+				left: `110%`,
+				right: `0%`,
+			});
+			await next({
+				width: `100%`,
+				left: "0%",
+				right: "100%",
+				config: { duration: 250 },
+			});
+			await next({
+				width: `0%`,
+				left: "-10%",
+				right: "110%",
+			});
+		},
+		trail: 210,
 	});
 
 	return (
@@ -58,47 +101,42 @@ const Headline = (props) => {
 			className={`page-heading ${className} ${loaded ? "loaded" : ""}`}
 			alignment={alignment}
 		>
-			{trail.map(({ y, ...rest }, index) => (
-				<animated.span
-					key={index}
-					style={{
-						...rest,
-						...spring,
-						transform: y.interpolate(
-							(y) => `translate3d(0,${y}px,0)`
-						),
-					}}
-				>
-					{chars[index]}
-				</animated.span>
-			))}
-			<div>
-				{boxTransitions.map(({ item, key, props }, i) => (
-					<animated.div
-						key={i}
-						num={i}
-						className={`box-transition layer-${i + 1} `}
-						style={props}
-					/>
+			<animated.div style={{ ...spring }}>
+				{trail.map(({ y, ...rest }, index) => (
+					<animated.span
+						key={`key-${index}-letter${chars[index]}`}
+						style={{
+							...rest,
+							transform: y.interpolate(
+								(y) => `translate3d(0,${y}px,0)`
+							),
+						}}
+					>
+						{chars[index]}
+					</animated.span>
 				))}
+			</animated.div>
+			<div>
+				{items !== [] &&
+					boxTransitions.map(({ item, key, props }, i) => (
+						<animated.div
+							key={`layer-${i}`}
+							num={i}
+							className={`box-transition layer-${i + 1} `}
+							style={props}
+						/>
+					))}
 			</div>
-			{/* <animated.div
-				style={boxSpring}
-				className="box-transition layer-1"
-			/>
-			<animated.div
-				style={boxSpring}
-				className="box-transition layer-2"
-			/>
-			<animated.div
-				style={boxSpring}
-				className="box-transition layer-3"
-			/> */}
 		</HeadlineH1>
 	);
 };
 
-export default withApollo(Headline);
+const areEqual = (prevProps, nextProps) => {
+	return prevProps.status === "entering";
+};
+
+// export default withApollo(Headline);
+export default React.memo(Headline, areEqual);
 
 const HeadlineH1 = styled.h1`
 	position: relative;
@@ -108,6 +146,7 @@ const HeadlineH1 = styled.h1`
 	height: auto;
 	display: inline-block;
 	margin: 0;
+	white-space: nowrap;
 	font-variant: small-caps;
 	${(props) => (props.alignment === "left" ? "padding-left: 12rem;" : "")}
 	${(props) => (props.alignment === "right" ? "padding-right: 12rem;" : "")}
