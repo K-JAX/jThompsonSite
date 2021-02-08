@@ -38,9 +38,9 @@ class Slide extends Component {
 			>
 				<ProjectTitle
 					title={title}
-					subtitle={`${date.slice(0, 4)}, ${location.city}, ${
-						location.stateShort
-					}`}
+					subtitle={`${date.slice(0, 4)}, ${
+						location && location.city
+					}, ${location && location.stateShort}`}
 					slideTitle
 					active={active}
 					attachmentClass={titleAttachClass}
