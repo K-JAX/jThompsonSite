@@ -1,39 +1,45 @@
 import React, { Component } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-import axios from "axios";
+import styled from "styled-components";
 import { Parser as HtmlToReactParser } from "html-to-react";
 
 // Components
+import Headline from "../Atoms/Headline";
 import Form from "../Organisms/Form";
 
 /**
  * GraphQL page query that takes a page slug as a uri
  * Returns the title and content of the page
  */
+
 const PAGE_QUERY = gql`
 	query PageQuery {
 		pageBy(uri: "contact") {
 			title
 			content
+			featuredImage {
+				node {
+					sourceUrl(size: LARGE)
+					altText
+				}
+			}
 		}
 	}
 `;
 
-const SEND_MUTATION = gql`
-	mutation SEND_EMAIL {
-		sendEmail(
-			input: {
-				to: "kevingarubba@gmail.com"
-				from: "test@test.com"
-				subject: "test email"
-				body: "test email"
-				clientMutationId: "test"
+const FORM_QUERY = gql`
+	query FormQuery {
+		form(id: "1", idType: DATABASE_ID) {
+			title
+			fields {
+				nodes {
+					fieldId
+					label
+					required
+					type
+				}
 			}
-		) {
-			origin
-			sent
-			message
 		}
 	}
 `;
@@ -50,84 +56,81 @@ class Contact extends Component {
 				title: "",
 				content: "",
 			},
-			form: [],
-			sendStatus: {},
+			form: {},
 		};
 	}
 
 	componentDidMount() {
 		this.executePageQuery();
-		// this.sendMail();
-		// this.getForm();
 	}
 
 	componentDidUpdate(prevProps) {
 		const { props } = this;
 		if (props.match.params.slug !== prevProps.match.params.slug) {
 			this.executePageQuery();
-			// this.getForm();
 		}
 	}
 
-	sendMail = async () => {
-		const { client } = this.props;
-		const result = await client.mutate({
-			mutation: SEND_MUTATION,
-		});
-		this.setState({ sendStatus: result }, console.log(result));
-	};
-
-	getForm = () => {
-		// axios
-		// 	.get("http://localhost:8080/wp-json/forms/v1/forms/51")
-		// 	.then((res) => {
-		// 		const form = res.data;
-		// 		this.setState({ isLoaded: true, form });
-		// 	});
-	};
-
-	/**
-	 * Execute page query, process the response and set the state
-	 */
 	executePageQuery = async () => {
 		const { match, client } = this.props;
 		let uri = match.params.slug;
 		if (!uri) {
-			uri = "welcome";
+			uri = "/";
 		}
 		const result = await client.query({
 			query: PAGE_QUERY,
 			variables: { uri },
 		});
 		const page = result.data.pageBy;
-		this.setState({ page });
+		const formResult = await client.query({
+			query: FORM_QUERY,
+		});
+		const { form } = formResult.data;
+		this.setState({ page, form, isLoaded: true });
 	};
-
-	// renderForm = () => {
-	//   const {form, isLoaded} = this.state;
-
-	//     form.fields.map((field) => {
-	//        return <li>{ field.name }</li>
-	//     });
-	// }
 
 	render() {
 		const { page, form, isLoaded } = this.state;
 
-		var htmlToReactParser = new HtmlToReactParser();
-		const parsedContent = htmlToReactParser.parse(page.content);
+		// var htmlToReactParser = new HtmlToReactParser();
+		// const parsedContent = htmlToReactParser.parse(page.content);
+		if (!isLoaded) return <p>Loading</p>;
 
 		return (
-			<div style={{ marginLeft: "315px" }}>
-				<div className="pa2">
-					<h1>{page.title}</h1>
+			<PageDiv className="container-fluid">
+				<div className="row">
+					<div
+						className="col-12 col-md-6 featured-img"
+						style={{
+							backgroundImage: `url(${page.featuredImage.node.sourceUrl})`,
+						}}
+					/>
+					<div className="title-container col-12 col-md-6">
+						<div className="pa2">
+							<Headline
+								className="mb-3"
+								alignment="right"
+								text={page.title}
+							/>
+						</div>
+						<div className="row" style={{ marginLeft: "-20px" }}>
+							<Form className="col-12" data={form} />
+						</div>
+					</div>
 				</div>
-				{/* <div>{parsedContent}</div> */}
-				{/* <div dangerouslySetInnerHTML={{__html: page.content }} /> */}
-				{isLoaded ? <Form data={form} /> : ""}
-			</div>
+			</PageDiv>
 		);
 	}
 }
 
 export default withApollo(Contact);
+
+const PageDiv = styled.div`
+	.featured-img {
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.title-container {
+		margin-left: --20px;
+	}
+`;

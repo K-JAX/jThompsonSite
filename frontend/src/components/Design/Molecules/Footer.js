@@ -16,14 +16,7 @@ const Footer = (props) => {
 			isHome={isDesktopHome}
 		>
 			{isDesktopHome ? "" : <SocialMenu />}
-			<small
-				className="center"
-				style={{
-					textAlign: "center",
-					marginTop: "20px",
-					marginBottom: "20px",
-				}}
-			>
+			<small className="center">
 				&copy;{new Date().getFullYear()} JTA
 			</small>
 		</FooterElement>
@@ -34,7 +27,7 @@ export default compose(withBreakpoints)(Footer);
 
 const FooterElement = styled.footer`
 	position: absolute;
-	top: 100%;
+	top: calc(100vh - 100px);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -42,6 +35,12 @@ const FooterElement = styled.footer`
 	${(props) => (props.isHome ? "margin-left: 6em;" : "")}
 	.social-nav {
 		display: inline-block;
-		margin: auto;
+		margin: 0 auto;
+	}
+	small {
+		width: 100%;
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 `;
