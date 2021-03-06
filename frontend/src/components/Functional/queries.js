@@ -1,5 +1,11 @@
 import gql from "graphql-tag";
 
+export const SITE_STATUS_QUERY = gql`
+	query MyQuery {
+		siteStatus
+	}
+`;
+
 export const SINGLE_PROJ_QUERY = gql`
 	query SingleProjectQuery($slug: ID!) {
 		project(id: $slug, idType: URI) {
@@ -9,7 +15,7 @@ export const SINGLE_PROJ_QUERY = gql`
 			projectId
 			featuredImage {
 				node {
-					sourceUrl(size: LARGE)
+					sourceUrl(size: MEDIUM)
 					srcSet
 					altText
 					id

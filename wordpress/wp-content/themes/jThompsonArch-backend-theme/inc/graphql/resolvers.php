@@ -12,6 +12,9 @@ if ( function_exists( 'register_graphql_field' ) ) {
 
     // Add favicon
     require_once 'resolvers/favicon.php';
+
+    // Check Site Mode
+    require_once 'resolvers/site-status.php';
     
     // Add project type resolver
     require_once 'resolvers/project-type.php';

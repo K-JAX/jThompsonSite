@@ -116,6 +116,7 @@ const Form = (props) => {
 							)}
 							{field.type === "submit" && (
 								<input
+									className="theme-btn"
 									type="submit"
 									value="Submit"
 									disabled={!verified}

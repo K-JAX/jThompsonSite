@@ -4,9 +4,13 @@ import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import gql from "graphql-tag";
 import { TransitionGroup, Transition } from "react-transition-group";
+import styled from "styled-components";
 
 // Components
 import ProjectSingle from "./Project-Single";
+import { TransitionWipeLayers } from "../Molecules/TransitionWipeLayers";
+import { LoadingMatte } from "../Atoms/LoadingMatte";
+
 // import {
 // 	SlideshowContext,
 // 	SlideshowProvider,
@@ -39,6 +43,7 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.executePageQuery();
+		console.log(this.props.location.state.from);
 		// console.log(this.props.status);
 	}
 
@@ -67,23 +72,38 @@ class Home extends Component {
 		const { isLoaded, slideshowOptions } = this.state;
 		const { breakpoints, currentBreakpoint, status } = this.props;
 		if (!isLoaded) {
-			return <p>Loading</p>;
+			return <LoadingMatte />;
 		}
 
 		// console.log(this.props);
 		return (
-			<div
-				className={`page page-route-${status} container-fluid`}
-				style={
-					breakpoints[currentBreakpoint] > breakpoints.lg
-						? { marginLeft: "300px" }
-						: {}
-				}
-			>
-				<ProjectSingle featured={true} options={slideshowOptions} />
-			</div>
+			<PageDiv status={status} className={`page page-route-${status}`}>
+				<TransitionWipeLayers
+					className="z-10"
+					status={status}
+					from={this.props.location.state.from}
+					location={this.props.location}
+				/>
+				<div
+					className="z-1 container-fluid"
+					style={
+						breakpoints[currentBreakpoint] > breakpoints.lg
+							? { marginLeft: "300px" }
+							: {}
+					}
+				>
+					<ProjectSingle featured={true} options={slideshowOptions} />
+				</div>
+			</PageDiv>
 		);
 	}
 }
 
 export default compose(withApollo, withBreakpoints)(Home);
+
+const PageDiv = styled.div`
+	${(props) => props.status === "entering" && `z-index: -2;`}
+	${(props) =>
+		(props.status === "exiting" || props.status === "exited") &&
+		`z-index: -2;`}
+`;

@@ -21,10 +21,12 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-	<Router className>
-		<ApolloProvider client={client}>
-			<App />
-		</ApolloProvider>
-	</Router>,
+	<React.Suspense fallback={<span>Loading</span>}>
+		<Router>
+			<ApolloProvider client={client}>
+				<App />
+			</ApolloProvider>
+		</Router>
+	</React.Suspense>,
 	document.getElementById("root")
 );

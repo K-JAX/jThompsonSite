@@ -14,7 +14,6 @@ export const Button = (props) => {
 };
 
 Button.propTypes = {
-	children: PropTypes.string,
 	onClick: PropTypes.func,
 	internal: PropTypes.bool,
 	priority: PropTypes.string,
@@ -99,9 +98,42 @@ const StyledButton = styled.button`
 		}
 		&:hover {
 			color: white;
-
 			&:after {
 				transition-delay: 0.25s;
+			}
+		}
+	}
+	&.circular {
+		border: none;
+		background: transparent;
+		transition: 0.125s;
+		&:hover {
+			opacity: 0.9;
+			span {
+				transform: translateY(-2px) !important;
+			}
+		}
+		&:active {
+			transform: scale(0.95);
+		}
+		& > span {
+			display: flex;
+			margin: auto;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			border-radius: 400px;
+			outline: none;
+			color: #464853;
+			border: 1px solid;
+			width: 150px;
+			height: 150px;
+			padding: 0;
+			background-color: rgba(255, 255, 255, 0.55);
+			transition: 0.25s;
+			cursor: pointer;
+			span {
+				/* margin-top: 1em; */
 			}
 		}
 	}

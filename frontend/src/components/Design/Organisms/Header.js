@@ -91,7 +91,6 @@ class Header extends Component {
 					) : (
 						<PulloutMenu
 							burgerOnClick={this.handleClick}
-							
 							menuActive={mobileMenuActive}
 						/>
 					)}
@@ -104,7 +103,7 @@ class Header extends Component {
 export default compose(withApollo, withBreakpoints)(Header);
 
 const HeaderElement = styled.header`
-	z-index: 10;
+	z-index: 9;
 	position: fixed;
 	display: flex;
 	top: 0;
