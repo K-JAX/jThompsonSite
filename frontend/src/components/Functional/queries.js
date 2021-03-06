@@ -6,6 +6,16 @@ export const SITE_STATUS_QUERY = gql`
 	}
 `;
 
+export const SITE_SETTINGS_QUERY = gql`
+	query MyQuery {
+		generalSettings {
+			title
+			description
+		}
+		faviconUrl
+	}
+`;
+
 export const SINGLE_PROJ_QUERY = gql`
 	query SingleProjectQuery($slug: ID!) {
 		project(id: $slug, idType: URI) {
