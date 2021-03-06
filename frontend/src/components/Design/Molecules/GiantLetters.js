@@ -98,7 +98,7 @@ const GiantLettersSVG = styled.svg`
 	user-select: none;
 	top: 0;
 	text {
-		font-size: 96em;
+		font-size: 83em;
 	}
 	#main-bg {
 		text {
