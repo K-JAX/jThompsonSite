@@ -18,7 +18,7 @@ const Intro = (props) => {
 	const { status, location, message } = props;
 	return (
 		<PageDiv status={status}>
-			{data !== undefined && (
+			{/* {data !== undefined && (
 				<Helmet>
 					<meta charSet="utf-8" />
 					<title>{`${
@@ -30,7 +30,7 @@ const Intro = (props) => {
 					/>
 					<link rel="icon" type="image/png" href={data.faviconUrl} />
 				</Helmet>
-			)}
+			)} */}
 			<GiantLetters layout="svg" letters="JTA" />
 			<EntryTitle message={message} location={location} />
 			<TransitionWipeLayers status={status} />

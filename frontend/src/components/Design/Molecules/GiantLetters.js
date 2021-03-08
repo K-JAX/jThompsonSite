@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Spring, config } from "react-spring/renderprops";
 
 export const GiantLetters = (props) => {
 	const { letters, layout, height, zIndex } = props;
@@ -32,20 +33,28 @@ export const GiantLetters = (props) => {
 				className="svg"
 				layout={layout}
 			>
-				<g id="main-bg">
-					{separated.map((letter, i) => {
-						return (
-							<text
-								key={letter}
-								className={`letter-${i}`}
-								x={letterPositions[i]}
-								y="100%"
-							>
-								{letter}
-							</text>
-						);
-					})}
-				</g>
+				<Spring
+					config={{ tension: 80, friction: 30 }}
+					from={{ transform: "translateX(-100%)" }}
+					to={{ transform: "translateX(0%)" }}
+				>
+					{(props) => (
+						<g id="main-bg" style={props}>
+							{separated.map((letter, i) => {
+								return (
+									<text
+										key={letter}
+										className={`letter-${i}`}
+										x={letterPositions[i]}
+										y="100%"
+									>
+										{letter}
+									</text>
+								);
+							})}
+						</g>
+					)}
+				</Spring>
 				<g id="" className="distant-bg regular">
 					{separated.map((letter, i) => {
 						return (
@@ -101,8 +110,8 @@ const GiantLettersSVG = styled.svg`
 		font-size: 83em;
 	}
 	#main-bg {
+		/* animation: squishIn ease 2.55s; */
 		text {
-			animation: squishIn ease 2.55s;
 		}
 		.letter-0 {
 			opacity: 0.3;
@@ -129,10 +138,10 @@ const GiantLettersSVG = styled.svg`
 			}
 		}
 		&.regular {
-			animation: rollOverlay ease 20.55s infinite alternate;
+			/* animation: rollOverlay ease 20.55s infinite alternate; */
 		}
 		&.backwards {
-			animation: rollOverlay ease 20.55s infinite reverse;
+			/* animation: rollOverlay ease 20.55s infinite reverse; */
 		}
 	}
 	@keyframes squishIn {
