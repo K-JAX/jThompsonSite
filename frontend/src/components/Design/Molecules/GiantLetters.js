@@ -34,7 +34,7 @@ export const GiantLetters = (props) => {
 				layout={layout}
 			>
 				<Spring
-					config={{ tension: 80, friction: 30 }}
+					config={{ tension: 80, friction: 30, precision: 0.001 }}
 					from={{ transform: "translateX(-100%)" }}
 					to={{ transform: "translateX(0%)" }}
 				>
