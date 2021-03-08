@@ -6,18 +6,16 @@ import { Link } from "react-router-dom";
 // components
 import Arrow from "../Atoms/Arrow";
 import { Button } from "../Atoms/Button";
+import { storeVisitedCookie } from "../../Functional/StoreCookies";
 
 export const EntryTitle = (props) => {
-	const storeCookie = () => {
-		var date = new Date();
-
-		document.cookie =
-			"visited=true; expires=" + date.setDate(date.getDate() + 1);
-	};
 	let { message } = props;
-	let userMessage = message.startsWith("Coming Soon")
-		? "Coming Soon"
-		: "Under Maintenance";
+	let userMessage;
+	if (message !== undefined) {
+		userMessage = message.startsWith("Coming Soon")
+			? "Coming Soon"
+			: "Under Maintenance";
+	}
 	return (
 		<EntrySignDiv>
 			<h1>
@@ -31,7 +29,7 @@ export const EntryTitle = (props) => {
 						pathname: "/",
 						state: { from: "intro" },
 					}}
-					onClick={storeCookie}
+					onClick={storeVisitedCookie}
 				>
 					<Button priority="circular">
 						<span className="mb-2">Click to enter</span>

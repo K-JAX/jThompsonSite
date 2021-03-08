@@ -10,16 +10,7 @@ import gql from "graphql-tag";
 import Logo from "../Atoms/Logo";
 import SidebarMenu from "../Molecules/SidebarMenu";
 import PulloutMenu from "../Molecules/PulloutMenu";
-
-const SITE_SETTINGS_QUERY = gql`
-	query MyQuery {
-		generalSettings {
-			title
-			description
-		}
-		faviconUrl
-	}
-`;
+import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
 class Header extends Component {
 	constructor(props) {

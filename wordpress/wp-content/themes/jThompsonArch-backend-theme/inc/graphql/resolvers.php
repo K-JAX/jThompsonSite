@@ -2,7 +2,7 @@
 /**
  * Add GraphQL resolvers
  *
- * @package  JTA
+ * @package JTA
  */
  
 // check if WPGraphQL plugin is active.

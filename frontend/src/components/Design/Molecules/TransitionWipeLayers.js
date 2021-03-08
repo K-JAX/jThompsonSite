@@ -23,12 +23,14 @@ const TransitionDiv = styled.div`
 	z-index: 1;
 	width: 100vw;
 	height: 100vh;
-	${(props) =>
-		(props.status === "entering" || props.status === "entered") &&
-		`animation: underlay 0s 3.25s ease forwards;`}
+	animation: underlay 0s 3.25s ease forwards;
+	&.exited,
+	&.exiting {
+		animation: underlay 0s 0s ease reverse forwards !important;
+	}
 	${(props) =>
 		(props.status === "exiting" || props.status === "exited") &&
-		`animation: underlay 0s 0s ease reverse forwards;`}
+		`animation: underlay 0s 0s ease reverse forwards !important;`}
 	.transition-screen {
 		transform: translateX(0);
 		animation: wipeLeft 0.85s ease forwards;

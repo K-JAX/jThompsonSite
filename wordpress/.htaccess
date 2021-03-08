@@ -3,22 +3,22 @@
 # dynamically generated, and should only be modified via WordPress filters.
 # Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-Header add Access-Control-Allow-Origin "*"
-Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^index\.php$ - [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . /index.php [L]
+	Header add Access-Control-Allow-Origin "*"
+	Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
 </IfModule>
 
 <FilesMatch "\.(ttf|otf|eot|woff|svg|pdf)$">
-    <IfModule mod_headers.c>
-        SetEnvIf Origin "http(s)?://(cdn|sub)\.domain\.com$" AccessControlAllowOrigin=$0
-        Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
-        Header merge Vary Origin
-    </IfModule>
+	<IfModule mod_headers.c>
+		SetEnvIf Origin "http(s)?://(cdn|sub)\.domain\.com$" AccessControlAllowOrigin=$0
+		Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+		Header merge Vary Origin
+	</IfModule>
 </FilesMatch>
 
 # END WordPress
