@@ -1,11 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Spring, config } from "react-spring/renderprops";
+import { useSpring, animated, config } from "react-spring";
+import { Spring } from "react-spring/renderprops";
+import { easeQuadInOut } from "d3-ease";
+
+const interp = (i) => (r) =>
+	`translate3d(${
+		140 * Math.sin(r + (i * 2 * Math.PI) / 1.6)
+	}%, 0, 0) scale(1.125)`;
 
 export const GiantLetters = (props) => {
 	const { letters, layout, height, zIndex } = props;
 	let separated = letters.split("");
+
 	if (layout === "cascade")
 		return (
 			<GiantLettersDiv
@@ -25,6 +33,23 @@ export const GiantLetters = (props) => {
 		);
 	if (layout === "svg") {
 		let letterPositions = [-251, 142, 507];
+
+		const gProps = useSpring({
+			from: { transform: "translateX(-100%)" },
+			to: { transform: "translateX(0%)" },
+			config: { tension: 80, friction: 30, precision: 0.001 },
+		});
+
+		const { radians } = useSpring({
+			from: { radians: 0 },
+			to: async (next) => {
+				while (1) await next({ radians: 2 * Math.PI });
+			},
+			config: { duration: 45000, precision: 0.001 },
+			delay: 700,
+			reset: true,
+		});
+
 		return (
 			<GiantLettersSVG
 				width="100%"
@@ -33,29 +58,24 @@ export const GiantLetters = (props) => {
 				className="svg"
 				layout={layout}
 			>
-				<Spring
-					config={{ tension: 80, friction: 30, precision: 0.001 }}
-					from={{ transform: "translateX(-100%)" }}
-					to={{ transform: "translateX(0%)" }}
+				<animated.g id="main-bg" style={gProps}>
+					{separated.map((letter, i) => {
+						return (
+							<text
+								key={letter}
+								className={`letter-${i}`}
+								x={letterPositions[i]}
+								y="100%"
+							>
+								{letter}
+							</text>
+						);
+					})}
+				</animated.g>
+				<animated.g
+					className="distant-bg regular"
+					style={{ transform: radians.interpolate(interp(10)) }}
 				>
-					{(props) => (
-						<g id="main-bg" style={props}>
-							{separated.map((letter, i) => {
-								return (
-									<text
-										key={letter}
-										className={`letter-${i}`}
-										x={letterPositions[i]}
-										y="100%"
-									>
-										{letter}
-									</text>
-								);
-							})}
-						</g>
-					)}
-				</Spring>
-				<g id="" className="distant-bg regular">
 					{separated.map((letter, i) => {
 						return (
 							<text
@@ -68,8 +88,12 @@ export const GiantLetters = (props) => {
 							</text>
 						);
 					})}
-				</g>
-				<g id="" className="distant-bg backwards">
+				</animated.g>
+				<animated.g
+					id=""
+					className="distant-bg backwards"
+					style={{ transform: radians.interpolate(interp(-10)) }}
+				>
 					{separated.map((letter, i) => {
 						return (
 							<text
@@ -82,7 +106,7 @@ export const GiantLetters = (props) => {
 							</text>
 						);
 					})}
-				</g>
+				</animated.g>
 			</GiantLettersSVG>
 		);
 	}
@@ -125,8 +149,9 @@ const GiantLettersSVG = styled.svg`
 	}
 	.distant-bg {
 		opacity: 0.0225;
+		transform-origin: 50% 50%;
 		text {
-			transform: translateX(300%) translateY(-7%) scale(1.125);
+			/* transform: translateX(100%) translateY(-7%) scale(1.125); */
 			&:first-of-type {
 				animation-delay: 0s;
 			}
