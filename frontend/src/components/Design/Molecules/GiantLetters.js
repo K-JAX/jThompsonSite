@@ -40,15 +40,15 @@ export const GiantLetters = (props) => {
 			config: { tension: 80, friction: 30, precision: 0.001 },
 		});
 
-		const { radians } = useSpring({
-			from: { radians: 0 },
-			to: async (next) => {
-				while (1) await next({ radians: 2 * Math.PI });
-			},
-			config: { duration: 45000, precision: 0.001 },
-			delay: 700,
-			reset: true,
-		});
+		// const { radians } = useSpring({
+		// 	from: { radians: 0 },
+		// 	to: async (next) => {
+		// 		while (1) await next({ radians: 2 * Math.PI });
+		// 	},
+		// 	config: { duration: 45000, precision: 0.001 },
+		// 	delay: 700,
+		// 	reset: true,
+		// });
 
 		return (
 			<GiantLettersSVG
@@ -72,7 +72,7 @@ export const GiantLetters = (props) => {
 						);
 					})}
 				</animated.g>
-				<animated.g
+				{/* <animated.g
 					className="distant-bg regular"
 					style={{ transform: radians.interpolate(interp(10)) }}
 				>
@@ -106,7 +106,7 @@ export const GiantLetters = (props) => {
 							</text>
 						);
 					})}
-				</animated.g>
+				</animated.g> */}
 			</GiantLettersSVG>
 		);
 	}

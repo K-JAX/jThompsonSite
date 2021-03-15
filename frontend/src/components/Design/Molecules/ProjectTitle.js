@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Spring, animated } from "react-spring/renderprops";
 
 // components
 import Arrow from "../Atoms/Arrow";
@@ -17,43 +18,53 @@ class ProjectTitle extends Component {
 			active,
 		} = this.props;
 		return (
-			<ProjectTitleDiv
-				className={`project-title ${
-					slideTitle ? "slideTitle" : "regularTitle"
-				} ${attachmentClass}`}
-			>
-				{slideTitle ? (
-					<div className="scroll-indicator">
-						<small className="help-text">
-							<i>Scroll to view</i>
-						</small>
-						<Arrow num={3} direction="down" color="#000" animate />
-					</div>
-				) : (
-					<Link className="bcrumb" to={"/portfolio"}>
-						Portfolio &#62;
-					</Link>
-				)}
-				<div className="title-stack">
-					<h1>{title}</h1>
-					{percentage !== undefined && (
-						<SlideMeter
-							progress={active ? percentage : undefined}
-						/>
-					)}
+			<Spring from={{ y: 100 }} to={{ y: 0 }} config={{ delay: 1500 }}>
+				{(props) => (
+					<ProjectTitleDiv
+						className={`project-title ${
+							slideTitle ? "slideTitle" : "regularTitle"
+						} ${attachmentClass}`}
+						style={{ transform: `translateY(${props.y}%)` }}
+					>
+						{slideTitle ? (
+							<div className="scroll-indicator">
+								<small className="help-text">
+									<i>Scroll to view</i>
+								</small>
+								<Arrow
+									num={3}
+									direction="down"
+									color="#000"
+									animate
+								/>
+							</div>
+						) : (
+							<Link className="bcrumb" to={"/portfolio"}>
+								Portfolio &#62;
+							</Link>
+						)}
+						<div className="title-stack">
+							<h1>{title}</h1>
+							{percentage !== undefined && (
+								<SlideMeter
+									progress={active ? percentage : undefined}
+								/>
+							)}
 
-					<h2>
-						<i>{subtitle}</i>
-					</h2>
-				</div>
-			</ProjectTitleDiv>
+							<h2>
+								<i>{subtitle}</i>
+							</h2>
+						</div>
+					</ProjectTitleDiv>
+				)}
+			</Spring>
 		);
 	}
 }
 
 export default ProjectTitle;
 
-const ProjectTitleDiv = styled.div`
+const ProjectTitleDiv = styled(animated.div)`
 	position: absolute;
 	right: 0;
 	display: flex;

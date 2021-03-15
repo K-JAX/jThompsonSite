@@ -39,6 +39,19 @@ export const Routing = () => {
 		storeVisitedCookie();
 	}
 
+	// const path = location.pathname;
+	// const store = window.localStorage;
+	// let url = "";
+	// let prevUrl = "";
+
+	// url = store.getItem("url");
+	// store.setItem("prevUrl", url);
+	// store.setItem("url", path);
+
+	// url = store.getItem("url");
+	// prevUrl = store.getItem("prevUrl");
+	// console.log(prevUrl);
+
 	let HomeRoute =
 		visitedCookie === null || visitedCookie === undefined
 			? { path: "/", component: Intro }
@@ -65,7 +78,7 @@ export const Routing = () => {
 				key={key}
 				unmountOnExit
 				classNames="page-route"
-				timeout={3000}
+				timeout={1000}
 			>
 				{(status) => (
 					<Switch location={location}>

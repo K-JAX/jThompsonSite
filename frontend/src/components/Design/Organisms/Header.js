@@ -5,6 +5,7 @@ import { compose } from "recompose";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import gql from "graphql-tag";
+import { Spring } from "react-spring/renderprops";
 
 // Components
 import Logo from "../Atoms/Logo";
@@ -74,18 +75,40 @@ class Header extends Component {
 					/>
 					<link rel="icon" type="image/png" href={faviconUrl} />
 				</Helmet>
-				<div className="d-flex flex flex-fixed black">
-					<Logo isHome={isHome} menuActive={mobileMenuActive} />
-					{isHome &&
-					breakpoints[currentBreakpoint] > breakpoints.lg ? (
-						<SidebarMenu />
-					) : (
-						<PulloutMenu
-							burgerOnClick={this.handleClick}
-							menuActive={mobileMenuActive}
-						/>
-					)}
-				</div>
+				<Spring
+					from={{ x: -100 }}
+					to={{ x: 0 }}
+					config={{ delay: 2500 }}
+				>
+					{(props) => {
+						let transforms = isHome
+							? {
+									transform: `translateX(${props.x}%)`,
+							  }
+							: {};
+						return (
+							<div
+								className="d-flex flex flex-fixed black"
+								style={transforms}
+							>
+								<Logo
+									isHome={isHome}
+									menuActive={mobileMenuActive}
+								/>
+								{isHome &&
+								breakpoints[currentBreakpoint] >
+									breakpoints.lg ? (
+									<SidebarMenu />
+								) : (
+									<PulloutMenu
+										burgerOnClick={this.handleClick}
+										menuActive={mobileMenuActive}
+									/>
+								)}
+							</div>
+						);
+					}}
+				</Spring>
 			</HeaderElement>
 		);
 	}
@@ -94,7 +117,7 @@ class Header extends Component {
 export default compose(withApollo, withBreakpoints)(Header);
 
 const HeaderElement = styled.header`
-	z-index: 9;
+	z-index: 12;
 	position: fixed;
 	display: flex;
 	top: 0;

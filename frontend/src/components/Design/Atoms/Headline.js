@@ -15,7 +15,7 @@ const Headline = (props) => {
 
 	useEffect(() => {
 		setIsLoaded(true);
-		!up && console.log("running useEffect");
+		// !up && console.log("running useEffect");
 		// set(true);
 		// console.log(`isLoaded: ${isLoaded}, status: ${status}, up: ${up}`);
 		// inCondition && startAnim();
@@ -28,7 +28,7 @@ const Headline = (props) => {
 	const outCondition = (status === "exiting" || status === "exited") && up;
 
 	const startAnim = () => {
-		console.log("running the start anim");
+		// console.log("running the start anim");
 		setTimeout(() => {
 			set(true);
 			setItems([0, 1, 2]);

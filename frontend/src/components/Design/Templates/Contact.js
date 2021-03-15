@@ -102,7 +102,7 @@ class Contact extends Component {
 					<div
 						className="col-12 col-md-6 featured-img"
 						style={{
-							backgroundImage: `url(${page.featuredImage.node.sourceUrl})`,
+							backgroundImage: `url(${page.featuredImage?.node.sourceUrl})`,
 						}}
 					/>
 					<div className="title-container col-12 col-md-6">

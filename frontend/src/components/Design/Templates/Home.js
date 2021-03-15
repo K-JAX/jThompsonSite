@@ -1,14 +1,14 @@
-import React, { Component, createContext } from "react";
+import React, { Component } from "react";
 import { withApollo } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import gql from "graphql-tag";
-import { TransitionGroup, Transition } from "react-transition-group";
 import styled from "styled-components";
+import { Spring, animated } from "react-spring/renderprops";
 
 // Components
 import ProjectSingle from "./Project-Single";
-import { TransitionWipeLayers } from "../Molecules/TransitionWipeLayers";
+import { Wipes } from "../Molecules/Wipes";
 import { LoadingMatte } from "../Atoms/LoadingMatte";
 
 // import {
@@ -43,18 +43,8 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.executePageQuery();
-		console.log(this.props.location.state.from);
+		// console.log(this.props.location.state.from);
 		// console.log(this.props.status);
-	}
-
-	componentDidUpdate() {
-		// console.log(this.props.status);
-	}
-
-	componentWillUnmount() {
-		// this.state = {
-		// 	bool: false,
-		// };
 	}
 
 	executePageQuery = async () => {
@@ -71,29 +61,37 @@ class Home extends Component {
 	render() {
 		const { isLoaded, slideshowOptions } = this.state;
 		const { breakpoints, currentBreakpoint, status } = this.props;
-		if (!isLoaded) {
-			return <LoadingMatte />;
-		}
+		if (!isLoaded) return <LoadingMatte />;
 
 		// console.log(this.props);
 		return (
 			<PageDiv status={status} className={`page page-route-${status}`}>
-				<TransitionWipeLayers
+				<Wipes
 					className="z-10"
 					status={status}
-					from={this.props.location.state.from}
-					location={this.props.location}
+					from={0}
+					enter={105}
+					delay={800}
 				/>
-				<div
-					className="z-1 container-fluid"
-					style={
-						breakpoints[currentBreakpoint] > breakpoints.lg
-							? { marginLeft: "300px" }
-							: {}
-					}
+				<Spring
+					from={{ ml: 0 }}
+					to={{ ml: 300 }}
+					config={{ delay: 1700 }}
 				>
-					<ProjectSingle featured={true} options={slideshowOptions} />
-				</div>
+					{(props) => {
+						return (
+							<animated.div
+								className="z-1 container-fluid"
+								style={{ marginLeft: `${props.ml}px` }}
+							>
+								<ProjectSingle
+									featured={true}
+									options={slideshowOptions}
+								/>
+							</animated.div>
+						);
+					}}
+				</Spring>
 			</PageDiv>
 		);
 	}

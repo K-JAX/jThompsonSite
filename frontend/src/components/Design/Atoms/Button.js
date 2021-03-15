@@ -4,10 +4,14 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 export const Button = (props) => {
-	const { children, onClick, priority, hover } = props;
+	const { children, onClick, priority, hover, id } = props;
 
 	return (
-		<StyledButton className={`${priority} ${hover}`} onClick={onClick}>
+		<StyledButton
+			id={id}
+			className={`${priority} ${hover}`}
+			onClick={onClick}
+		>
 			<span>{children}</span>
 		</StyledButton>
 	);

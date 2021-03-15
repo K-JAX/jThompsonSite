@@ -3,13 +3,18 @@ import styled from "styled-components";
 import ReactBreakpoints from "react-breakpoints";
 import { useQuery } from "react-apollo";
 import { Media } from "react-breakpoints";
+import { useLocation } from "react-router-dom";
 
+// Components
 import Intro from "./Design/Templates/Intro";
+import Header from "./Design/Organisms/Header";
 import { Routing } from "../components/Functional/Routing";
 import { SITE_STATUS_QUERY } from "./Functional/queries";
+import { getCookie } from "./Functional/StoreCookies";
 
 export default ({ in: inProp }) => {
 	const { loading, error, data } = useQuery(SITE_STATUS_QUERY);
+	const location = useLocation();
 
 	if (loading) return loading;
 	if (error) return error;
@@ -17,6 +22,7 @@ export default ({ in: inProp }) => {
 	if (data.siteStatus !== "") return <Intro message={data.siteStatus} />;
 
 	let isHome = location.pathname === "/" && true;
+	let visitedCookie = getCookie("visited");
 
 	const breakpoints = {
 		sm: 576,
@@ -28,9 +34,9 @@ export default ({ in: inProp }) => {
 	return (
 		<BodyContainer className={`center position-relative`}>
 			<ReactBreakpoints breakpoints={breakpoints}>
-				{/* {(visitedCookie || !isHome) && (
+				{(visitedCookie || location.pathname !== "/") && (
 					<Header location={location} isHome={isHome} />
-				)} */}
+				)}
 				<Media>
 					{({ breakpoints, currentBreakpoint }) => {
 						let offsetCondition =

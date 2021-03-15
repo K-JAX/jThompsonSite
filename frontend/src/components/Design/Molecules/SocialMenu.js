@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-// import SocialMediaButtons from "react-social-media-buttons";
 import styled from "styled-components";
 import { withApollo } from "react-apollo";
 import { compose } from "recompose";
 import gql from "graphql-tag";
+import { Spring, animated } from "react-spring/renderprops";
 
 // Component
 import SocialIcon from "../Atoms/SocialIcon";
@@ -60,17 +60,22 @@ class SocialMenu extends Component {
 		}
 
 		return (
-			<SocialNavElem
-				className={`social-nav ${className ? className : ""}`}
-			>
-				{menu.menuItems.edges.map((menuItem) => (
-					<SocialIcon
-						link={menuItem.node.url}
-						target={menuItem.node.target}
-						key={menuItem.node.id}
-					/>
-				))}
-			</SocialNavElem>
+			<Spring from={{ y: 100 }} to={{ y: 0 }} config={{ delay: 3500 }}>
+				{(props) => (
+					<SocialNavElem
+						className={`social-nav ${className ? className : ""}`}
+						style={{ transform: `translateY(${props.y}%)` }}
+					>
+						{menu.menuItems.edges.map((menuItem) => (
+							<SocialIcon
+								link={menuItem.node.url}
+								target={menuItem.node.target}
+								key={menuItem.node.id}
+							/>
+						))}
+					</SocialNavElem>
+				)}
+			</Spring>
 		);
 	}
 }
@@ -79,7 +84,7 @@ export default compose(
 	withApollo
 )(SocialMenu);
 
-const SocialNavElem = styled.nav`
+const SocialNavElem = styled(animated.nav)`
 	&.isHome {
 		padding-left: 50px;
 	}

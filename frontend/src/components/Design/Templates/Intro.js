@@ -6,34 +6,38 @@ import { useQuery } from "react-apollo";
 // Components
 import { GiantLetters } from "../Molecules/GiantLetters";
 import { EntryTitle } from "../Molecules/EntryTitle";
-import { TransitionWipeLayers } from "../Molecules/TransitionWipeLayers";
+import { Wipes } from "../Molecules/Wipes";
 import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
 const Intro = (props) => {
-	// console.log(props.location.pathname);
 	const { loading, error, data } = useQuery(SITE_SETTINGS_QUERY);
+	const { location, message } = props;
+	let { status } = props;
 
-	// if (data === undefined) return <p></p>;
-
-	const { status, location, message } = props;
 	return (
 		<PageDiv status={status}>
-			{/* {data !== undefined && (
+			{data !== undefined && (
 				<Helmet>
 					<meta charSet="utf-8" />
 					<title>{`${
 						data.generalSettings.title
-					} ${" - Coming soon!"}`}</title>
+					} ${" - Welcome"}`}</title>
 					<link
 						rel="canonical"
 						href="https://jThompsonArchitect.com"
 					/>
 					<link rel="icon" type="image/png" href={data.faviconUrl} />
 				</Helmet>
-			)} */}
+			)}
 			<GiantLetters layout="svg" letters="JTA" />
 			<EntryTitle message={message} location={location} />
-			<TransitionWipeLayers status={status} />
+			<Wipes
+				startColor={"light"}
+				from={0}
+				enter={-105}
+				leave={0}
+				status={status}
+			/>
 		</PageDiv>
 	);
 };
@@ -47,9 +51,10 @@ const PageDiv = styled.div`
 	align-content: center;
 	background: white;
 	${(props) =>
-		(props.status === "entering" || props.status === "entered") &&
-		`z-index: 10;`}
-	${(props) =>
+		(props.status === "entering" ||
+			props.status === "entered" ||
+			props.status === "exited") &&
+		`z-index: 10;`}/* ${(props) =>
 		(props.status === "exiting" || props.status === "exited") &&
-		`z-index: 10;`}
+		`z-index: 10;`} */
 `;

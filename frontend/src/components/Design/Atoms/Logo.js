@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import styled from "styled-components";
+import { useSpring, animated } from "react-spring";
+
+import { getPreviousPath } from "../../Functional/GetPreviousPath";
 
 const Logo = (props) => {
 	const { isHome, breakpoints, currentBreakpoint, menuActive } = props;
+	// const [location, setLocation] = useState("");
+
+	// const paths = getPreviousPath();
+	const paths = getPreviousPath();
+
+	const springProps = useSpring(
+		{
+			from: {
+				transform: `translateX(${
+					isHome && paths["prevUrl"] !== "/" ? 0 : -100
+				}%)`,
+			},
+			to: { transform: `translateX(0%)` },
+		},
+		[]
+	);
+	// let history = useHistory();
+	// useEffect(() => {
+	// const { location, history } = props;
+	// console.log(history);
+	// history.goBack();
+	// });
 
 	return (
 		<Link
@@ -22,6 +47,7 @@ const Logo = (props) => {
 						? "home-logo"
 						: "normal-logo"
 				} ${menuActive ? "menu-active" : ""}`}
+				style={springProps}
 			>
 				<h1 className="initials">JTA</h1>
 				<div className="title-text">
@@ -34,7 +60,7 @@ const Logo = (props) => {
 };
 export default compose(withBreakpoints)(Logo);
 
-const LogoElement = styled.div`
+const LogoElement = styled(animated.div)`
 	font-family: "Hind Siliguri", sans-serif;
 	padding: 2.75em 1em 2.5em 50px;
 	white-space: nowrap;
@@ -43,7 +69,8 @@ const LogoElement = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	transition: 0.35s;
+	transition: width 0.35s, background 0.35s;
+	will-change: transform;
 	&.home-logo {
 		width: 165px;
 		.initials {

@@ -26,7 +26,7 @@ class PressArticles extends Component {
 	}
 
 	componentDidUpdate() {
-		console.log("checking render timez");
+		// console.log("checking render timez");
 	}
 	// shouldComponentUpdate() {
 	// 	console.log("Greeting - shouldComponentUpdate lifecycle");

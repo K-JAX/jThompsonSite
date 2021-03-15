@@ -31,7 +31,7 @@ export const EntryTitle = (props) => {
 					}}
 					onClick={storeVisitedCookie}
 				>
-					<Button priority="circular">
+					<Button id="entry-button" priority="circular">
 						<span className="mb-2">Click to enter</span>
 						<br />
 						<Arrow direction="up" />
