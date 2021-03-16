@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Spring } from "react-spring";
-// import { Spring } from "react-spring/renderprops";
+// import { Spring } from "react-spring";
+import { Spring } from "react-spring/renderprops";
 import * as easings from "d3-ease";
 import VisibilitySensor from "react-visibility-sensor";
 import PropTypes from "prop-types";

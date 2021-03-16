@@ -16,6 +16,7 @@ then
     done
 fi
 
+sudo chown -R www-data:www-data /var/www/html
 
 sudo -i -u www-data bash << EOF
 

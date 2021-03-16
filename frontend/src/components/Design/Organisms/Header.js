@@ -5,7 +5,7 @@ import { compose } from "recompose";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import gql from "graphql-tag";
-import { Spring } from "react-spring";
+import { Spring } from "react-spring/renderprops";
 
 // Components
 import Logo from "../Atoms/Logo";

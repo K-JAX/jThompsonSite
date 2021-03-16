@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useSpring, animated, config } from "react-spring";
-import { Spring } from "react-spring";
-// import { Spring } from "react-spring/renderprops";
+// import { Spring } from "react-spring";
+import { Spring } from "react-spring/renderprops";
+import { motion } from "framer-motion";
 import { easeQuadInOut } from "d3-ease";
 
 const interp = (i) => (r) =>
@@ -72,9 +73,15 @@ export const GiantLetters = (props) => {
 						);
 					})}
 				</animated.g>
-				<animated.g
+				<motion.g
 					className="distant-bg regular"
-					style={{ transform: radians.interpolate(interp(10)) }}
+					initial={{ x: -1500, scale: 1.1 }}
+					animate={{ x: 2000 }}
+					transition={{
+						type: "tween",
+						yoyo: Infinity,
+						duration: 15,
+					}}
 				>
 					{separated.map((letter, i) => {
 						return (
@@ -88,11 +95,16 @@ export const GiantLetters = (props) => {
 							</text>
 						);
 					})}
-				</animated.g>
-				<animated.g
-					id=""
+				</motion.g>
+				<motion.g
 					className="distant-bg backwards"
-					style={{ transform: radians.interpolate(interp(-10)) }}
+					initial={{ x: 2000, scale: 1.1 }}
+					animate={{ x: -1500 }}
+					transition={{
+						type: "tween",
+						yoyo: Infinity,
+						duration: 15,
+					}}
 				>
 					{separated.map((letter, i) => {
 						return (
@@ -106,7 +118,7 @@ export const GiantLetters = (props) => {
 							</text>
 						);
 					})}
-				</animated.g>
+				</motion.g>
 			</GiantLettersSVG>
 		);
 	}
@@ -134,9 +146,6 @@ const GiantLettersSVG = styled.svg`
 		font-size: 83em;
 	}
 	#main-bg {
-		/* animation: squishIn ease 2.55s; */
-		text {
-		}
 		.letter-0 {
 			opacity: 0.3;
 		}
@@ -150,41 +159,6 @@ const GiantLettersSVG = styled.svg`
 	.distant-bg {
 		opacity: 0.0225;
 		transform-origin: 50% 50%;
-		text {
-			/* transform: translateX(100%) translateY(-7%) scale(1.125); */
-			&:first-of-type {
-				animation-delay: 0s;
-			}
-			&:nth-of-type(2) {
-				animation-delay: 2.5s;
-			}
-			&:last-of-type {
-				animation-delay: 4s;
-			}
-		}
-		&.regular {
-			/* animation: rollOverlay ease 20.55s infinite alternate; */
-		}
-		&.backwards {
-			/* animation: rollOverlay ease 20.55s infinite reverse; */
-		}
-	}
-	@keyframes squishIn {
-		0% {
-			transform: translateX(-100%);
-		}
-		100% {
-			transform: translateX(0);
-		}
-	}
-
-	@keyframes rollOverlay {
-		0% {
-			transform: translateX(200%) scale(1.15) translateZ(0);
-		}
-		100% {
-			transform: translateX(-400%) scale(1.15) translateZ(0);
-		}
 	}
 `;
 
