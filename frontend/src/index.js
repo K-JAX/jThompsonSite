@@ -20,13 +20,15 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
-ReactDOM.render(
-	<React.Suspense fallback={<span>Loading</span>}>
-		<Router>
-			<ApolloProvider client={client}>
-				<App />
-			</ApolloProvider>
-		</Router>
-	</React.Suspense>,
-	document.getElementById("root")
-);
+document.fonts.ready.then(function () {
+	ReactDOM.render(
+		<React.Suspense fallback={<span>Loading</span>}>
+			<Router>
+				<ApolloProvider client={client}>
+					<App />
+				</ApolloProvider>
+			</Router>
+		</React.Suspense>,
+		document.getElementById("root")
+	);
+});
