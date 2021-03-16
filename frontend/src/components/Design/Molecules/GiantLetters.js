@@ -37,7 +37,7 @@ export const GiantLetters = (props) => {
 		return (
 			<GiantLettersSVG
 				width="100%"
-				height="100vh"
+				height="100%"
 				viewBox="0 0 1000 1000"
 				className="svg"
 				layout={layout}
@@ -62,7 +62,7 @@ export const GiantLetters = (props) => {
 					animate={{ x: 2000 }}
 					transition={{
 						type: "tween",
-						yoyo: Infinity,
+						repeat: Infinity,
 						duration: 15,
 					}}
 				>
@@ -85,7 +85,7 @@ export const GiantLetters = (props) => {
 					animate={{ x: -1500 }}
 					transition={{
 						type: "tween",
-						yoyo: Infinity,
+						repeat: Infinity,
 						duration: 15,
 					}}
 				>
@@ -147,7 +147,7 @@ const GiantLettersSVG = styled.svg`
 
 const GiantLettersDiv = styled.div`
 	position: absolute;
-	font-size: ${(props) => (props.height === "full" ? "100vh" : "2250px")};
+	font-size: ${(props) => (props.height === "full" ? "100%" : "2250px")};
 	font-family: "Hind Siliguri", sans-serif;
 	z-index: ${(props) => props.zIndex};
 	&.cascading {
