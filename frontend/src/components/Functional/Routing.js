@@ -28,7 +28,7 @@ import {
 	deleteCookie,
 } from "../Functional/StoreCookies";
 
-export const Routing = () => {
+const Routing = () => {
 	const location = useLocation();
 	const { pathname, key } = location;
 
@@ -108,3 +108,5 @@ export const Routing = () => {
 		</TransitionGroup>
 	);
 };
+
+export default Routing;

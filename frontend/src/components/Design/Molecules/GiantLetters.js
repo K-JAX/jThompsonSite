@@ -2,15 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useSpring, animated, config } from "react-spring";
-// import { Spring } from "react-spring";
-import { Spring } from "react-spring/renderprops";
 import { motion } from "framer-motion";
-import { easeQuadInOut } from "d3-ease";
-
-const interp = (i) => (r) =>
-	`translate3d(${
-		140 * Math.sin(r + (i * 2 * Math.PI) / 1.6)
-	}%, 0, 0) scale(1.125)`;
 
 export const GiantLetters = (props) => {
 	const { letters, layout, height, zIndex } = props;
@@ -40,15 +32,6 @@ export const GiantLetters = (props) => {
 			from: { transform: "translateX(-100%)" },
 			to: { transform: "translateX(0%)" },
 			config: { tension: 80, friction: 30, precision: 0.001 },
-		});
-
-		const { radians } = useSpring({
-			from: { radians: 0 },
-			to: { radians: 2 * Math.PI },
-			loop: true,
-			config: { duration: 45000, precision: 0.001 },
-			delay: 700,
-			reset: true,
 		});
 
 		return (

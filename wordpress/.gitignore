@@ -3,3 +3,4 @@ wp-content/uploads
 ai1wm-backups
 wp-content/plugins/
 plugins/**
+wp-content/upgrade/wp-migrate-db-pro-media*

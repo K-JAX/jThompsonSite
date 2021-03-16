@@ -7,8 +7,12 @@ import { useLocation } from "react-router-dom";
 
 // Components
 import Intro from "./Design/Templates/Intro";
+// const Intro = React.lazy(() => import("./Design/Templates/Intro"));
+
 import Header from "./Design/Organisms/Header";
-import { Routing } from "../components/Functional/Routing";
+// import { Routing } from "../components/Functional/Routing";
+const Routing = React.lazy(() => import("../components/Functional/Routing"));
+
 import { SITE_STATUS_QUERY } from "./Functional/queries";
 import { getCookie } from "./Functional/StoreCookies";
 
