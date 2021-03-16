@@ -163,4 +163,5 @@ Wipes.defaultProps = {
 	delay: 0,
 	startColor: "dark",
 	endColor: "dark",
+	status: "entering",
 };
