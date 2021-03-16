@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Spring, animated } from "react-spring/renderprops";
+import { Spring, animated } from "react-spring";
 
 // components
 import Arrow from "../Atoms/Arrow";

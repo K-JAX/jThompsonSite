@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { withApollo } from "react-apollo";
 import { compose } from "recompose";
 import gql from "graphql-tag";
-import { Spring, animated } from "react-spring/renderprops";
+import { Spring, animated } from "react-spring";
 
 // Component
 import SocialIcon from "../Atoms/SocialIcon";

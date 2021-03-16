@@ -4,7 +4,7 @@ import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { Spring, animated } from "react-spring/renderprops";
+import { Spring, animated } from "react-spring";
 
 // Components
 import ProjectSingle from "./Project-Single";
