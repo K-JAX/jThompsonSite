@@ -10,7 +10,7 @@ import { createHttpLink } from "apollo-link-http";
 import App from "./components/App";
 import Config from "./config";
 // Bootstrap
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Apollo GraphQL client
 const client = new ApolloClient({
@@ -22,15 +22,15 @@ const client = new ApolloClient({
 
 // if (document.fonts.check("1em Roboto")) {
 // }
-document.fonts.ready.then(function () {
-	ReactDOM.render(
-		<React.Suspense fallback={<span>Loading</span>}>
-			<Router>
-				<ApolloProvider client={client}>
-					<App />
-				</ApolloProvider>
-			</Router>
-		</React.Suspense>,
-		document.getElementById("root")
-	);
-});
+// document.fonts.ready.then(function () {
+ReactDOM.render(
+	<React.Suspense fallback={<span>Loading</span>}>
+		<Router>
+			<ApolloProvider client={client}>
+				<App />
+			</ApolloProvider>
+		</Router>
+	</React.Suspense>,
+	document.getElementById("root")
+);
+// });

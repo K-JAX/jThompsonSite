@@ -4,24 +4,23 @@ import PropTypes from "prop-types";
 import { useTransition, animated } from "react-spring";
 
 export const Wipes = (props) => {
+	const [items, setItems] = useState([]);
+	const [color, setColor] = useState("");
 	const [z, setZ] = useState(11);
 	const { className, from, enter, leave, delay } = props;
 	let { status, startColor, endColor } = props;
-	const [items, setItems] = useState([1, 2, 3]);
-	const [color, setColor] = useState(startColor);
-
 	// setItems([1, 2, 3]);
 	// setColor(startColor);
 
-	// useEffect(() => {
-	// 	// 	// if (status === "entered" || status === "entering") {
-	// 	// 	setItems([1, 2, 3]);
-	// 	// 	setColor(startColor);
-	// 	// 	// if (status === "exited" || status === "exiting") {
-	// 	// 	// 	setItems([]);
-	// 	// 	// 	setColor(endColor);
-	// 	// 	// }
-	// }, []);
+	useEffect(() => {
+		if (status === "entered" || status === "entering") {
+			setItems([1, 2, 3]);
+			setColor(startColor);
+		} else if (status === "exited" || status === "exiting") {
+			setItems([]);
+			setColor(endColor);
+		}
+	}, [status]);
 
 	const layerTransitions = useTransition(items, (item) => item, {
 		from: {
@@ -36,7 +35,7 @@ export const Wipes = (props) => {
 			await setZ(11);
 			await next({ transform: `translateX(${leave}%)` });
 			await new Promise((resolve) => setTimeout(resolve, 7000));
-			await setZ(-1);
+			// await setZ(-1);
 		},
 		trail: 160,
 		config: { tension: 300, friction: 50 },

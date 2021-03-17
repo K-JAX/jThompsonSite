@@ -108,7 +108,11 @@ class Nav extends Component {
 								className={`ml1 no-underline black ${
 									isHome ? "active" : ""
 								}`}
-								style={{ transitionDelay: `${i * 0.2}s` }}
+								style={
+									{
+										/*transitionDelay: `${i * 0.2}s`*/
+									}
+								}
 								title={menu.node.title}
 								onClick={onClick}
 							>
@@ -126,7 +130,11 @@ class Nav extends Component {
 									: menu.node.target
 							}
 							className="ml1 no-underline black"
-							style={{ transitionDelay: `${i * 0.1}s` }}
+							style={
+								{
+									/* transitionDelay: `${i * 0.1}s` */
+								}
+							}
 							title={menu.node.title}
 						>
 							<span>{menu.node.label}</span>

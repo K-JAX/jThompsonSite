@@ -14,7 +14,7 @@ const Header = React.lazy(() => import("./Design/Organisms/Header"));
 // import Footer from "./Design/Molecules/Footer";
 const Footer = React.lazy(() => import("./Design/Molecules/Footer"));
 
-// import { Routing } from "../components/Functional/Routing";
+// import Routing from "../components/Functional/Routing";
 const Routing = React.lazy(() => import("../components/Functional/Routing"));
 
 import { SITE_STATUS_QUERY } from "./Functional/queries";
