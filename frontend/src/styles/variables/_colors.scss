@@ -1,9 +1,13 @@
 // Colors
-$wht:       white;
-$blk:       black;
-$navy: 		#464853 !default;
-$gray:      #c0c0c0;
-$warmGray:  #F9F3F0;
+$wht: white;
+$blk: black;
+$navy: #464853 !default;
+$gray: #c0c0c0;
+$warmGray: #f9f3f0;
 
 // Gradients
-$GRAD-warm-white: linear-gradient(110deg, rgba(246,243,243,1) 0%, rgba(245,242,241,1) 100%);
+$GRAD-warm-white: linear-gradient(
+	110deg,
+	rgba(242, 239, 239, 1) 0%,
+	rgba(245, 242, 241, 1) 100%
+);

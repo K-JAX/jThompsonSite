@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Spring, animated } from "react-spring/renderprops";
+import PropTypes from "prop-types";
 
 // components
 import Arrow from "../Atoms/Arrow";
@@ -12,21 +13,24 @@ class ProjectTitle extends Component {
 		const {
 			title,
 			subtitle,
-			slideTitle,
+			type,
 			percentage,
 			attachmentClass,
 			active,
+			className,
 		} = this.props;
 		return (
-			<Spring from={{ y: 100 }} to={{ y: 0 }} config={{ delay: 1500 }}>
+			<Spring
+				from={{ y: type === "slideTitle" ? 100 : 0 }}
+				to={{ y: 0 }}
+				config={{ delay: 1500 }}
+			>
 				{(props) => (
 					<ProjectTitleDiv
-						className={`project-title ${
-							slideTitle ? "slideTitle" : "regularTitle"
-						} ${attachmentClass}`}
+						className={`project-title ${type} ${className} ${attachmentClass}`}
 						style={{ transform: `translateY(${props.y}%)` }}
 					>
-						{slideTitle ? (
+						{type === "slideTitle" && (
 							<div className="scroll-indicator">
 								<small className="help-text">
 									<i>Scroll to view</i>
@@ -38,22 +42,30 @@ class ProjectTitle extends Component {
 									animate
 								/>
 							</div>
-						) : (
+						)}
+						{type == "regularTitle" && (
 							<Link className="bcrumb" to={"/portfolio"}>
 								Portfolio &#62;
 							</Link>
 						)}
-						<div className="title-stack">
-							<h1>{title}</h1>
+						<div className="title-stack row">
+							<h1 className={`${type === "thumbTitle" && "h6"}`}>
+								{title}
+							</h1>
+							{type == "thumbTitle" && (
+								<Arrow className="long" direction="right" />
+							)}
 							{percentage !== undefined && (
 								<SlideMeter
 									progress={active ? percentage : undefined}
 								/>
 							)}
 
-							<h2>
-								<i>{subtitle}</i>
-							</h2>
+							{subtitle !== undefined && (
+								<h2>
+									<i>{subtitle}</i>
+								</h2>
+							)}
 						</div>
 					</ProjectTitleDiv>
 				)}
@@ -100,6 +112,10 @@ const ProjectTitleDiv = styled(animated.div)`
 				max-height: 200px;
 			}
 		}
+	}
+	&.thumbTitle {
+		bottom: 0;
+		background: white;
 	}
 	&.hero {
 		position: fixed;
@@ -250,4 +266,61 @@ const ProjectTitleDiv = styled(animated.div)`
 			}
 		}
 	}
+	&.thumbTitle {
+		position: absolute;
+		width: 50%;
+		height: 100%;
+		right: -100%;
+		display: flex;
+		min-width: auto;
+		background: #464853;
+		overflow: hidden;
+		transition: 0.35s;
+		&:before,
+		&:after {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 100%;
+			transition: 0.45s;
+		}
+		&:before {
+			z-index: 1;
+			background: #e3e2dd;
+			transition-delay: 0.1s;
+		}
+		&:after {
+			z-index: 2;
+			background: white;
+			transition-delay: 0.2s;
+		}
+		.title-stack {
+			position: relative;
+			z-index: 3;
+			width: 100%;
+			left: 100%;
+			margin: 0;
+			padding: 0.25em 1.25em;
+			min-width: auto;
+			flex-direction: row;
+			/* justify-content: space-between; */
+			justify-content: center;
+			transition: 0.35s;
+			background: transparent;
+			transition-delay: 0.2s;
+
+			h1 {
+				font-size: 1em;
+			}
+		}
+	}
 `;
+ProjectTitle.propTypes = {
+	type: PropTypes.string,
+};
+
+ProjectTitle.defaultProps = {
+	type: "regularTitle",
+};

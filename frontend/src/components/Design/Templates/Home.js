@@ -5,6 +5,7 @@ import { compose } from "recompose";
 import gql from "graphql-tag";
 import styled from "styled-components";
 import { Spring, animated } from "react-spring/renderprops";
+import { getPreviousPath } from "../../Functional/GetPreviousPath";
 
 // Components
 import ProjectSingle from "./Project-Single";
@@ -43,7 +44,7 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.executePageQuery();
-		// console.log(this.props.location.state.from);
+		console.log(this.props.location);
 		// console.log(this.props.status);
 	}
 
@@ -74,15 +75,17 @@ class Home extends Component {
 					delay={800}
 				/>
 				<Spring
-					from={{ ml: 0 }}
-					to={{ ml: 300 }}
+					from={{ w: 0 }}
+					to={{ w: 300 }}
 					config={{ delay: 1700 }}
 				>
 					{(props) => {
 						return (
 							<animated.div
-								className="z-1 container-fluid"
-								style={{ marginLeft: `${props.ml}px` }}
+								className="z-1"
+								style={{
+									width: `calc(100% - ${props.w}px)`,
+								}}
 							>
 								<ProjectSingle
 									featured={true}
@@ -100,6 +103,8 @@ class Home extends Component {
 export default compose(withApollo, withBreakpoints)(Home);
 
 const PageDiv = styled.div`
+	display: flex;
+	justify-content: end;
 	${(props) => props.status === "entering" && `z-index: -2;`}
 	${(props) =>
 		(props.status === "exiting" || props.status === "exited") &&

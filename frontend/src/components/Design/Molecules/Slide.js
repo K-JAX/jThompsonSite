@@ -41,7 +41,7 @@ class Slide extends Component {
 					subtitle={`${date.slice(0, 4)}, ${
 						location && location.city
 					}, ${location && location.stateShort}`}
-					slideTitle
+					type="slideTitle"
 					active={active}
 					attachmentClass={titleAttachClass}
 					percentage={percentage}

@@ -24,7 +24,7 @@ const client = new ApolloClient({
 // }
 // document.fonts.ready.then(function () {
 ReactDOM.render(
-	<React.Suspense fallback={<span>Loading</span>}>
+	<React.Suspense fallback={<span></span>}>
 		<Router>
 			<ApolloProvider client={client}>
 				<App />

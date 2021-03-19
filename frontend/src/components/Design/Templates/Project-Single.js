@@ -147,7 +147,7 @@ class ProjectSingle extends Component {
 							<title>{data.project.title}</title>
 						</Helmet>
 					)}
-					<ScrollHeroProvider >
+					<ScrollHeroProvider>
 						<SlideshowContext.Consumer>
 							{(slideshow) => (
 								<ScrollHeroContext.Consumer>
@@ -173,6 +173,7 @@ export default withApollo(ProjectSingle);
 
 const ProjectMain = styled.main`
 	position: relative;
+	margin-bottom: 80px;
 `;
 
 ProjectSingle.propTypes = {

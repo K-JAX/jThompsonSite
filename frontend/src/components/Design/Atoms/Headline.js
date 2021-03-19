@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { withApollo } from "react-apollo";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useSpring, useTrail, animated, useTransition } from "react-spring";
 
 const Headline = (props) => {
-	const { text, loaded, className, alignment } = props;
+	const { text, loaded, className, alignment, size } = props;
 	let { status } = props;
 	// status = status === undefined ? "entered" : status;
 
 	const [up, set] = useState(false);
+	const [opaque, setOpaque] = useState(false);
 	const [items, setItems] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -44,21 +44,16 @@ const Headline = (props) => {
 
 	const chars = useMemo(() => text.split(""), [text]);
 
-	const spring = useSpring(
-		{
-			from: { opacity: 0 },
-			to: async (next) => {
-				await next({
-					opacity: up ? 1 : 0,
-					color: "#fff",
-				});
-				await new Promise((resolve) => setTimeout(resolve, 400));
-				await next({ color: "#000" });
-			},
-			config: { tension: 250 },
+	const spring = useSpring({
+		from: { opacity: 0, color: "#000" },
+		to: async (next) => {
+			await next(!opaque ? { opacity: 1, color: "#fff" } : {});
+			await new Promise((resolve) => setTimeout(resolve, 800));
+			await next({ opacity: 1, color: "#000" });
+			await setOpaque(true);
 		},
-		[]
-	);
+		config: { tension: 250 },
+	});
 
 	const trail = useTrail(chars.length, {
 		config: { mass: 5, tension: 1800, friction: 140 },
@@ -98,8 +93,11 @@ const Headline = (props) => {
 
 	return (
 		<HeadlineH1
-			className={`page-heading ${className} ${loaded ? "loaded" : ""}`}
+			className={`page-heading ${className} ${size} ${
+				loaded ? "loaded" : ""
+			}`}
 			alignment={alignment}
+			size={size}
 		>
 			<animated.div style={{ ...spring }}>
 				{trail.map(({ y, ...rest }, index) => (
@@ -141,15 +139,32 @@ export default React.memo(Headline, areEqual);
 const HeadlineH1 = styled.h1`
 	position: relative;
 	justify-self: end;
-	font-size: 8.25rem;
+	/* ${(props) =>
+		props.size === "large"
+			? "font-size: 8.25rem;"
+			: "font-size: 2.75rem;"} */
+
 	font-weight: 100;
 	height: auto;
 	display: inline-block;
 	margin: 0;
 	white-space: nowrap;
 	font-variant: small-caps;
-	${(props) => (props.alignment === "left" ? "padding-left: 12rem;" : "")}
+	/* ${(props) =>
+		props.alignment === "left" ? "padding-left: 12rem;" : ""} */
 	${(props) => (props.alignment === "right" ? "padding-right: 12rem;" : "")}
+	&.large {
+		font-size: 8.25rem;
+		@media all and (max-width: 768px) {
+			font-size: 5rem;
+		}
+	}
+	&.small {
+		font-size: 2.75rem;
+		/* @media all and (max-width: 768px) {
+			font-size: 2rem;
+		} */
+	}
 	&:before {
 		content: "";
 		position: absolute;
@@ -163,9 +178,7 @@ const HeadlineH1 = styled.h1`
 	}
 	&.loaded {
 	}
-	@media all and (max-width: 768px) {
-		font-size: 5rem;
-	}
+
 	span {
 		display: inline-block;
 	}
@@ -193,7 +206,12 @@ const HeadlineH1 = styled.h1`
 
 Headline.propTypes = {
 	text: PropTypes.string,
+	size: PropTypes.string,
 	loaded: PropTypes.bool,
 	className: PropTypes.string,
 	alignment: PropTypes.string,
+};
+
+Headline.defaultProps = {
+	size: "large",
 };

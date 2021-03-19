@@ -3,7 +3,14 @@ import styled from "styled-components";
 
 class Arrow extends Component {
 	render() {
-		const { isHovered, alignment, color, direction, animate } = this.props;
+		const {
+			isHovered,
+			alignment,
+			color,
+			direction,
+			animate,
+			className,
+		} = this.props;
 		let { num } = this.props;
 		if (num === undefined) num = 1;
 
@@ -37,6 +44,7 @@ class Arrow extends Component {
 				color={color}
 				className={` 
 					${alignment}
+					${className}
 					${isHovered ? " hovering" : ""}
 					${animate ? "animated" : ""}
 					`}
@@ -163,6 +171,49 @@ const ArrowBox = styled.div`
 			}
 			100% {
 				opacity: 0;
+			}
+		}
+	}
+	&.long {
+		position: relative;
+		.arrow {
+			height: 100%;
+			outline: none;
+			border: none;
+			background: none;
+			font-size: 1.5em;
+			padding: 0 1.15em;
+			position: relative;
+			transform: rotate(180deg);
+			right: 12%;
+			&:before,
+			&:after {
+				content: "";
+				position: absolute;
+				opacity: 0.75;
+				transition: 0.25s;
+			}
+			&:before {
+				background: gray;
+				width: 75%;
+				height: 2px;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+			}
+			&:after {
+				width: 7px;
+				height: 7px;
+				top: -1px;
+				bottom: 1px;
+				right: 7px;
+				margin: auto;
+				border: 1px solid black;
+				border-bottom: none;
+				border-left: none;
+				transform: rotate(45deg);
 			}
 		}
 	}

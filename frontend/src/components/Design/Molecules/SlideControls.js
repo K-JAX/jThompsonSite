@@ -120,6 +120,7 @@ const ControlsDiv = styled.div`
 		}
 		.total {
 			opacity: 0.5;
+			white-space: nowrap;
 		}
 	}
 	&.gallery {
@@ -128,7 +129,6 @@ const ControlsDiv = styled.div`
 		justify-content: center;
 		@media all and (max-width: 768px) {
 			position: absolute;
-			/* top: 0; */
 			bottom: 0%;
 		}
 	}
@@ -136,7 +136,6 @@ const ControlsDiv = styled.div`
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
-		/* padding: 5px 15px; */
 		padding: 0;
 		.slide-count {
 			position: relative;

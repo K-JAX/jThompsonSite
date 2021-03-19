@@ -66,6 +66,16 @@ button.no-style {
 	border: none;
 	box-shadow: none;
 	outline: none;
+	background: transparent;
+}
+
+button.no-style-lg {
+	@media all and (min-width: 992px) {
+		border: none;
+		box-shadow: none;
+		outline: none;
+		background: transparent;
+	}
 }
 
 .gray {
@@ -137,6 +147,20 @@ button.no-style {
 	z-index: 10;
 }
 
+.before {
+	&:before {
+		content: "";
+		position: absolute;
+	}
+}
+
+.after {
+	&:after {
+		content: "";
+		position: absolute;
+	}
+}
+
 .button,
 input[type="submit"] {
 	padding: 0.8em 2.8em;
@@ -184,6 +208,9 @@ input[type="submit"] {
 
 .offset-header {
 	margin-top: 175px;
+	@media all and (max-width: 767px) {
+		margin-top: 100px;
+	}
 }
 
 .trunk {

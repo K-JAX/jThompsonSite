@@ -60,7 +60,6 @@ const HeroSection = styled.section`
 	background-size: cover;
 	/* overflow: hidden; */
 	&.hero-section {
-		/* override whatever grid properties inherited */
 		grid-template-columns: 100%;
 	}
 `;

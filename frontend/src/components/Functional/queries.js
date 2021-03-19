@@ -104,6 +104,9 @@ export const FEATURED_PROJ_QUERY = gql`
 				}
 			}
 		) {
+			nodes {
+				id
+			}
 			edges {
 				node {
 					id
@@ -180,6 +183,9 @@ export const PRESS_QUERY = gql`
 	query PressQuery {
 		__typename
 		pressArticles {
+			nodes {
+				id
+			}
 			edges {
 				node {
 					title
@@ -211,6 +217,71 @@ export const PRESS_QUERY = gql`
 	}
 `;
 
+export const PROJ_TYPE_QUERY = gql`
+	query ProjectTypeQuery {
+		projectTypes(where: { hideEmpty: true }) {
+			edges {
+				node {
+					id
+					slug
+					name
+				}
+			}
+		}
+	}
+`;
+
+export const PROJ_QUERY = gql`
+	query ProjectQuery {
+		projects {
+			edges {
+				node {
+					id
+					slug
+					title
+					link
+					featuredImage {
+						node {
+							sourceUrl(size: MEDIUM_LARGE)
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const FILTERED_PROJ_QUERY = gql`
+	query ProjectQuery($id: String! = "urban") {
+		projects(
+			where: {
+				taxQuery: {
+					taxArray: {
+						terms: [$id]
+						operator: IN
+						field: SLUG
+						taxonomy: PROJECTTYPE
+					}
+				}
+			}
+		) {
+			edges {
+				node {
+					id
+					slug
+					title
+					link
+					featuredImage {
+						node {
+							sourceUrl(size: MEDIUM_LARGE)
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
 export const SINGLE_PRESS_QUERY = gql`
 	query SinglePressQuery($slug: ID!) {
 		pressArticle(id: $slug, idType: URI) {
@@ -222,6 +293,14 @@ export const SINGLE_PRESS_QUERY = gql`
 					mediaItemUrl
 				}
 			}
+		}
+	}
+`;
+
+export const PAGE_QUERY = gql`
+	query PageQuery($uri: String!) {
+		pageBy(uri: $uri) {
+			title
 		}
 	}
 `;

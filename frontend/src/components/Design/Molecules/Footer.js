@@ -27,7 +27,8 @@ export default compose(withBreakpoints)(Footer);
 
 const FooterElement = styled.footer`
 	position: absolute;
-	top: calc(100vh - 100px);
+	top: calc(100vh - 300px);
+	/* bottom: 100px; */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
