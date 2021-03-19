@@ -242,6 +242,7 @@ export const PROJ_QUERY = gql`
 					link
 					featuredImage {
 						node {
+							id
 							sourceUrl(size: MEDIUM_LARGE)
 						}
 					}
