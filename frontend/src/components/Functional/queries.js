@@ -233,7 +233,7 @@ export const PROJ_TYPE_QUERY = gql`
 
 export const PROJ_QUERY = gql`
 	query ProjectQuery {
-		projects {
+		projects(first: 18) {
 			edges {
 				node {
 					id
@@ -255,6 +255,7 @@ export const PROJ_QUERY = gql`
 export const FILTERED_PROJ_QUERY = gql`
 	query ProjectQuery($id: String! = "urban") {
 		projects(
+			first: 18
 			where: {
 				taxQuery: {
 					taxArray: {
