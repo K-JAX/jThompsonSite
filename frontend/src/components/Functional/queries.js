@@ -274,6 +274,7 @@ export const FILTERED_PROJ_QUERY = gql`
 					link
 					featuredImage {
 						node {
+							id
 							sourceUrl(size: MEDIUM_LARGE)
 						}
 					}
