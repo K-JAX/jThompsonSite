@@ -18,7 +18,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Deploy NodeJS and Wordpress Site
-        uses: appleboy/ssh-actions
+        uses: appleboy/ssh-actions@master
         with:
           host: ${{secrets.SSH_HOST}}
           key: ${{secrets.SSH_KEY}}
