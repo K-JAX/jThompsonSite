@@ -4,7 +4,7 @@
 let usingDocker = process.env.HOME === "/home/node";
 let dev = usingDocker ? "http://wp-headless:8080" : "http://localhost:8080";
 
-let prod = "https://wordpress.jthompsonarch.com";
+let prod = "https://wp.jthompsonarch.com";
 let url = process.env.NODE_ENV === "development" ? dev : prod;
 
 const Config = {
