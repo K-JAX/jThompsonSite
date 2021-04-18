@@ -27,7 +27,10 @@ jobs:
           script: |
             mkdir test
             cd test
-            git clone https://github.com/K-JAX/jThompsonSite.git
+            git init
+            git remote add origin https://github.com/K-JAX/jThompsonSite.git
+            git fetch origin
+            git checkout origin/master -- frontend
             echo "Deployement successful to digital ocean"
 
       # Runs a set of commands using the runners shell
