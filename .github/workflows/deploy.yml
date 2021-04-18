@@ -31,6 +31,7 @@ jobs:
             git clone https://github.com/K-JAX/jThompsonSite.git
             rm -rf /var/www/html/jthompsonarch/frontend
             rm -rf /var/www/wordpress/wp-content/themes
+            cd jThompsonSite/frontend && yarn build && cd ..
             cp -R jThompsonSite/frontend /var/www/html/jthompsonarch/frontend
             cp -R jThompsonSite/wordpress/wp-content/themes /var/www/wordpress/wp-content/themes
 
