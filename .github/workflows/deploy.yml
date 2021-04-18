@@ -25,6 +25,7 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
 
           script: |
+            rm -rf test
             mkdir test
             cd test
             git init
