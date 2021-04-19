@@ -10,3 +10,4 @@ yarn-error.log
 wordpress/wp-includes
 data/wp_headless/*
 frontend/node_modules
+build/
