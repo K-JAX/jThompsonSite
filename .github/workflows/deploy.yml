@@ -30,9 +30,7 @@ jobs:
             cd deployment
             git clone https://github.com/K-JAX/jThompsonSite.git
             cd jThompsonSite/frontend && yarn && yarn build && cd ../..
-      # overwrite the frontend files
             rm -rf /var/www/html/jthompsonarch/frontend
             cp -R jThompsonSite/frontend /var/www/html/jthompsonarch/frontend
-      # overwrite the wordpress theme files
             rm -rf /var/www/wordpress/wp-content/themes
             cp -R jThompsonSite/wordpress/wp-content/themes /var/www/wordpress/wp-content/themes
