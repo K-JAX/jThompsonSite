@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { withApollo } from "react-apollo";
 import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
-import isEqual from "react-fast-compare";
 
 // Functions
 import {

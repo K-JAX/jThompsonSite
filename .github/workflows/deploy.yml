@@ -29,19 +29,10 @@ jobs:
             mkdir deployment
             cd deployment
             git clone https://github.com/K-JAX/jThompsonSite.git
-            rm -rf /var/www/html/jthompsonarch/frontend
-            rm -rf /var/www/wordpress/wp-content/themes
             cd jThompsonSite/frontend && yarn && yarn build && cd ../..
+      # overwrite the frontend files
+            rm -rf /var/www/html/jthompsonarch/frontend
             cp -R jThompsonSite/frontend /var/www/html/jthompsonarch/frontend
+      # overwrite the wordpress theme files
+            rm -rf /var/www/wordpress/wp-content/themes
             cp -R jThompsonSite/wordpress/wp-content/themes /var/www/wordpress/wp-content/themes
-
-
-      # cd test
-      # git checkout origin/master -- frontend
-      # echo "Deployement successful to digital ocean"
-
-      # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #   run: |
-      #     echo Add other actions to build,
-      #     echo test, and deploy your project.
