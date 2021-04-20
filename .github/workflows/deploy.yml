@@ -28,7 +28,7 @@ jobs:
             rm -rf deployment
             mkdir deployment
             cd deployment
-            git clone https://github.com/K-JAX/jThompsonSite.git
+            git clone -–depth 1 https://github.com/K-JAX/jThompsonSite.git
             cd jThompsonSite/frontend && yarn && yarn build && cd ../..
             rm -rf /var/www/html/jthompsonarch/frontend
             cp -R jThompsonSite/frontend /var/www/html/jthompsonarch/frontend
