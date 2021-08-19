@@ -19,7 +19,7 @@ export const EntryTitle = (props) => {
 	return (
 		<EntrySignDiv>
 			<h1>
-				Joseph Thompson
+				Joseph Thompson_
 				<br />
 				<strong>Architect</strong>
 			</h1>
