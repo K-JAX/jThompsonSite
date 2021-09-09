@@ -327,3 +327,59 @@ input[type="submit"] {
 		opacity: 1;
 	}
 }
+
+// .overlay-anim-container * {
+// 	position: relative;
+// 	overflow: hidden;
+// 	&:before,
+// 	&:after {
+// 		content: "";
+// 		position: absolute;
+// 		left: 0;
+// 		top: 0;
+// 		width: 100%;
+// 		// height: 100%;
+// 		margin: auto;
+// 		// animation: expose 0.4s forwards;
+// 	}
+// 	&:before {
+// 		background: $gray;
+// 	}
+// 	&:after {
+// 		// transiton-delay: 1s;
+// 		background: $navy;
+// 		animation-delay: 0.15s;
+// 	}
+// }
+
+// @keyframes expose {
+// 	0% {
+// 		top: 0;
+// 		bottom: 100%;
+// 		height: 0;
+// 	}
+// 	50% {
+// 		top: 0;
+// 		bottom: 0;
+// 		height: 100%;
+// 	}
+// 	100% {
+// 		top: 100%;
+// 		bottom: 0;
+// 		height: 0%;
+// 	}
+// }
+
+.overlay-anim-container {
+	position: relative;
+
+	.anim-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		background: gray;
+	}
+}

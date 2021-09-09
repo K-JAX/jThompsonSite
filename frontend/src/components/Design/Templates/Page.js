@@ -1,30 +1,37 @@
-import React, { Component } from 'react';
-import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
+import React, { Component } from "react";
+import { withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import { Helmet } from "react-helmet";
 
 /**
  * GraphQL page query that takes a page slug as a uri
  * Returns the title and content of the page
  */
 const PAGE_QUERY = gql`
-  query PageQuery($uri: String!) {
-	pageBy(uri: $uri) {
-	  title
-	  content
+	query PageQuery($uri: String!) {
+		pageBy(uri: $uri) {
+			title
+			content
+			seo {
+				title
+				metaDesc
+				metaKeywords
+			}
+		}
 	}
-  }
 `;
 
 /**
  * Fetch and display a Page
  */
 class Page extends Component {
-	constructor(props){
-		super(props)
+	constructor(props) {
+		super(props);
 		this.state = {
 			page: {
-				title: '',
-				content: '',
+				title: "",
+				content: "",
+				seo: {},
 			},
 		};
 	}
@@ -33,13 +40,13 @@ class Page extends Component {
 		this.executePageQuery();
 	}
 
-	componentDidUpdate( prevProps ) {
+	componentDidUpdate(prevProps) {
 		const { props } = this;
-		if(props.match.params.slug !== prevProps.match.params.slug){
+		if (props.match.params.slug !== prevProps.match.params.slug) {
 			this.executePageQuery();
 		}
-	}  
-	
+	}
+
 	/**
 	 * Execute page query, process the response and set the state
 	 */
@@ -47,7 +54,7 @@ class Page extends Component {
 		const { match, client } = this.props;
 		let uri = match.params.slug;
 		if (!uri) {
-			uri = 'welcome';
+			uri = "welcome";
 		}
 		const result = await client.query({
 			query: PAGE_QUERY,
@@ -61,13 +68,24 @@ class Page extends Component {
 		const { page } = this.state;
 
 		return (
-			<div style={{marginLeft: '315px'}}>
+			<div style={{ marginLeft: "315px" }}>
+				<Helmet>
+					<meta charSet="utf-8" />
+					<title>{`${
+						data.generalSettings.title
+					} ${" - Welcome"}`}</title>
+					<link
+						rel="canonical"
+						href="https://jThompsonArchitect.com"
+					/>
+					<link rel="icon" type="image/png" href={data.faviconUrl} />
+				</Helmet>
 				<p>{JSON.stringify(page)}</p>
 				<div className="pa2">
 					<h1>{page.title}</h1>
 				</div>
 				<div
-				// eslint-disable-next-line react/no-danger
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: page.content,
 					}}

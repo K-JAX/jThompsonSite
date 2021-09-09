@@ -44,7 +44,7 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.executePageQuery();
-		console.log(this.props.location);
+		// console.log(this.props.location);
 		// console.log(this.props.status);
 	}
 

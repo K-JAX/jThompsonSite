@@ -3,7 +3,7 @@ version: '3.3'
 services:
     db-headless:
         container_name: db
-        user: "${USERID}:${GROUPID}"
+        # user: "${USERID}:${GROUPID}"
         environment:
             - MYSQL_RANDOM_ROOT_PASSWORD=yes
             - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
@@ -26,10 +26,10 @@ services:
             - db-headless
         volumes:
             - ./wordpress:/var/www/html:Z
-            - ./docker/plugins:/var/www/plugins 
+            - ./docker/plugins:/var/www/plugins
             - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
         ports:
-        - '8080:8080'
+            - '8080:8080'
         restart: always
     node-web-app:
         command: yarn start
@@ -39,7 +39,7 @@ services:
         build: ./frontend
         ports:
             - '3001:3001'
-        user: "${USERID}:${GROUPID}"
+        # user: "${USERID}:${GROUPID}"
         volumes:
             - ./frontend/src:/home/node/app/src:Z
             - ./frontend/.eslintrc.json:/home/node/app/.eslintrc:Z

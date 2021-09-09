@@ -1,96 +1,37 @@
 import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useSpring, useTrail, animated, useTransition } from "react-spring";
+import { motion, useAnimation } from "framer-motion";
 
 const Headline = (props) => {
 	const { text, loaded, className, alignment, size } = props;
 	let { status } = props;
-	// status = status === undefined ? "entered" : status;
-
-	const [up, set] = useState(false);
-	const [opaque, setOpaque] = useState(false);
-	const [items, setItems] = useState([]);
-	const [isLoaded, setIsLoaded] = useState(false);
-
+	const [items, setItems] = useState([1, 2, 3]);
+	const chars = text.split("");
+	const letterAnim = useAnimation();
+	const boxAnim = useAnimation();
+	async function letterSeq() {
+		await letterAnim.start({ y: 0, opacity: 1 });
+		await letterAnim.start({ color: "#000" });
+	}
+	async function letterOutSeq() {
+		await letterAnim.start({ y: 30, opacity: 0 });
+	}
+	async function boxSeq() {
+		await boxAnim.start({ width: "100%", left: "0%", right: "100%" });
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		await boxAnim.start({ width: "0%", left: "100%", right: "0%" });
+	}
 	useEffect(() => {
-		setIsLoaded(true);
-		// !up && console.log("running useEffect");
-		// set(true);
-		// console.log(`isLoaded: ${isLoaded}, status: ${status}, up: ${up}`);
-		// inCondition && startAnim();
-		startAnim();
-		outCondition && exitAnim();
-	}, []);
+		if (status === "entered") {
+			letterSeq();
+			boxSeq();
+		} else if (status === "exiting") {
+			letterOutSeq();
+		}
+	}, [status]);
 
-	const inCondition = (status === "entering" || status === "entered") && !up;
-
-	const outCondition = (status === "exiting" || status === "exited") && up;
-
-	const startAnim = () => {
-		// console.log("running the start anim");
-		setTimeout(() => {
-			set(true);
-			setItems([0, 1, 2]);
-		}, 1000);
-	};
-
-	const exitAnim = () => {
-		setTimeout(() => {
-			set(false);
-		}, 700);
-		setItems([]);
-	};
-
-	const chars = useMemo(() => text.split(""), [text]);
-
-	const spring = useSpring({
-		from: { opacity: 0, color: "#000" },
-		to: async (next) => {
-			await next(!opaque ? { opacity: 1, color: "#fff" } : {});
-			await new Promise((resolve) => setTimeout(resolve, 800));
-			await next({ opacity: 1, color: "#000" });
-			await setOpaque(true);
-		},
-		config: { tension: 250 },
-	});
-
-	const trail = useTrail(chars.length, {
-		config: { mass: 5, tension: 1800, friction: 140 },
-		y: up ? 0 : 50,
-	});
-
-	const boxTransitions = useTransition(items, (item) => item, {
-		from: { width: `0%`, left: "-10%", right: "110%" },
-		enter: (item) => async (next, cancel) => {
-			await next({
-				width: `100%`,
-				left: "0%",
-				right: "100%",
-			});
-			await next({ width: `0%`, left: `110%`, right: `0%` });
-		},
-		leave: (item) => async (next, cancel) => {
-			await next({
-				width: `0%`,
-				left: `110%`,
-				right: `0%`,
-			});
-			await next({
-				width: `100%`,
-				left: "0%",
-				right: "100%",
-				config: { duration: 250 },
-			});
-			await next({
-				width: `0%`,
-				left: "-10%",
-				right: "110%",
-			});
-		},
-		trail: 210,
-	});
-
+	if (status === "entering") return null;
 	return (
 		<HeadlineH1
 			className={`page-heading ${className} ${size} ${
@@ -99,29 +40,40 @@ const Headline = (props) => {
 			alignment={alignment}
 			size={size}
 		>
-			<animated.div style={{ ...spring }}>
-				{trail.map(({ y, ...rest }, index) => (
-					<animated.span
-						key={`key-${index}-letter${chars[index]}`}
-						style={{
-							...rest,
-							transform: y.interpolate(
-								(y) => `translate3d(0,${y}px,0)`
-							),
+			{chars.map((char, i) => {
+				return (
+					<motion.span
+						key={`letter-${char}`}
+						initial={{ y: 80, color: "#fff", opacity: 0 }}
+						animate={letterAnim}
+						transition={{
+							type: "spring",
+							stiffness: 100,
+							duration: 0.25,
+							delay: i / 20,
 						}}
 					>
-						{chars[index]}
-					</animated.span>
-				))}
-			</animated.div>
+						{char}
+					</motion.span>
+				);
+			})}
 			<div>
 				{items !== [] &&
-					boxTransitions.map(({ item, key, props }, i) => (
-						<animated.div
+					items.map(({ item, key, props }, i) => (
+						<motion.div
 							key={`layer-${i}`}
-							num={i}
 							className={`box-transition layer-${i + 1} `}
-							style={props}
+							initial={{
+								width: "0%",
+								left: "0%",
+								right: "100%",
+							}}
+							animate={boxAnim}
+							transition={{
+								type: "easeInOut",
+								duration: 0.3,
+								delay: i / 10,
+							}}
 						/>
 					))}
 			</div>
@@ -129,29 +81,18 @@ const Headline = (props) => {
 	);
 };
 
-const areEqual = (prevProps, nextProps) => {
-	return prevProps.status === "entering";
-};
-
 // export default withApollo(Headline);
-export default React.memo(Headline, areEqual);
+export default Headline;
 
 const HeadlineH1 = styled.h1`
 	position: relative;
 	justify-self: end;
-	/* ${(props) =>
-		props.size === "large"
-			? "font-size: 8.25rem;"
-			: "font-size: 2.75rem;"} */
-
 	font-weight: 100;
 	height: auto;
 	display: inline-block;
 	margin: 0;
 	white-space: nowrap;
 	font-variant: small-caps;
-	/* ${(props) =>
-		props.alignment === "left" ? "padding-left: 12rem;" : ""} */
 	${(props) => (props.alignment === "right" ? "padding-right: 12rem;" : "")}
 	&.large {
 		font-size: 8.25rem;
@@ -161,9 +102,6 @@ const HeadlineH1 = styled.h1`
 	}
 	&.small {
 		font-size: 2.75rem;
-		/* @media all and (max-width: 768px) {
-			font-size: 2rem;
-		} */
 	}
 	&:before {
 		content: "";

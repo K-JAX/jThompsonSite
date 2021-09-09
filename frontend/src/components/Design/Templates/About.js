@@ -4,11 +4,14 @@ import gql from "graphql-tag";
 import { Parser as HtmlToReactParser } from "html-to-react";
 import styled from "styled-components";
 import { TransitionGroup, Transition } from "react-transition-group";
+import { Helmet } from "react-helmet";
+import gsap from "gsap";
 
 // components
 import Headline from "../Atoms/Headline";
 import { GiantLetters } from "../Molecules/GiantLetters";
 import FigureLink from "../Organisms/FigureLink";
+import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
 
 /**
  * GraphQL page query that takes a page slug as a uri
@@ -19,6 +22,11 @@ const PAGE_QUERY = gql`
 		pageBy(uri: "about") {
 			title
 			content
+			seo {
+				title
+				metaDesc
+				metaKeywords
+			}
 			featuredImage {
 				node {
 					sourceUrl(size: LARGE)
@@ -58,14 +66,17 @@ class About extends Component {
 				content: "",
 				featuredImage: {},
 				aboutDetails: {},
+				seo: {},
 			},
 			isLoaded: false,
 		};
+		this.animRef = null;
 	}
 
 	componentDidMount() {
 		this.executePageQuery();
-		// console.log(this.props);
+		// console.log(this.animRef);
+		// this.animateChildren();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -73,7 +84,6 @@ class About extends Component {
 		if (props.match.params.slug !== prevProps.match.params.slug) {
 			this.executePageQuery();
 		}
-		// console.log(this.props.status);
 	}
 
 	/**
@@ -91,26 +101,44 @@ class About extends Component {
 		const page = result.data.pageBy;
 		this.setState({ page, isLoaded: true });
 	};
+	animateChildren = async () => {
+		const q = gsap.utils.selector(this.animRef.current);
+		gsap.to(q(".test"), { x: 100 });
+	};
 
 	render() {
 		const { page, isLoaded } = this.state;
 		const { status, className } = this.props;
 		if (page.title === "") return <p>Loading</p>;
-		const { title, content, featuredImage, aboutDetails } = page;
+		const { title, content, featuredImage, aboutDetails, seo } = page;
 		const { ctaLinks } = aboutDetails;
 		var htmlToReactParser = new HtmlToReactParser();
 		var parsedContent = htmlToReactParser.parse(content);
 		var parsedIntro = htmlToReactParser.parse(aboutDetails.introText);
-
+		// console.log(parsedIntro);
+		// console.log(status);
 		return (
 			<PageDiv
 				className={`container-fluid px-0`}
 				style={{ overflowX: "hidden", overflowY: "hidden" }}
 			>
+				<Helmet>
+					<meta charSet="utf-8" />
+					<title>{`${seo.title}`}</title>
+					<link rel="canonical" href={`${seo.canonical}`} />
+					<meta name="description" content={`${seo.metaDesc}`} />
+				</Helmet>
 				<div className="container position-relative">
 					<div className="row">
 						<div style={{ width: "450px" }} className="mt-5 pt-3">
-							<img src={featuredImage.node.sourceUrl} />
+							<OverlayAnimDiv
+								direction="right"
+								content={
+									<img src={featuredImage.node.sourceUrl} />
+								}
+								status={status}
+							/>
+							{/* <img src={featuredImage.node.sourceUrl} /> */}
 						</div>
 						<div className="col ml-xl-5 ml-md-3 ml-0">
 							<Headline
@@ -118,7 +146,15 @@ class About extends Component {
 								status={status}
 								text={page.title}
 							/>
-							<div>{parsedIntro}</div>
+							<div
+								className="intro"
+								ref={(div) => (this.animRef = div)}
+							>
+								<OverlayAnimDiv
+									content={parsedIntro}
+									status={status}
+								/>
+							</div>
 						</div>
 						<GiantLetters
 							letters="JTA"
@@ -128,7 +164,12 @@ class About extends Component {
 					</div>
 				</div>
 				<div className="container content-container px-4">
-					<div className="row">{parsedContent}</div>
+					<div className="row">
+						<OverlayAnimDiv
+							content={parsedContent}
+							status={status}
+						/>
+					</div>
 				</div>
 				<div className="container px-4">
 					<div className="row justify-content-center">
