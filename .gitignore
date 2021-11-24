@@ -2,8 +2,8 @@ node_modules
 npm-debug.log
 yarn-error.log
 wp-graphiql
-data/ib_buffer_pool
-data/ibtmp1
+data/
+data/*
 plugins
 wordpress/wp-content/plugins/
      

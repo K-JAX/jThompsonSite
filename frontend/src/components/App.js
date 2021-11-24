@@ -69,6 +69,8 @@ export default ({ in: inProp }) => {
 };
 
 const BodyContainer = styled.div`
+	min-height: 105vh;
+	padding-bottom: 5em;
 	.page-container-element {
 		@media all and (max-width: 767px) {
 			margin-top: 80px;

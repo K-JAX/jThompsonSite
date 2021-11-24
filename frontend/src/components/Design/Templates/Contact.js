@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { Parser as HtmlToReactParser } from "html-to-react";
+import { motion, useAnimation } from "framer-motion";
 
 // Components
 import Headline from "../Atoms/Headline";
 import Form from "../Organisms/Form";
+import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
 
 /**
  * GraphQL page query that takes a page slug as a uri
@@ -91,6 +92,7 @@ class Contact extends Component {
 
 	render() {
 		const { page, form, isLoaded } = this.state;
+		const { status } = this.props;
 
 		// var htmlToReactParser = new HtmlToReactParser();
 		// const parsedContent = htmlToReactParser.parse(page.content);
@@ -99,7 +101,10 @@ class Contact extends Component {
 		return (
 			<PageDiv className="container-fluid">
 				<div className="row">
-					<div
+					<motion.div
+						initial={{ x: -50, opacity: 0 }}
+						animate={{ x: 0, opacity: 1 }}
+						transition={{ duration: 1 }}
 						className="col-12 col-md-6 featured-img"
 						style={{
 							backgroundImage: `url(${page.featuredImage?.node.sourceUrl})`,
@@ -110,12 +115,22 @@ class Contact extends Component {
 							<Headline
 								className="mb-3"
 								alignment="right"
+								status={status}
 								text={page.title}
 							/>
 						</div>
-						<div className="row" style={{ marginLeft: "-20px" }}>
-							<Form className="col-12" data={form} />
-						</div>
+
+						<OverlayAnimDiv
+							status={status}
+							content={
+								<div
+									className="row"
+									style={{ marginLeft: "-20px" }}
+								>
+									<Form className="col-12" data={form} />
+								</div>
+							}
+						/>
 					</div>
 				</div>
 			</PageDiv>

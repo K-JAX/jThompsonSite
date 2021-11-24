@@ -172,6 +172,7 @@ class Portfolio extends Component {
 						<Headline
 							size="small"
 							text={page.title}
+							status={status}
 							className="mb-4"
 							alignment="left"
 						/>

@@ -3,7 +3,6 @@ import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { Parser as HtmlToReactParser } from "html-to-react";
 import styled from "styled-components";
-import { TransitionGroup, Transition } from "react-transition-group";
 import { Helmet } from "react-helmet";
 import gsap from "gsap";
 
@@ -91,10 +90,7 @@ class About extends Component {
 	 */
 	executePageQuery = async () => {
 		const { client } = this.props;
-		// let uri = match.params.slug;
-		// if (!uri) {
-		// 	uri = "welcome";
-		// }
+
 		const result = await client.query({
 			query: PAGE_QUERY,
 		});
