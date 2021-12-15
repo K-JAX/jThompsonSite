@@ -16,8 +16,10 @@ export const SlideshowProvider = (props) => {
 			value={{
 				props: props.options,
 				slideIndex: slideIndex,
-				addIndex: () => setIndex(slideIndex + 1),
-				removeIndex: () => setIndex(slideIndex - 1),
+				addIndex: (slideNum) =>
+					setIndex(slideIndex === slideNum ? 0 : slideIndex + 1),
+				subtractIndex: (slideNum) =>
+					setIndex(slideIndex === 0 ? slideNum : slideIndex - 1),
 				resetIndex: () => setIndex(slideIndex - slideIndex),
 				setToEnd: (slideNum) => setIndex(slideNum),
 				switchToIndex: (thumbNum) => setIndex(thumbNum),
@@ -90,12 +92,8 @@ class Slideshow extends Component {
 		let lastCounterStep = (slideshowTimer / 10) * offset;
 		let countTime = counterStep - lastCounterStep; // subtracting 1 step from counttime so it'll show 100% completion
 		this.counterId = setInterval(() => {
-			let {
-				milliseconds,
-				percentage,
-				currentSlide,
-				totalSlides,
-			} = this.state;
+			let { milliseconds, percentage, currentSlide, totalSlides } =
+				this.state;
 			let { slides, isSingleEntity } = this.props;
 			totalSlides = isSingleEntity
 				? slides.slideImages.length - 1
@@ -111,7 +109,7 @@ class Slideshow extends Component {
 				milliseconds = 0;
 				this.context.slideIndex > totalSlides
 					? this.context.resetIndex()
-					: this.context.addIndex();
+					: this.context.addIndex(totalSlides);
 			}
 
 			percentage = (milliseconds * 100) / slideDuration;

@@ -20,7 +20,7 @@ export const PressArticleSingle = (props) => {
 		setNumPages(numPages);
 	};
 
-	console.log(data.pressArticle.acf.pdfUpload.mediaItemUrl);
+	// console.log(data.pressArticle.acf.pdfUpload.mediaItemUrl);
 	return (
 		<div className="container d-flex align-items-center flex-column">
 			<div className="row">

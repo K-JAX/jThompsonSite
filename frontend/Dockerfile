@@ -4,18 +4,9 @@ RUN apk update && apk add bash
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node package.json .
-# COPY --chown=node:node yarn.lock .
+COPY --chown=node:node ./ .
 
 RUN chown -R node:node /home/node/app
 
-RUN yarn install
+RUN npm i
 
-COPY --chown=node:node ./ .
-
-RUN chmod -R 775 /home/node/app && \
-	chown node:node .
-
-USER node
-
-EXPOSE 3001

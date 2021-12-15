@@ -1,106 +1,61 @@
-import React, { Component } from "react";
-import { withApollo } from "react-apollo";
+import { useRef, useEffect } from "react";
+import { useQuery } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
-import { compose } from "recompose";
-import gql from "graphql-tag";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Spring, animated } from "react-spring/renderprops";
-import { getPreviousPath } from "../../Functional/GetPreviousPath";
+import { motion } from "framer-motion";
 
 // Components
 import ProjectSingle from "./Project-Single";
 import { Wipes } from "../Molecules/Wipes";
 import { LoadingMatte } from "../Atoms/LoadingMatte";
+import { HOME_QUERY } from "../../Functional/queries";
 
-// import {
-// 	SlideshowContext,
-// 	SlideshowProvider,
-// } from "../../Functional/SlideshowContext";
+// Hooks
+import { usePrevLocation } from "../../Functional/CustomHooks";
 
-/**
- * GraphQL page query
- * Gets page's title and content using slug as uri
- */
-const HOME_QUERY = gql`
-	query MyQuery {
-		page(id: "home", idType: URI) {
-			uri
-			sliderTimer {
-				slideshowTimer
-				transitionSpeed
-			}
-		}
-	}
-`;
+const Home = (props) => {
+	const { loading, error, data } = useQuery(HOME_QUERY);
+	let { status } = props;
 
-class Home extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			slideshowOptions: {},
-			isLoaded: false,
-		};
-	}
+	const location = useLocation();
+	const prevLocation = usePrevLocation(location);
+	console.log(prevLocation);
 
-	componentDidMount() {
-		this.executePageQuery();
-		// console.log(this.props.location);
-		// console.log(this.props.status);
-	}
+	if (loading) return <LoadingMatte />;
+	if (error) return `Error! ${error}`;
 
-	executePageQuery = async () => {
-		const { client } = this.props;
-		const result = await client.query({
-			query: HOME_QUERY,
-		});
-		this.setState({
-			slideshowOptions: result.data.page.sliderTimer,
-			isLoaded: true,
-		});
-	};
-
-	render() {
-		const { isLoaded, slideshowOptions } = this.state;
-		const { breakpoints, currentBreakpoint, status } = this.props;
-		if (!isLoaded) return <LoadingMatte />;
-
-		// console.log(this.props);
-		return (
-			<PageDiv status={status} className={`page page-route-${status}`}>
+	return (
+		<PageDiv status={status} className={`page page-route-${status}`}>
+			{prevLocation.pathname === "/" && (
 				<Wipes
 					className="z-10"
+					startColor={"dark"}
 					status={status}
 					from={0}
 					enter={105}
-					delay={800}
+					leave={-105}
+					delay={300}
 				/>
-				<Spring
-					from={{ w: 0 }}
-					to={{ w: 300 }}
-					config={{ delay: 1700 }}
-				>
-					{(props) => {
-						return (
-							<animated.div
-								className="z-1"
-								style={{
-									width: `calc(100% - ${props.w}px)`,
-								}}
-							>
-								<ProjectSingle
-									featured={true}
-									options={slideshowOptions}
-								/>
-							</animated.div>
-						);
-					}}
-				</Spring>
-			</PageDiv>
-		);
-	}
-}
-
-export default compose(withApollo, withBreakpoints)(Home);
+			)}
+			<motion.div
+				className="z-1"
+				initial={{ width: `calc(100% - ${0}px)` }}
+				animate={{ width: `calc(100% - ${300}px)` }}
+				transition={{
+					type: "tween",
+					delay: 1.0,
+				}}
+			>
+				<ProjectSingle
+					featured={true}
+					options={data.page.sliderTimer}
+				/>
+			</motion.div>
+		</PageDiv>
+	);
+};
+export default withBreakpoints(Home);
 
 const PageDiv = styled.div`
 	display: flex;

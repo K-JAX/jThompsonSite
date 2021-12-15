@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Spring, animated } from "react-spring/renderprops";
+import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 
 // components
@@ -20,63 +20,52 @@ class ProjectTitle extends Component {
 			className,
 		} = this.props;
 		return (
-			<Spring
-				from={{ y: type === "slideTitle" ? 100 : 0 }}
-				to={{ y: 0 }}
-				config={{ delay: 1500 }}
+			<ProjectTitleDiv
+				className={`project-title ${type} ${className} ${attachmentClass}`}
+				initial={{ y: `${type === "slideTitle" ? 100 : 0}%` }}
+				animate={{ y: 0 }}
+				transition={{ delay: 1.5 }}
 			>
-				{(props) => (
-					<ProjectTitleDiv
-						className={`project-title ${type} ${className} ${attachmentClass}`}
-						style={{ transform: `translateY(${props.y}%)` }}
-					>
-						{type === "slideTitle" && (
-							<div className="scroll-indicator">
-								<small className="help-text">
-									<i>Scroll to view</i>
-								</small>
-								<Arrow
-									num={3}
-									direction="down"
-									color="#000"
-									animate
-								/>
-							</div>
-						)}
-						{type == "regularTitle" && (
-							<Link className="bcrumb" to={"/portfolio"}>
-								Portfolio &#62;
-							</Link>
-						)}
-						<div className="title-stack row">
-							<h1 className={`${type === "thumbTitle" && "h6"}`}>
-								{title}
-							</h1>
-							{type == "thumbTitle" && (
-								<Arrow className="long" direction="right" />
-							)}
-							{percentage !== undefined && (
-								<SlideMeter
-									progress={active ? percentage : undefined}
-								/>
-							)}
-
-							{subtitle !== undefined && (
-								<h2>
-									<i>{subtitle}</i>
-								</h2>
-							)}
-						</div>
-					</ProjectTitleDiv>
+				{type === "slideTitle" && (
+					<div className="scroll-indicator">
+						<small className="help-text">
+							<i>Scroll to view</i>
+						</small>
+						<Arrow num={3} direction="down" color="#000" animate />
+					</div>
 				)}
-			</Spring>
+				{type == "regularTitle" && (
+					<Link className="bcrumb" to={"/portfolio"}>
+						Portfolio &#62;
+					</Link>
+				)}
+				<div className="title-stack row">
+					<h1 className={`${type === "thumbTitle" && "h6"}`}>
+						{title}
+					</h1>
+					{type == "thumbTitle" && (
+						<Arrow className="long" direction="right" />
+					)}
+					{percentage !== undefined && (
+						<SlideMeter
+							progress={active ? percentage : undefined}
+						/>
+					)}
+
+					{subtitle !== undefined && (
+						<h2>
+							<i>{subtitle}</i>
+						</h2>
+					)}
+				</div>
+			</ProjectTitleDiv>
 		);
 	}
 }
 
 export default ProjectTitle;
 
-const ProjectTitleDiv = styled(animated.div)`
+const ProjectTitleDiv = styled(motion.div)`
 	position: absolute;
 	right: 0;
 	display: flex;

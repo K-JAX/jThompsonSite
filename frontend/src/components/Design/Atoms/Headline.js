@@ -43,7 +43,7 @@ const Headline = (props) => {
 			{chars.map((char, i) => {
 				return (
 					<motion.span
-						key={`letter-${char}`}
+						key={`letter-${char}-${i}`}
 						initial={{ y: 80, color: "#fff", opacity: 0 }}
 						animate={letterAnim}
 						transition={{

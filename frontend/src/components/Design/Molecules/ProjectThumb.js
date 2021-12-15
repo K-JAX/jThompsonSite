@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSpring, animated } from "react-spring";
 import { motion } from "framer-motion";
 
 // Component
@@ -13,13 +12,6 @@ export const ProjectThumb = (props) => {
 
 	useEffect(() => {}, [status]);
 
-	// const spring = useSpring({
-	// 	from: { width: "0%" },
-	// 	to: { width: "100%" },
-	// 	leave: { width: "0%" },
-	// 	delay: delay,
-	// });
-
 	return (
 		<ThumbLi className={`${className}`}>
 			<Link
@@ -28,7 +20,6 @@ export const ProjectThumb = (props) => {
 				className="mb-0 pb-0"
 			>
 				<figure className="thumb before border position-relative d-flex justify-content-center align-items-center mb-0">
-					{/* <animated.div className="animated-container" style={spring}> */}
 					<motion.div
 						className="animated-container"
 						initial={{ width: "0%" }}
@@ -50,7 +41,6 @@ export const ProjectThumb = (props) => {
 							title={project.node.title}
 							type="thumbTitle"
 						/>
-						{/* </animated.div> */}
 					</motion.div>
 				</figure>
 			</Link>

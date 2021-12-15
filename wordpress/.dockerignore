@@ -1,0 +1,9 @@
+node_modules/
+wp-content/uploads
+wp-includes/
+**/wp-includes/**
+wp-admin/
+ai1wm-backups
+wp-content/plugins/
+plugins/**
+wp-content/upgrade/wp-migrate-db-pro-media*

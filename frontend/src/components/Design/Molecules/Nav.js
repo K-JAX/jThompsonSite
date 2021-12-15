@@ -105,7 +105,7 @@ class Nav extends Component {
 										? "_self"
 										: menu.node.target
 								}
-								className={`ml1 no-underline black ${
+								className={`ml1 text-decoration-none black ${
 									isHome ? "active" : ""
 								}`}
 								style={
@@ -129,7 +129,7 @@ class Nav extends Component {
 									? "_self"
 									: menu.node.target
 							}
-							className="ml1 no-underline black"
+							className="ml1 text-decoration-none black"
 							style={
 								{
 									/* transitionDelay: `${i * 0.1}s` */

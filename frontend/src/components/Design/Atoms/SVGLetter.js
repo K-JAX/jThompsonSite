@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-// import { Spring } from "react-spring";
-import { Spring } from "react-spring/renderprops";
+import { motion } from "framer-motion";
 import * as easings from "d3-ease";
 import VisibilitySensor from "react-visibility-sensor";
 import PropTypes from "prop-types";
@@ -10,66 +9,51 @@ export const SVGLetter = (props) => {
 	const { letter, size, alignment } = props;
 
 	let dashArraySize = size * 5.9;
+	let xPos = {
+		start: alignment === "left" ? 10 : 80,
+		end: alignment === "left" ? 12 : 78,
+	};
 
 	return (
 		<VisibilitySensor>
 			{({ isVisible }) => (
-				<Spring
-					from={{
-						dOffset: dashArraySize,
-						leftX: 10,
-						rightX: 80,
-						fillOpacity: 0,
-						fillColorR: 0,
-						fillColorG: 0,
-						fillColorB: 0,
-						strokeOpacity: 1,
-					}}
-					to={{
-						dOffset: isVisible ? 0 : dashArraySize,
-						fillOpacity: isVisible ? 0.125 : 0,
-						leftX: 12,
-						rightX: 78,
-						fillColorR: 70,
-						fillColorG: 72,
-						fillColorB: 83,
-						strokeOpacity: isVisible ? 0.125 : 0.5,
-					}}
-					config={{
-						duration: 4000,
-						easing: easings.easeCubic,
-					}}
+				<LetterSVG
+					viewBox={`0 0 ${size * 2} 80`}
+					height={`100%`}
+					letterSize={size}
 				>
-					{(props) => (
-						<LetterSVG
-							viewBox={`0 0 ${size * 2} 80`}
-							height={`100%`}
-							letterSize={size}
-						>
-							<text
-								strokeDasharray={`${dashArraySize} ${dashArraySize}`}
-								strokeDashoffset={props.dOffset}
-								fontSize={size}
-								x={`${
-									alignment === "left"
-										? props.leftX
-										: props.rightX
-								}%`}
-								y={size / 1.85}
-								style={{ transform: `translateX(${props.x})` }}
-								strokeWidth={2}
-								fontWeight={`bold`}
-								stroke={`rgba(161,211,255, ${props.strokeOpacity})`}
-								fill={`rgba(${props.fillColorR},${props.fillColorG},${props.fillColorB},${props.fillOpacity})`}
-								textAnchor={`${
-									alignment === "left" ? "start" : "end"
-								}`}
-							>
-								{letter}
-							</text>
-						</LetterSVG>
-					)}
-				</Spring>
+					<motion.text
+						initial={{
+							strokeDashoffset: 0,
+							x: `${xPos.start}%`,
+							fill: "rgba(70, 72, 83, 0.05)",
+							stroke: "rgba(161,211,255, 0)",
+						}}
+						animate={{
+							strokeDashoffset: isVisible ? 100 : dashArraySize,
+							x: `${isVisible ? xPos.end : xPos.start}%`,
+							fill: isVisible
+								? "rgba(70, 72, 83, 0.5)"
+								: "rgba(70, 72, 83, 0.125)",
+							stroke: isVisible
+								? "rgba(161,211,255, 1)"
+								: "rgba(161,211,255, 0)",
+						}}
+						transition={{
+							duration: 3,
+						}}
+						strokeDasharray={`${dashArraySize} ${dashArraySize}`}
+						fontSize={size}
+						y={size / 1.85}
+						strokeWidth={2}
+						fill={`rgba(70, 72, 83, 0.5)`}
+						fontWeight={`bold`}
+						stroke={`rgba(161,211,255, 1)`}
+						textAnchor={`${alignment === "left" ? "start" : "end"}`}
+					>
+						{letter}
+					</motion.text>
+				</LetterSVG>
 			)}
 		</VisibilitySensor>
 	);

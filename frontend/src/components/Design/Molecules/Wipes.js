@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useTransition, animated } from "react-spring";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 
 export const Wipes = (props) => {
 	const [items, setItems] = useState([]);
@@ -9,56 +9,58 @@ export const Wipes = (props) => {
 	const [z, setZ] = useState(11);
 	const { className, from, enter, leave, delay } = props;
 	let { status, startColor, endColor } = props;
-	// setItems([1, 2, 3]);
-	// setColor(startColor);
 
 	useEffect(() => {
-		if (status === "entered" || status === "entering") {
+		if (status === "entered") {
 			setItems([1, 2, 3]);
 			setColor(startColor);
-		} else if (status === "exited" || status === "exiting") {
-			setItems([]);
+			wipeSeq();
+		} else if (status === "exiting") {
 			setColor(endColor);
+			wipeOutSeq();
 		}
 	}, [status]);
 
-	const layerTransitions = useTransition(items, (item) => item, {
-		from: {
-			transform: `translateX(${from}%)`,
-		},
-		enter: () => async (next) => {
-			await new Promise((resolve) => setTimeout(resolve, delay));
-			await next({ transform: `translateX(${enter}%)` });
-			await setZ(-1);
-		},
-		leave: () => async (next) => {
-			await setZ(11);
-			await next({ transform: `translateX(${leave}%)` });
-			await new Promise((resolve) => setTimeout(resolve, 7000));
-			// await setZ(-1);
-		},
-		trail: 160,
-		config: { tension: 300, friction: 50 },
-	});
+	async function wipeSeq() {
+		await setZ(11);
+		await new Promise((resolve) => setTimeout(resolve, delay + 800));
+		await setZ(-1);
+	}
+	async function wipeOutSeq() {
+		await setZ(11);
+		await setItems([]);
+	}
 
 	return (
 		<TransitionDiv
 			status={status}
-			from={props}
 			className={`${className} ${color} ${status} ${from}`}
 			style={{ zIndex: z }}
 		>
-			{items !== [] &&
-				layerTransitions.map(
-					({ item, key, props }, i) =>
-						item && (
-							<animated.div
-								key={key}
-								className={`transition-screen layer-${i + 1}`}
-								style={props}
-							/>
-						)
-				)}
+			<AnimatePresence>
+				{items !== [] &&
+					items.map(({ item }, i) => (
+						<motion.div
+							key={`item-${i}`}
+							className={`transition-screen layer-${i + 1}`}
+							initial={{
+								x: `${from}%`,
+							}}
+							animate={{
+								x: `${enter}%`,
+							}}
+							exit={{
+								x: `${leave}%`,
+							}}
+							transition={{
+								type: "spring",
+								damping: 30,
+								stiffness: 120,
+								delay: i / 20,
+							}}
+						/>
+					))}
+			</AnimatePresence>
 		</TransitionDiv>
 	);
 };
@@ -67,10 +69,14 @@ const TransitionDiv = styled.div`
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
+	left: 0;
+	top: 0;
 	.transition-screen {
 		position: absolute;
 		width: 100%;
 		height: 100%;
+		top: 0;
+		left: 0;
 		will-change: auto;
 		transform: translateX(0);
 	}
@@ -160,6 +166,7 @@ Wipes.defaultProps = {
 	enter: -105,
 	leave: 105,
 	delay: 0,
+	className: "",
 	startColor: "dark",
 	endColor: "dark",
 	status: "entering",

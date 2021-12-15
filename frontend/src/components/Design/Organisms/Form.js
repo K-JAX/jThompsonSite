@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { withApollo } from "react-apollo";
 import styled from "styled-components";
 import ReCAPTCHA from "react-google-recaptcha";
-import useSignUpForm from "../../Functional/CustomHooks";
 import gql from "graphql-tag";
 import { useForm } from "react-hook-form";
 
 const Form = (props) => {
-	const { register, handleSubmit, errors } = useForm(); // initialize the hook
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm(); // initialize the hook
 	const recaptchaRef = React.useRef();
 	const [verified, setVerified] = useState(false);
 	const [sendStatus, setSendStatus] = useState({});
@@ -59,6 +62,7 @@ const Form = (props) => {
 		setVerified(true);
 	};
 	const { data, className } = props;
+	if (!data) return <p>Loading</p>;
 	return (
 		<StyledForm
 			className={`${className && className} row py-4`}
@@ -68,6 +72,7 @@ const Form = (props) => {
 				let type = field.type === "textbox" ? "text" : field.type;
 				return (
 					<div
+						key={`field-${field.label.toLowerCase()}`}
 						className={`my-3 ${
 							field.type === "submit" ? "col-4" : "col-12"
 						}`}
@@ -78,7 +83,7 @@ const Form = (props) => {
 							}`}
 						>
 							{field.name && "Name field required"}
-							<div class="col-12 mb-1">
+							<div className="col-12 mb-1">
 								<b>{field.label !== "Submit" && field.label}</b>
 								{field.required && (
 									<span className="text-danger">*</span>
@@ -91,9 +96,12 @@ const Form = (props) => {
 											name={field.label.toLowerCase()}
 											className="col-12 pt-2 pb-3"
 											placeholder={field.label}
-											ref={register({
-												required: field.required,
-											})}
+											{...register(
+												field.label.toLowerCase(),
+												{
+													required: field.required,
+												}
+											)}
 										/>
 										{errors[field.label.toLowerCase()] &&
 											`${field.label} is required.`}
@@ -106,9 +114,12 @@ const Form = (props) => {
 										className="col-12 py-3"
 										rows={6}
 										placeholder={"Type here..."}
-										ref={register({
-											required: field.required,
-										})}
+										{...register(
+											field.label.toLowerCase(),
+											{
+												required: field.required,
+											}
+										)}
 									></textarea>
 									{errors[field.label.toLowerCase()] &&
 										`${field.label} is required.`}

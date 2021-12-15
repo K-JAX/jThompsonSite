@@ -27,14 +27,14 @@ export const SlideControls = React.memo((props) => {
 					>
 						<button
 							className="prev arrow"
-							onClick={context.removeIndex}
+							onClick={() => context.subtractIndex(props.total)}
 						></button>
 						{contentType === "gallery" && (
 							<SlideStrip thumbs={images} />
 						)}
 						<button
 							className="next arrow"
-							onClick={context.addIndex}
+							onClick={() => context.addIndex(2)}
 						></button>
 					</div>
 				</ControlsDiv>

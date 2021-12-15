@@ -1,46 +1,44 @@
-version: '3.3'
+version: "3.3"
 
 services:
-    db-headless:
-        container_name: db
-        # user: "${USERID}:${GROUPID}"
-        environment:
-            - MYSQL_RANDOM_ROOT_PASSWORD=yes
-            - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
-            - MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}
-            - MYSQL_USER=${WORDPRESS_DB_USER}
-        image: mariadb
-        volumes:
-            - ./data:/var/lib/mysql:Z
-        ports:
-            - '3307:3306'
-        restart: always
-    wp-headless:
-        build: ./wordpress
-        container_name: wp
-        command: bash install_wordpress.sh
-        user: root
-        env_file:
-            - ./.env
-        depends_on:
-            - db-headless
-        volumes:
-            - ./wordpress:/var/www/html:Z
-            - ./docker/plugins:/var/www/plugins
-            - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-        ports:
-            - '8080:8080'
-        restart: always
-    node-web-app:
-        command: yarn start
-        container_name: node
-        expose:
-            - '3001'
-        build: ./frontend
-        ports:
-            - '3001:3001'
-        # user: "${USERID}:${GROUPID}"
-        volumes:
-            - ./frontend/src:/home/node/app/src:Z
-            - ./frontend/.eslintrc.json:/home/node/app/.eslintrc:Z
-        working_dir: /home/node/app
+  db-headless:
+    container_name: db
+    # user: "${USERID}:${GROUPID}"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
+      - MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}
+      - MYSQL_USER=${WORDPRESS_DB_USER}
+    image: mariadb
+    volumes:
+      - ./data:/var/lib/mysql:Z
+    ports:
+      - "3307:3306"
+  wp-headless:
+    build: ./wordpress
+    container_name: wp
+    command: bash install_wordpress.sh
+    user: root
+    env_file:
+      - ./.env
+    depends_on:
+      - db-headless
+    volumes:
+      - ./wordpress:/var/www/html:Z
+      - ./docker/plugins:/var/www/plugins
+      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - "8080:8080"
+  node-web-app:
+    command: npm run start
+    container_name: node
+    expose:
+      - "3001"
+    build: ./frontend
+    ports:
+      - "3001:3001"
+    # user: "${USERID}:${GROUPID}"
+    volumes:
+      - ./frontend/src:/home/node/app/src:Z
+      - ./frontend/.eslintrc.json:/home/node/app/.eslintrc:Z
+    working_dir: /home/node/app

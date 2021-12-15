@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Router, Route, useLocation } from "react-router-dom";
+import { Routes, Router, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, Transition } from "react-transition-group";
 
 // Components
@@ -20,7 +20,6 @@ import Post from "../Design/Templates/Post";
 import { NotFound } from "../Design/Templates/404";
 import Search from "../Design/Templates/Search";
 import Category from "../Design/Templates/Category";
-import Headline from "../Design/Atoms/Headline";
 
 import {
 	storeVisitedCookie,
@@ -81,28 +80,25 @@ const Routing = () => {
 				timeout={1000}
 			>
 				{(status) => (
-					<Switch location={location}>
+					<Routes location={location}>
 						{routes.map((route, i) => (
 							<Route
 								exact
 								key={route.path}
 								path={route.path}
-								render={(rest) => (
+								element={
 									<div
 										className={`page page-route-${status} ${
 											route.path !== "/" &&
 											"offset-header"
 										}`}
 									>
-										<route.component
-											{...rest}
-											status={status}
-										/>
+										<route.component status={status} />
 									</div>
-								)}
+								}
 							/>
 						))}
-					</Switch>
+					</Routes>
 				)}
 			</Transition>
 		</TransitionGroup>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { withApollo } from "react-apollo";
 import { compose } from "recompose";
 import gql from "graphql-tag";
-import { Spring, animated } from "react-spring/renderprops";
+import { motion } from "framer-motion";
 
 // Component
 import SocialIcon from "../Atoms/SocialIcon";
@@ -60,22 +60,20 @@ class SocialMenu extends Component {
 		}
 
 		return (
-			<Spring from={{ y: 100 }} to={{ y: 0 }} config={{ delay: 3500 }}>
-				{(props) => (
-					<SocialNavElem
-						className={`social-nav ${className ? className : ""}`}
-						style={{ transform: `translateY(${props.y}%)` }}
-					>
-						{menu.menuItems.edges.map((menuItem) => (
-							<SocialIcon
-								link={menuItem.node.url}
-								target={menuItem.node.target}
-								key={menuItem.node.id}
-							/>
-						))}
-					</SocialNavElem>
-				)}
-			</Spring>
+			<SocialNavElem
+				className={`social-nav ${className ? className : ""}`}
+				initial={{ y: `100%` }}
+				animate={{ y: `0%` }}
+				transition={{ delay: 2.5 }}
+			>
+				{menu.menuItems.edges.map((menuItem) => (
+					<SocialIcon
+						link={menuItem.node.url}
+						target={menuItem.node.target}
+						key={menuItem.node.id}
+					/>
+				))}
+			</SocialNavElem>
 		);
 	}
 }
@@ -84,7 +82,7 @@ export default compose(
 	withApollo
 )(SocialMenu);
 
-const SocialNavElem = styled(animated.nav)`
+const SocialNavElem = styled(motion.nav)`
 	&.isHome {
 		padding-left: 50px;
 	}

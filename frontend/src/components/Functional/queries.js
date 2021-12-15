@@ -1,5 +1,17 @@
 import gql from "graphql-tag";
 
+export const HOME_QUERY = gql`
+	query MyQuery {
+		page(id: "home", idType: URI) {
+			uri
+			sliderTimer {
+				slideshowTimer
+				transitionSpeed
+			}
+		}
+	}
+`;
+
 export const SITE_STATUS_QUERY = gql`
 	query MyQuery {
 		siteStatus

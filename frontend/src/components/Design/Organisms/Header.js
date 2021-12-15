@@ -5,7 +5,7 @@ import { compose } from "recompose";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import gql from "graphql-tag";
-import { Spring } from "react-spring/renderprops";
+import { motion } from "framer-motion";
 
 // Components
 import Logo from "../Atoms/Logo";
@@ -75,40 +75,23 @@ class Header extends Component {
 					/>
 					<link rel="icon" type="image/png" href={faviconUrl} />
 				</Helmet>
-				<Spring
-					from={{ x: -100 }}
-					to={{ x: 0 }}
-					config={{ delay: 2500 }}
+				<motion.div
+					className="d-flex flex flex-fixed black"
+					initial={{ x: `${isHome ? "-100%" : 0}` }}
+					animate={{ x: 0 }}
+					transition={{ type: "Tween", delay: 1.3 }}
 				>
-					{(props) => {
-						let transforms = isHome
-							? {
-									transform: `translateX(${props.x}%)`,
-							  }
-							: {};
-						return (
-							<div
-								className="d-flex flex flex-fixed black"
-								style={transforms}
-							>
-								<Logo
-									isHome={isHome}
-									menuActive={mobileMenuActive}
-								/>
-								{isHome &&
-								breakpoints[currentBreakpoint] >
-									breakpoints.lg ? (
-									<SidebarMenu />
-								) : (
-									<PulloutMenu
-										burgerOnClick={this.handleClick}
-										menuActive={mobileMenuActive}
-									/>
-								)}
-							</div>
-						);
-					}}
-				</Spring>
+					<Logo isHome={isHome} menuActive={mobileMenuActive} />
+					{isHome &&
+					breakpoints[currentBreakpoint] > breakpoints.lg ? (
+						<SidebarMenu />
+					) : (
+						<PulloutMenu
+							burgerOnClick={this.handleClick}
+							menuActive={mobileMenuActive}
+						/>
+					)}
+				</motion.div>
 			</HeaderElement>
 		);
 	}

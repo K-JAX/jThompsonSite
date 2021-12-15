@@ -1,18 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useQuery } from "react-apollo";
+import { useLocation } from "react-router";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { motion, useAnimation } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Components
 import Headline from "../Atoms/Headline";
 import Form from "../Organisms/Form";
 import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
-
-/**
- * GraphQL page query that takes a page slug as a uri
- * Returns the title and content of the page
- */
+import Loader from "../Atoms/Loader";
 
 const PAGE_QUERY = gql`
 	query PageQuery {
@@ -45,10 +43,78 @@ const FORM_QUERY = gql`
 	}
 `;
 
+const Contact = (props) => {
+	const [page, setPage] = useState({});
+	const [form, setForm] = useState({});
+	const { pathname } = useLocation();
+	const uri = pathname.replace("/", "");
+	const { status } = props;
+
+	const pageResp = useQuery(PAGE_QUERY, {
+		onCompleted: (data) => setPage(data.pageBy),
+	});
+	const formResp = useQuery(FORM_QUERY, {
+		onCompleted: (data) => setForm(data.form),
+	});
+	if (pageResp.loading || formResp.loading) return <Loader />;
+	if (pageResp.error || formResp.error)
+		return `Error! ${pageResp.error} ${formResp.error}`;
+	if (!pageResp.data || !formResp.data) return <Loader />;
+
+	return (
+		// <p>Test</p>
+		<PageDiv className="container-fluid">
+			<div className="row">
+				<AnimatePresence>
+					{status == "entered" && (
+						<motion.div
+							initial={{ x: -50, opacity: 0 }}
+							animate={{ x: 0, opacity: 1 }}
+							exit={{ x: -50, opacity: 0 }}
+							transition={{ duration: 1 }}
+							className="col-12 col-md-6 featured-img"
+							style={{
+								backgroundImage: `url(${page.featuredImage?.node.sourceUrl})`,
+							}}
+						/>
+					)}
+				</AnimatePresence>
+				<div className="title-container col-12 col-md-6">
+					<div className="pa2">
+						<Headline
+							className="mb-3"
+							alignment="right"
+							status={status}
+							text={pageResp.data.pageBy.title}
+						/>
+					</div>
+					<AnimatePresence>
+						{status == "entered" && (
+							<motion.div
+								initial={{ x: 50, opacity: 0 }}
+								animate={{ x: 0, opacity: 1 }}
+								exit={{ x: 50, opacity: 0 }}
+								transition={{ duration: 1 }}
+								className="row"
+								style={{ marginLeft: "-20px" }}
+							>
+								<Form
+									className="col-12"
+									data={formResp.data.form}
+								/>
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
+			</div>
+		</PageDiv>
+	);
+};
+
 /**
  * Fetch and display a Page
  */
-class Contact extends Component {
+class ContactOld extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -101,15 +167,20 @@ class Contact extends Component {
 		return (
 			<PageDiv className="container-fluid">
 				<div className="row">
-					<motion.div
-						initial={{ x: -50, opacity: 0 }}
-						animate={{ x: 0, opacity: 1 }}
-						transition={{ duration: 1 }}
-						className="col-12 col-md-6 featured-img"
-						style={{
-							backgroundImage: `url(${page.featuredImage?.node.sourceUrl})`,
-						}}
-					/>
+					<AnimatePresence>
+						{status == "entered" && (
+							<motion.div
+								initial={{ x: -50, opacity: 0 }}
+								animate={{ x: 0, opacity: 1 }}
+								exit={{ x: -50, opacity: 0 }}
+								transition={{ duration: 1 }}
+								className="col-12 col-md-6 featured-img"
+								style={{
+									backgroundImage: `url(${page.featuredImage?.node.sourceUrl})`,
+								}}
+							/>
+						)}
+					</AnimatePresence>
 					<div className="title-container col-12 col-md-6">
 						<div className="pa2">
 							<Headline
@@ -119,18 +190,20 @@ class Contact extends Component {
 								text={page.title}
 							/>
 						</div>
-
-						<OverlayAnimDiv
-							status={status}
-							content={
-								<div
+						<AnimatePresence>
+							{status == "entered" && (
+								<motion.div
+									initial={{ x: 50, opacity: 0 }}
+									animate={{ x: 0, opacity: 1 }}
+									exit={{ x: 50, opacity: 0 }}
+									transition={{ duration: 1 }}
 									className="row"
 									style={{ marginLeft: "-20px" }}
 								>
 									<Form className="col-12" data={form} />
-								</div>
-							}
-						/>
+								</motion.div>
+							)}
+						</AnimatePresence>
 					</div>
 				</div>
 			</PageDiv>

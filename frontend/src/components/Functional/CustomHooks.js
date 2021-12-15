@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const useSignUpForm = (callback) => {
+export const useSignUpForm = (callback) => {
 	const [inputs, setInputs] = useState({ value: "", valid: false });
 
 	const handleSubmit = (event) => {
@@ -27,4 +27,13 @@ const useSignUpForm = (callback) => {
 		inputs,
 	};
 };
-export default useSignUpForm;
+
+export const usePrevLocation = (location) => {
+	const prevLocRef = useRef(location);
+
+	useEffect(() => {
+		prevLocRef.current = location;
+	}, [location]);
+
+	return prevLocRef.current;
+};

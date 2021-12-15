@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useSpring, animated, config } from "react-spring";
 import { motion } from "framer-motion";
 
 export const GiantLetters = (props) => {
@@ -27,13 +26,6 @@ export const GiantLetters = (props) => {
 		);
 	if (layout === "svg") {
 		let letterPositions = [-251, 142, 507];
-
-		const gProps = useSpring({
-			from: { transform: "translateX(-100%)" },
-			to: { transform: "translateX(0%)" },
-			config: { tension: 80, friction: 30, precision: 0.001 },
-		});
-
 		return (
 			<GiantLettersSVG
 				width="100%"
@@ -42,7 +34,15 @@ export const GiantLetters = (props) => {
 				className="svg"
 				layout={layout}
 			>
-				<animated.g id="main-bg" style={gProps}>
+				<motion.g
+					id="main-bg"
+					initial={{ x: `-100%` }}
+					animate={{ x: 0 }}
+					transition={{
+						type: "Inertia",
+						duration: 0.85,
+					}}
+				>
 					{separated.map((letter, i) => {
 						return (
 							<text
@@ -55,7 +55,7 @@ export const GiantLetters = (props) => {
 							</text>
 						);
 					})}
-				</animated.g>
+				</motion.g>
 				<motion.g
 					className="distant-bg regular"
 					initial={{ x: -1500, scale: 1.1 }}
@@ -157,7 +157,7 @@ const GiantLettersDiv = styled.div`
 		/* top: -41%; */
 		top: 0;
 		margin: auto;
-		margin-left: -0.045em;
+		margin-left: -0.0575em;
 		user-select: none;
 		.letter {
 			width: 0.15em;
