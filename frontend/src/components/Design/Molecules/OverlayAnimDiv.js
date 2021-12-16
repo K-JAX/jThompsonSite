@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 
 const OverlayAnimDiv = (props) => {
@@ -141,10 +141,9 @@ const OverlayAnimDiv = (props) => {
 		</div>
 	);
 };
+export default OverlayAnimDiv;
 
 OverlayAnimDiv.defaultProps = {
 	direction: "down",
 	status: "entering",
 };
-
-export default OverlayAnimDiv;

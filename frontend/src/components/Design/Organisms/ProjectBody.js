@@ -1,13 +1,10 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Parser as HtmlToReactParser } from "html-to-react";
 import PropTypes from "prop-types";
 
 // components
-import { SlideshowContext } from "../Organisms/Slideshow";
 import Hero from "../Organisms/Hero";
 import ProjectContent from "../Organisms/ProjectContent";
-import { ScrollHeroContext } from "../../Functional/ScrollHeroCheck";
-import { ProjectContext } from "../Templates/Project-Single";
 
 class ProjectBody extends Component {
 	constructor(props) {
@@ -158,15 +155,3 @@ class ProjectBody extends Component {
 }
 
 export default ProjectBody;
-
-// ProjectBody.contextType = ProjectContext;
-
-// import React, { useContext } from "react";
-// import { SlideshowContext } from "../Organisms/Slideshow";
-
-// const ProjectBody = () => {
-// 	const Slidestuff = useContext(SlideshowContext);
-// 	return <p>{JSON.stringify(Slidestuff)}</p>;
-// };
-
-// export default ProjectBody;

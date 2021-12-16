@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-// Components
+// components
 import Nav from "./Nav";
 import Burger from "../Atoms/Burger";
 

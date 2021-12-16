@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 
-export const Wipes = (props) => {
+const Wipes = (props) => {
 	const [items, setItems] = useState([]);
 	const [color, setColor] = useState("");
 	const [z, setZ] = useState(11);
@@ -64,6 +64,7 @@ export const Wipes = (props) => {
 		</TransitionDiv>
 	);
 };
+export default Wipes;
 
 const TransitionDiv = styled.div`
 	position: absolute;

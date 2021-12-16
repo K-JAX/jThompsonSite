@@ -5,7 +5,7 @@ import ProjectTitle from "../Molecules/ProjectTitle";
 import Slideshow from "./Slideshow";
 import PropTypes from "prop-types";
 
-// Components
+// functions
 import { ScrollHeroContext } from "../../Functional/ScrollHeroCheck";
 
 class Hero extends Component {

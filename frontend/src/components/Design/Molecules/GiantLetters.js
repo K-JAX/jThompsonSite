@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
-export const GiantLetters = (props) => {
+const GiantLetters = (props) => {
 	const { letters, layout, height, zIndex } = props;
 	let separated = letters.split("");
 
@@ -111,6 +111,7 @@ export const GiantLetters = (props) => {
 		</GiantLettersDiv>
 	);
 };
+export default GiantLetters;
 
 GiantLetters.propTypes = {
 	letters: PropTypes.string,

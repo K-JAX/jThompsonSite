@@ -1,6 +1,6 @@
 // components
-import { SVGLetter } from "../Atoms/SVGLetter";
-import { Button } from "../Atoms/Button";
+import SVGLetter from "../Atoms/SVGLetter";
+import Button from "../Atoms/Button";
 
 const PressArticleLinkSection = (props) => {
 	let { title, link, alignment, image, ctaText } = props;

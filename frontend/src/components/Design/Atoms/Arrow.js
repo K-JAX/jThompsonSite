@@ -54,7 +54,6 @@ class Arrow extends Component {
 		);
 	}
 }
-
 export default Arrow;
 
 const ArrowBox = styled.div`

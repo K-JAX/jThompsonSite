@@ -3,10 +3,11 @@ import { useQuery } from "react-apollo";
 import { Document, Page, pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-// components
+
+// functions
 import { SINGLE_PRESS_QUERY } from "../../Functional/queries";
 
-export const PressArticleSingle = (props) => {
+const PressArticleSingle = (props) => {
 	const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
 	const { slug } = props.match.params;
@@ -20,7 +21,6 @@ export const PressArticleSingle = (props) => {
 		setNumPages(numPages);
 	};
 
-	// console.log(data.pressArticle.acf.pdfUpload.mediaItemUrl);
 	return (
 		<div className="container d-flex align-items-center flex-column">
 			<div className="row">
@@ -50,3 +50,4 @@ export const PressArticleSingle = (props) => {
 		</div>
 	);
 };
+export default PressArticleSingle;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-// Components
+// components
 import Nav from "./Nav";
 import SocialMenu from "./SocialMenu";
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-// Components
+// components
 import Arrow from "../Atoms/Arrow";
 
 const CTAStrip = (props) => {

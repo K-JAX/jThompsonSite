@@ -1,16 +1,17 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { withApollo } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import gql from "graphql-tag";
 import { motion } from "framer-motion";
 
-// Components
+// components
 import Logo from "../Atoms/Logo";
 import SidebarMenu from "../Molecules/SidebarMenu";
 import PulloutMenu from "../Molecules/PulloutMenu";
+
+// functions
 import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
 class Header extends Component {
@@ -48,12 +49,8 @@ class Header extends Component {
 	}
 
 	render() {
-		const {
-			siteName,
-			siteDescription,
-			faviconUrl,
-			mobileMenuActive,
-		} = this.state;
+		const { siteName, siteDescription, faviconUrl, mobileMenuActive } =
+			this.state;
 		const { isHome, breakpoints, currentBreakpoint } = this.props;
 		return (
 			<HeaderElement

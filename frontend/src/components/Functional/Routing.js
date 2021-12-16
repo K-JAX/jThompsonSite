@@ -2,25 +2,24 @@ import React from "react";
 import { Routes, Router, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, Transition } from "react-transition-group";
 
-// Components
+// components
 import Header from "../Design/Organisms/Header";
 import Footer from "../Design/Molecules/Footer";
 import Intro from "../Design/Templates/Intro";
-// const Home = React.lazy(() => import("../Design/Templates/Home"));
 import Home from "../Design/Templates/Home";
 import Portfolio from "../Design/Templates/Portfolio";
-import ProjectType from "../Design/Templates/Project-Type";
-import ProjectSingle from "../Design/Templates/Project-Single";
+import ProjectSingle from "../Design/Templates/ProjectSingle";
 import About from "../Design/Templates/About";
 import PressArticles from "../Design/Templates/PressArticles";
-import { PressArticleSingle } from "../Design/Templates/PressArticle-Single";
+import PressArticleSingle from "../Design/Templates/PressArticleSingle";
 import Contact from "../Design/Templates/Contact";
 import Page from "../Design/Templates/Page";
 import Post from "../Design/Templates/Post";
-import { NotFound } from "../Design/Templates/404";
+import NotFound from "../Design/Templates/404";
 import Search from "../Design/Templates/Search";
 import Category from "../Design/Templates/Category";
 
+// Functions
 import {
 	storeVisitedCookie,
 	getCookie,
@@ -93,7 +92,10 @@ const Routing = () => {
 											"offset-header"
 										}`}
 									>
-										<route.component status={status} />
+										<route.component
+											history={location}
+											status={status}
+										/>
 									</div>
 								}
 							/>

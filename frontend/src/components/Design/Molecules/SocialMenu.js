@@ -78,7 +78,6 @@ class SocialMenu extends Component {
 	}
 }
 export default compose(
-	// with Router,
 	withApollo
 )(SocialMenu);
 

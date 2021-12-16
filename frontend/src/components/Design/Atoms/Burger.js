@@ -50,7 +50,6 @@ class Burger extends Component {
 		);
 	}
 }
-
 export default Burger;
 
 const duration = 1.25;

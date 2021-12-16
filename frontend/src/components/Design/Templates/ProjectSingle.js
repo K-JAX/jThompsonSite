@@ -5,14 +5,15 @@ import { withApollo, useQuery } from "react-apollo";
 import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 
+// components
+import Loader from "../Atoms/Loader";
+import ProjectBody from "../Organisms/ProjectBody";
+
 // Functions
 import {
 	SINGLE_PROJ_QUERY,
 	FEATURED_PROJ_QUERY,
 } from "../../Functional/queries";
-
-// Components
-import Loader from "../Atoms/Loader";
 import {
 	ScrollHeroContext,
 	ScrollHeroProvider,
@@ -21,9 +22,8 @@ import Slideshow, {
 	SlideshowContext,
 	SlideshowProvider,
 } from "../Organisms/Slideshow";
-import ProjectBody from "../Organisms/ProjectBody";
 
-const ProjectSingle = (props) => {
+export const ProjectSingle = (props) => {
 	let { options } = props;
 	const [isSingle, setIsSingle] = useState(
 		props.featured === true ? false : true
@@ -87,8 +87,7 @@ const ProjectSingle = (props) => {
 		</SlideshowProvider>
 	);
 };
-
-export default withApollo(ProjectSingle);
+export default ProjectSingle;
 
 const ProjectMain = styled.main`
 	position: relative;

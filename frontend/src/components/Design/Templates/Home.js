@@ -1,17 +1,18 @@
 import { useRef, useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-// Components
-import ProjectSingle from "./Project-Single";
-import { Wipes } from "../Molecules/Wipes";
-import { LoadingMatte } from "../Atoms/LoadingMatte";
-import { HOME_QUERY } from "../../Functional/queries";
+// components
+import ProjectSingle from "./ProjectSingle";
+import Wipes from "../Molecules/Wipes";
+import LoadingMatte from "../Atoms/LoadingMatte";
+import Loader from "../Atoms/Loader";
 
-// Hooks
+// functions
+import { HOME_QUERY } from "../../Functional/queries";
 import { usePrevLocation } from "../../Functional/CustomHooks";
 
 const Home = (props) => {
@@ -19,15 +20,17 @@ const Home = (props) => {
 	let { status } = props;
 
 	const location = useLocation();
-	const prevLocation = usePrevLocation(location);
-	console.log(prevLocation);
-
-	if (loading) return <LoadingMatte />;
+	if (loading)
+		return location?.state?.from === "Intro" ? (
+			<LoadingMatte />
+		) : (
+			<Loader />
+		);
 	if (error) return `Error! ${error}`;
 
 	return (
 		<PageDiv status={status} className={`page page-route-${status}`}>
-			{prevLocation.pathname === "/" && (
+			{location?.state?.from === "Intro" && (
 				<Wipes
 					className="z-10"
 					startColor={"dark"}

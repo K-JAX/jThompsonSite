@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 // components
-import { SlideshowContext } from "../Organisms/Slideshow";
 import SlideStrip from "../Molecules/SlideStrip";
 
-export const SlideControls = React.memo((props) => {
+// functions
+import { SlideshowContext } from "../Organisms/Slideshow";
+
+const SlideControls = React.memo((props) => {
 	const { contentType, images } = props;
 	let total = props.total !== undefined ? `/ ${props.total + 1}` : "";
 	return (

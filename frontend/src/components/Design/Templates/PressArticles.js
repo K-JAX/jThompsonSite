@@ -5,8 +5,10 @@ import { useQuery } from "react-apollo";
 // components
 import Headline from "../Atoms/Headline";
 import Loader from "../Atoms/Loader";
-import { PRESS_QUERY } from "../../Functional/queries";
 import PressArticleLinkSection from "../Organisms/PressArticleLinkSection";
+
+// functions
+import { PRESS_QUERY } from "../../Functional/queries";
 
 const PressArticles = (props) => {
 	const { status } = props;

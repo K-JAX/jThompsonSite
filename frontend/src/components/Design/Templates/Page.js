@@ -85,7 +85,6 @@ class Page extends Component {
 					<h1>{page.title}</h1>
 				</div>
 				<div
-					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: page.content,
 					}}

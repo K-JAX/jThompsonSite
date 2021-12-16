@@ -6,10 +6,9 @@ import { motion } from "framer-motion";
 
 // Component
 import Headline from "../Atoms/Headline";
-import { Button } from "../Atoms/Button";
-import { ProjectThumb } from "../Molecules/ProjectThumb";
+import ProjectThumb from "../Molecules/ProjectThumb";
 import Loader from "../Atoms/Loader";
-import { NoDataMessage } from "../Atoms/NoDataMessage";
+import NoDataMessage from "../Atoms/NoDataMessage";
 import {
 	PAGE_QUERY,
 	PROJ_TYPE_QUERY,

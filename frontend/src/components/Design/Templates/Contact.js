@@ -6,10 +6,9 @@ import gql from "graphql-tag";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Components
+// components
 import Headline from "../Atoms/Headline";
 import Form from "../Organisms/Form";
-import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
 import Loader from "../Atoms/Loader";
 
 const PAGE_QUERY = gql`

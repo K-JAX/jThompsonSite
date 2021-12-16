@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-export const LoadingMatte = () => {
+const LoadingMatte = () => {
 	return <LoadingMatteDiv />;
 };
-
+export default LoadingMatte;
 const LoadingMatteDiv = styled.div`
 	position: absolute;
 	width: 100vw;

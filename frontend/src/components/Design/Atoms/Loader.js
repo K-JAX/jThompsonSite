@@ -9,7 +9,6 @@ const Loader = (props) => {
 		</div>
 	);
 };
-
 export default Loader;
 
 const LoaderDiv = styled.div`

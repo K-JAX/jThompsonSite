@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Parser as HtmlToReactParser } from "html-to-react";
 
-// Components
+// components
 import Hero from "../Organisms/Hero";
 
 class ProjectFeatures extends Component {

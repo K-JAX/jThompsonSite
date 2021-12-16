@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-apollo";
 
-// Components
-import { GiantLetters } from "../Molecules/GiantLetters";
-import { EntryTitle } from "../Molecules/EntryTitle";
-import { Wipes } from "../Molecules/Wipes";
+// components
+import GiantLetters from "../Molecules/GiantLetters";
+import EntryTitle from "../Molecules/EntryTitle";
+import Wipes from "../Molecules/Wipes";
+
+// functions
 import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
 const Intro = (props) => {

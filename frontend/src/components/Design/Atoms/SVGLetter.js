@@ -5,7 +5,7 @@ import VisibilitySensor from "react-visibility-sensor";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-export const SVGLetter = (props) => {
+const SVGLetter = (props) => {
 	const { letter, size, alignment } = props;
 
 	let dashArraySize = size * 5.9;
@@ -58,6 +58,7 @@ export const SVGLetter = (props) => {
 		</VisibilitySensor>
 	);
 };
+export default SVGLetter;
 
 SVGLetter.defaultProps = {
 	size: 152,

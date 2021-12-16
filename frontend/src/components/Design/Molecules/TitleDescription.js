@@ -14,7 +14,6 @@ class TitleDescription extends Component {
 		);
 	}
 }
-
 export default withApollo(TitleDescription);
 
 const TitleDescriptionDiv = styled.div`

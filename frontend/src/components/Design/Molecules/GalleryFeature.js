@@ -21,7 +21,6 @@ const GalleryFeature = (props) => {
 		</GalleryDiv>
 	);
 };
-
 export default GalleryFeature;
 
 const GalleryDiv = styled.div`

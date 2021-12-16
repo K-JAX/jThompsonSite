@@ -81,7 +81,6 @@ const Headline = (props) => {
 	);
 };
 
-// export default withApollo(Headline);
 export default Headline;
 
 const HeadlineH1 = styled.h1`

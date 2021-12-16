@@ -6,9 +6,7 @@ import { compose } from "recompose";
 import gql from "graphql-tag";
 import Config from "../../../config";
 
-// import { AUTH_TOKEN } from '../../constants';
-
-// Components
+// components
 import Loader from "../Atoms/Loader";
 
 /**

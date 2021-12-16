@@ -22,7 +22,6 @@ const Footer = (props) => {
 		</FooterElement>
 	);
 };
-
 export default compose(withBreakpoints)(Footer);
 
 const FooterElement = styled.footer`

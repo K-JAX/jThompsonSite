@@ -4,7 +4,7 @@ import ReactBreakpoints, { Media } from "react-breakpoints";
 import { useQuery } from "react-apollo";
 import { useLocation } from "react-router-dom";
 
-// Components
+// components
 // import Intro from "./Design/Templates/Intro";
 const Intro = React.lazy(() => import("./Design/Templates/Intro"));
 

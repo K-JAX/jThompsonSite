@@ -8,7 +8,6 @@ import GalleryFeature from "../Molecules/GalleryFeature";
 import StatBox from "../Organisms/StatBox";
 import TitleDescription from "../Molecules/TitleDescription";
 import CTAStrip from "../Molecules/CTA-Strip";
-import SlideStrip from "../Molecules/SlideStrip";
 
 class ProjectContent extends Component {
 	render() {
@@ -21,7 +20,6 @@ class ProjectContent extends Component {
 			stats,
 			isSingle,
 		} = this.props;
-		// console.log(content);
 		return (
 			<ProjectContentSection>
 				<link

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withApollo } from "react-apollo";
 import styled from "styled-components";
 
-// Components
+// components
 import CaptionTitle from "../Atoms/CaptionTitle";
 import CaptionLink from "../Atoms/CaptionLink";
 

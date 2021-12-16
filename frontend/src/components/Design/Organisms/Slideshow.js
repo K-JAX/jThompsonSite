@@ -5,8 +5,10 @@ import styled from "styled-components";
 import Loader from "../Atoms/Loader";
 import Slide from "../Molecules/Slide";
 import ProjectTitle from "../Molecules/ProjectTitle";
+import SlideControls from "../Molecules/SlideControls";
+
+// functions
 import { ScrollHeroContext } from "../../Functional/ScrollHeroCheck";
-import { SlideControls } from "../Molecules/SlideControls";
 
 export const SlideshowContext = createContext();
 export const SlideshowProvider = (props) => {

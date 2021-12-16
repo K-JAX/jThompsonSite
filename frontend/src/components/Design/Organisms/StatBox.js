@@ -77,7 +77,6 @@ class StatBox extends Component {
 		);
 	}
 }
-
 export default withApollo(StatBox);
 
 const StatBoxDiv = styled.div`

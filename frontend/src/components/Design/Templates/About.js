@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 
 // components
 import Headline from "../Atoms/Headline";
-import { GiantLetters } from "../Molecules/GiantLetters";
+import GiantLetters from "../Molecules/GiantLetters";
 import FigureLink from "../Organisms/FigureLink";
 import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
 import Loader from "../Atoms/Loader";

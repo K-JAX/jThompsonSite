@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import ProjectTitle from "../Molecules/ProjectTitle";
 import Loader from "../Atoms/Loader";
 
-export const ProjectThumb = (props) => {
+const ProjectThumb = (props) => {
 	const { project, className, delay, status } = props;
 
 	useEffect(() => {}, [status]);
@@ -47,6 +47,7 @@ export const ProjectThumb = (props) => {
 		</ThumbLi>
 	);
 };
+export default ProjectThumb;
 
 const ThumbLi = styled.li`
 	a {

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Config from "../../../config";
 
-// Components
+// components
 import CaptionBox from "../Molecules/CaptionBox";
 
 class FigureLink extends Component {

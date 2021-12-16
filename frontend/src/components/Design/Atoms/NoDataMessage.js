@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export const NoDataMessage = (props) => {
+const NoDataMessage = (props) => {
 	const { text, className } = props;
 	const [loaded, setLoaded] = useState(false);
 
@@ -15,6 +15,7 @@ export const NoDataMessage = (props) => {
 		</StyledDiv>
 	);
 };
+export default NoDataMessage;
 
 const StyledDiv = styled.div`
 	position: relative;

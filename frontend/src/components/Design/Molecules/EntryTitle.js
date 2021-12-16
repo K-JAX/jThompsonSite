@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 
 // components
 import Arrow from "../Atoms/Arrow";
-import { Button } from "../Atoms/Button";
+import Button from "../Atoms/Button";
+
+// functions
 import { storeVisitedCookie } from "../../Functional/StoreCookies";
 
-export const EntryTitle = (props) => {
+const EntryTitle = (props) => {
 	let { message } = props;
 	let userMessage;
 	if (message !== undefined) {
@@ -27,8 +29,8 @@ export const EntryTitle = (props) => {
 				<Link
 					to={{
 						pathname: "/",
-						state: { from: "intro" },
 					}}
+					state={{ from: "Intro" }}
 					onClick={storeVisitedCookie}
 				>
 					<Button id="entry-button" priority="circular">
@@ -45,6 +47,7 @@ export const EntryTitle = (props) => {
 		</EntrySignDiv>
 	);
 };
+export default EntryTitle;
 
 EntryTitle.propTypes = {
 	comingSoon: PropTypes.bool,
