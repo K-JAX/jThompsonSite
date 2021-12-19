@@ -19,14 +19,20 @@ class Slide extends Component {
 			transitionSpeed,
 			titleAttachClass,
 		} = this.props;
+		const { sourceUrl, srcSet } = img;
 		if (isSingleEntity) {
 			return (
 				<>
 					<SlideComponent
 						className={className}
-						img={img}
 						transitionSpeed={transitionSpeed}
-					></SlideComponent>
+					>
+						<img
+							alt={`${title} project slide image.`}
+							src={img.sourceUrl}
+							srcSet={img.srcSet}
+						/>
+					</SlideComponent>
 				</>
 			);
 		}
@@ -60,6 +66,11 @@ const SlideComponent = styled.div`
 	overflow-y: visible;
 	background: url(${(props) => props.img}) center / cover no-repeat;
 	opacity: 0;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 	transition: ${(props) => props.transitionSpeed / 10}s;
 	&.activeSlide {
 		opacity: 1;

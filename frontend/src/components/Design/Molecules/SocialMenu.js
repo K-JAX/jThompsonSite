@@ -77,12 +77,11 @@ class SocialMenu extends Component {
 		);
 	}
 }
-export default compose(
-	withApollo
-)(SocialMenu);
+export default compose(withApollo)(SocialMenu);
 
 const SocialNavElem = styled(motion.nav)`
 	&.isHome {
 		padding-left: 50px;
+		margin-bottom: 20px;
 	}
 `;

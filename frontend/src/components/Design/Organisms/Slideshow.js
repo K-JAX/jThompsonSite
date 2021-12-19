@@ -173,7 +173,7 @@ class Slideshow extends Component {
 												slides.additionalProjectDetails
 													.location
 											}
-											img={image.sourceUrl}
+											img={image}
 											transitionSpeed={transitionSpeed}
 											active={i === slideIndex}
 											className={
