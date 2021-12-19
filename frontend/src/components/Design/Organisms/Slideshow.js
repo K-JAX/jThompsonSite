@@ -198,11 +198,11 @@ class Slideshow extends Component {
 							<ProjectTitle
 								title={slides.title}
 								subtitle={`${slides.date.slice(0, 4)}, ${
-									slides.additionalProjectDetails.location
-										.city
+									slides?.additionalProjectDetails?.location
+										?.city
 								}, ${
-									slides.additionalProjectDetails.location
-										.stateShort
+									slides?.additionalProjectDetails?.location
+										?.stateShort
 								}`}
 							/>
 						</>
