@@ -105,7 +105,12 @@ const About = (props) => {
 							/>
 						</div>
 					</div>
-					<GiantLetters letters="JTA" layout="cascade" zIndex={-1} />
+					<GiantLetters
+						letters="JTA"
+						layout="cascade"
+						zIndex={-1}
+						status={status}
+					/>
 				</div>
 			</div>
 			<div className="container content-container px-4">

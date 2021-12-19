@@ -5,26 +5,22 @@ import styled from "styled-components";
 import Nav from "./Nav";
 import Burger from "../Atoms/Burger";
 
-class PulloutMenu extends Component {
-	render() {
-		const { menuActive, burgerOnClick } = this.props;
-
-		return (
-			<Puller>
-				<Burger onClick={burgerOnClick} burgerIsActive={menuActive} />
-				<Nav
-					onClick={burgerOnClick}
-					className={`pullout ${menuActive ? "pulled-out" : ""}`}
-				>
-					<div className="transition layer-1" />
-					<div className="transition layer-2" />
-					<div className="transition layer-3" />
-				</Nav>
-			</Puller>
-		);
-	}
-}
-
+const PulloutMenu = (props) => {
+	const { menuActive, burgerOnClick } = props;
+	return (
+		<Puller>
+			<Burger onClick={burgerOnClick} burgerIsActive={menuActive} />
+			<Nav
+				onClick={burgerOnClick}
+				className={`pullout ${menuActive ? "pulled-out" : ""}`}
+			>
+				<div className="transition layer-1" />
+				<div className="transition layer-2" />
+				<div className="transition layer-3" />
+			</Nav>
+		</Puller>
+	);
+};
 export default PulloutMenu;
 
 const Puller = styled.div`

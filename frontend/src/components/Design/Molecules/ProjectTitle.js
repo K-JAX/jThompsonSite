@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -8,61 +8,67 @@ import PropTypes from "prop-types";
 import Arrow from "../Atoms/Arrow";
 import SlideMeter from "../Atoms/SlideMeter";
 
-class ProjectTitle extends Component {
-	render() {
-		const {
-			title,
-			subtitle,
-			type,
-			percentage,
-			attachmentClass,
-			active,
-			className,
-		} = this.props;
-		return (
-			<ProjectTitleDiv
-				className={`project-title ${type} ${className} ${attachmentClass}`}
-				initial={{ y: `${type === "slideTitle" ? 100 : 0}%` }}
-				animate={{ y: 0 }}
-				transition={{ delay: 1.5 }}
-			>
-				{type === "slideTitle" && (
-					<div className="scroll-indicator">
-						<small className="help-text">
-							<i>Scroll to view</i>
-						</small>
-						<Arrow num={3} direction="down" color="#000" animate />
-					</div>
-				)}
-				{type == "regularTitle" && (
-					<Link className="bcrumb" to={"/portfolio"}>
-						Portfolio &#62;
-					</Link>
-				)}
-				<div className="title-stack row">
-					<h1 className={`${type === "thumbTitle" && "h6"}`}>
-						{title}
-					</h1>
-					{type == "thumbTitle" && (
-						<Arrow className="long" direction="right" />
-					)}
-					{percentage !== undefined && (
-						<SlideMeter
-							progress={active ? percentage : undefined}
-						/>
-					)}
+const ProjectTitle = (props) => {
+	const {
+		title,
+		subtitle,
+		type,
+		percentage,
+		attachmentClass,
+		active,
+		className,
+	} = props;
 
-					{subtitle !== undefined && (
-						<h2>
-							<i>{subtitle}</i>
-						</h2>
-					)}
+	const variants = {
+		moveIn: {
+			y: `0%`,
+			transition: { delay: 1.5 },
+		},
+		moveOut: {
+			y: "100%",
+			transition: { delay: 0.0 },
+		},
+	};
+
+	return (
+		<ProjectTitleDiv
+			className={`project-title ${type} ${className} ${attachmentClass}`}
+			variants={variants}
+			initial={{ y: `${type === "slideTitle" ? 100 : 0}%` }}
+			animate="moveIn"
+			exit="moveOut"
+		>
+			{type === "slideTitle" && (
+				<div className="scroll-indicator">
+					<small className="help-text">
+						<i>Scroll to view</i>
+					</small>
+					<Arrow num={3} direction="down" color="#000" animate />
 				</div>
-			</ProjectTitleDiv>
-		);
-	}
-}
+			)}
+			{type == "regularTitle" && (
+				<Link className="bcrumb" to={"/portfolio"}>
+					Portfolio &#62;
+				</Link>
+			)}
+			<div className="title-stack row">
+				<h1 className={`${type === "thumbTitle" && "h6"}`}>{title}</h1>
+				{type == "thumbTitle" && (
+					<Arrow className="long" direction="right" />
+				)}
+				{percentage !== undefined && (
+					<SlideMeter progress={active ? percentage : undefined} />
+				)}
 
+				{subtitle !== undefined && (
+					<h2>
+						<i>{subtitle}</i>
+					</h2>
+				)}
+			</div>
+		</ProjectTitleDiv>
+	);
+};
 export default ProjectTitle;
 
 const ProjectTitleDiv = styled(motion.div)`

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
@@ -9,6 +10,15 @@ import { getPreviousPath } from "../../Functional/GetPreviousPath";
 const Logo = (props) => {
 	const { isHome, breakpoints, currentBreakpoint, menuActive } = props;
 	const paths = getPreviousPath();
+	const [headerClass, setHeaderClass] = useState("");
+
+	useEffect(() => {
+		if (!isHome || breakpoints[currentBreakpoint] <= breakpoints.lg) {
+			setTimeout(() => setHeaderClass("normal-logo"), 300);
+		} else {
+			setHeaderClass("home-logo");
+		}
+	}, [isHome]);
 
 	return (
 		<Link
@@ -20,11 +30,7 @@ const Logo = (props) => {
 		>
 			<LogoElement
 				alt="Logo and Site Title"
-				className={`${
-					isHome && breakpoints[currentBreakpoint] > breakpoints.lg
-						? "home-logo"
-						: "normal-logo"
-				} ${menuActive ? "menu-active" : ""}`}
+				className={`${headerClass} ${menuActive && "menu-active"}`}
 				initial={{
 					x: `${isHome && paths["prevUrl"] !== "/" ? 0 : -100}%`,
 				}}

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Config from "../../../config";
+import { motion, AnimatePresence } from "framer-motion";
 
 // components
 import CaptionBox from "../Molecules/CaptionBox";
@@ -47,30 +48,41 @@ class FigureLink extends Component {
 		}
 
 		return (
-			<Figure
-				className={`row mb-5 ${className} ${
-					alignment === "left" ? "left" : "right"
-				}`}
-				onMouseEnter={() => this.addHover()}
-				onMouseLeave={() => this.removeHover()}
-				onFocus={() => this.addHover()}
-			>
-				<Link
-					className="col-12 col-md-6 px-0 px-md-4 d-flex justify-content-end align-content-end"
-					to={slugPath}
+			<AnimatePresence>
+				<motion.div
+					initial={{ y: 100, opacity: 0 }}
+					animate={{ y: 0, opacity: 1 }}
+					exit={{ y: 100, opacity: 0 }}
+					transition={{ type: "tween", delay: 1 }}
 				>
-					<img className="py-4" src={img} />
-				</Link>
-				<CaptionBox
-					className="col-12 col-md-6 px-0"
-					isHovered={isHovered}
-					alignment={alignment}
-					link={link}
-				>
-					<h3 className="h2 font-weight-lighter">{captionTitle}</h3>
-					<p>{captionDescription}</p>
-				</CaptionBox>
-			</Figure>
+					<Figure
+						className={`row mb-5 ${className} ${
+							alignment === "left" ? "left" : "right"
+						}`}
+						onMouseEnter={() => this.addHover()}
+						onMouseLeave={() => this.removeHover()}
+						onFocus={() => this.addHover()}
+					>
+						<Link
+							className="col-12 col-md-6 px-0 px-md-4 d-flex justify-content-end align-content-end"
+							to={slugPath}
+						>
+							<img className="py-4" src={img} />
+						</Link>
+						<CaptionBox
+							className="col-12 col-md-6 px-0"
+							isHovered={isHovered}
+							alignment={alignment}
+							link={link}
+						>
+							<h3 className="h2 font-weight-lighter">
+								{captionTitle}
+							</h3>
+							<p>{captionDescription}</p>
+						</CaptionBox>
+					</Figure>
+				</motion.div>
+			</AnimatePresence>
 		);
 	}
 }

@@ -1,9 +1,8 @@
-import { useRef, useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // components
 import ProjectSingle from "./ProjectSingle";
@@ -13,11 +12,28 @@ import Loader from "../Atoms/Loader";
 
 // functions
 import { HOME_QUERY } from "../../Functional/queries";
-import { usePrevLocation } from "../../Functional/CustomHooks";
 
 const Home = (props) => {
 	const { loading, error, data } = useQuery(HOME_QUERY);
 	let { status } = props;
+
+	const animVariants = {
+		moveIn: {
+			width: `calc(100% - ${300}px)`,
+			x: 0,
+			transition: {
+				type: "tween",
+				delay: location?.state?.from === "Intro" ? 0.5 : 0,
+			},
+		},
+		moveOut: {
+			width: `0%`,
+			transition: {
+				type: "tween",
+				delay: 0,
+			},
+		},
+	};
 
 	const location = useLocation();
 	if (loading)
@@ -41,20 +57,25 @@ const Home = (props) => {
 					delay={300}
 				/>
 			)}
-			<motion.div
-				className="z-1"
-				initial={{ width: `calc(100% - ${0}px)` }}
-				animate={{ width: `calc(100% - ${300}px)` }}
-				transition={{
-					type: "tween",
-					delay: 1.0,
-				}}
-			>
-				<ProjectSingle
-					featured={true}
-					options={data.page.sliderTimer}
-				/>
-			</motion.div>
+			<AnimatePresence>
+				{status == "entered" && (
+					<motion.div
+						className="z-1"
+						variants={animVariants}
+						initial={{
+							width: `100%`,
+							x: location?.state?.from === "Intro" ? 0 : "100%",
+						}}
+						animate="moveIn"
+						exit="moveOut"
+					>
+						<ProjectSingle
+							featured={true}
+							options={data.page.sliderTimer}
+						/>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</PageDiv>
 	);
 };

@@ -1,100 +1,86 @@
-import { Component } from "react";
-import { withApollo } from "react-apollo";
+import { useState, useEffect } from "react";
+import { useQuery } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
 import { compose } from "recompose";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // components
 import Logo from "../Atoms/Logo";
+import Loader from "../Atoms/Loader";
 import SidebarMenu from "../Molecules/SidebarMenu";
 import PulloutMenu from "../Molecules/PulloutMenu";
 
 // functions
 import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
-class Header extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			siteName: "Joseph Thompson Architect",
-			siteDescription: "",
-			faviconUrl: "",
-			mobileMenuActive: false,
-		};
-		this.handleClick = this.handleClick.bind(this);
-	}
+const Header = (props) => {
+	const { isHome, breakpoints, currentBreakpoint } = props;
+	const [mobileMenuActive, setMobileMenuActive] = useState(false);
+	const [headerClass, setHeaderClass] = useState("");
 
-	componentDidMount() {
-		this.executeQuery();
-	}
+	const { loading, error, data } = useQuery(SITE_SETTINGS_QUERY);
+	useEffect(() => {
+		if (!isHome || breakpoints[currentBreakpoint] <= breakpoints.lg) {
+			setTimeout(() => setHeaderClass("normal"), 300);
+		} else {
+			setHeaderClass("home");
+		}
+	}, [isHome]);
+	if (loading) return <Loader />;
+	if (error) return `Error: ${error}`;
 
-	executeQuery = async () => {
-		const { client } = this.props;
-		const result = await client.query({
-			query: SITE_SETTINGS_QUERY,
-		});
-		this.setState({
-			siteName: result.data.generalSettings.title,
-			siteDescription: result.data.generalSettings.description,
-			faviconUrl: result.data.faviconUrl,
-		});
+	let { title, description } = data.generalSettings;
+	let { faviconUrl } = data;
+
+	const handleClick = () => {
+		setMobileMenuActive(mobileMenuActive ? false : true);
 	};
 
-	handleClick() {
-		this.setState((state) => ({
-			mobileMenuActive: state.mobileMenuActive ? false : true,
-		}));
-	}
+	const menuVariants = {
+		moveIn: { x: "0%", transition: { type: "tween", delay: 1.7 } },
+		moveOut: { x: "-100%", transition: { type: "tween", delay: 0 } },
+	};
 
-	render() {
-		const { siteName, siteDescription, faviconUrl, mobileMenuActive } =
-			this.state;
-		const { isHome, breakpoints, currentBreakpoint } = this.props;
-		return (
-			<HeaderElement
-				id="site-header"
-				className={`${
-					isHome && breakpoints[currentBreakpoint] > breakpoints.lg
-						? "home"
-						: "normal"
-				} flex pa1 justify-between`}
-			>
-				<Helmet>
-					<meta charSet="utf-8" />
-					<title>{`${siteName} ${
-						siteDescription !== "" ? "- " + siteDescription : ""
-					}`}</title>
-					<link
-						rel="canonical"
-						href="https://jThompsonArchitect.com"
-					/>
-					<link rel="icon" type="image/png" href={faviconUrl} />
-				</Helmet>
-				<motion.div
-					className="d-flex flex flex-fixed black"
-					initial={{ x: `${isHome ? "-100%" : 0}` }}
-					animate={{ x: 0 }}
-					transition={{ type: "Tween", delay: 1.3 }}
-				>
-					<Logo isHome={isHome} menuActive={mobileMenuActive} />
+	return (
+		<HeaderElement
+			id="site-header"
+			className={`${headerClass} flex pa1 justify-between`}
+		>
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>{`${title} - ${description}`}</title>
+				<link rel="canonical" href="https://jThompsonArchitect.com" />
+				<link rel="icon" type="image/png" href={faviconUrl} />
+			</Helmet>
+			<div className="d-flex flex flex-fixed black">
+				<Logo isHome={isHome} menuActive={mobileMenuActive} />
+				<AnimatePresence exitBeforeEnter>
 					{isHome &&
 					breakpoints[currentBreakpoint] > breakpoints.lg ? (
-						<SidebarMenu />
+						<motion.div
+							className="h-100"
+							key="sidebar"
+							variants={menuVariants}
+							initial={{ x: `-100%` }}
+							animate="moveIn"
+							exit="moveOut"
+						>
+							<SidebarMenu />
+						</motion.div>
 					) : (
 						<PulloutMenu
-							burgerOnClick={this.handleClick}
+							burgerOnClick={handleClick}
 							menuActive={mobileMenuActive}
 						/>
 					)}
-				</motion.div>
-			</HeaderElement>
-		);
-	}
-}
-
-export default compose(withApollo, withBreakpoints)(Header);
+				</AnimatePresence>
+			</div>
+		</HeaderElement>
+	);
+};
+export default compose(withBreakpoints)(Header);
 
 const HeaderElement = styled.header`
 	z-index: 12;

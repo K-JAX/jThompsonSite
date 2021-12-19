@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const GiantLetters = (props) => {
-	const { letters, layout, height, zIndex } = props;
+	const { letters, layout, height, zIndex, status } = props;
 	let separated = letters.split("");
 
 	if (layout === "cascade")
@@ -15,13 +15,26 @@ const GiantLetters = (props) => {
 				layout={layout}
 				zIndex={zIndex}
 			>
-				{separated.map((letter, i) => {
-					return (
-						<span key={letter} className={`letter letter-${i}`}>
-							{letter}
-						</span>
-					);
-				})}
+				<AnimatePresence>
+					{status === "entered" &&
+						separated.map((letter, i) => {
+							return (
+								<motion.span
+									key={letter}
+									className={`letter letter-${i}`}
+									initial={{ y: 50, opacity: 0 }}
+									animate={{ y: 0, opacity: 1 }}
+									exit={{ y: 50 }}
+									transition={{
+										type: "Tween",
+										duration: 1,
+									}}
+								>
+									{letter}
+								</motion.span>
+							);
+						})}
+				</AnimatePresence>
 			</GiantLettersDiv>
 		);
 	if (layout === "svg") {
@@ -123,7 +136,6 @@ GiantLetters.propTypes = {
 const GiantLettersSVG = styled.svg`
 	position: absolute;
 	font-family: "Hind Siliguri";
-	/* z-index: 0; */
 	user-select: none;
 	top: 0;
 	text {
@@ -153,9 +165,6 @@ const GiantLettersDiv = styled.div`
 	z-index: ${(props) => props.zIndex};
 	&.cascading {
 		display: flex;
-		/* left: -0.0245em; */
-		/* right: 0; */
-		/* top: -41%; */
 		top: 0;
 		margin: auto;
 		margin-left: -0.0575em;
@@ -164,17 +173,14 @@ const GiantLettersDiv = styled.div`
 			width: 0.15em;
 			line-height: 0.725;
 			&:first-of-type {
-				color: #464853;
-				opacity: 0.3;
+				color: rgba(70, 72, 83, 0.3);
 			}
 			&:nth-of-type(2) {
-				color: #464853;
-				opacity: 0.1;
+				color: rgba(70, 72, 83, 0.1);
 				margin-top: 0.27em;
 			}
 			&:last-of-type {
-				color: #464853;
-				opacity: 0.15;
+				color: rgba(70, 72, 83, 0.15);
 				margin-top: 0.4em;
 			}
 		}
