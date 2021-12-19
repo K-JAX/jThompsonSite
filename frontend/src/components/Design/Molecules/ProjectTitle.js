@@ -1,7 +1,7 @@
 import { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 
 // components
@@ -34,7 +34,7 @@ const ProjectTitle = (props) => {
 		<ProjectTitleDiv
 			className={`project-title ${type} ${className} ${attachmentClass}`}
 			variants={variants}
-			initial={{ y: `${type === "slideTitle" ? 100 : 0}%` }}
+			initial={{ y: "100%" }}
 			animate="moveIn"
 			exit="moveOut"
 		>

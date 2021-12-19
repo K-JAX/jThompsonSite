@@ -46,14 +46,12 @@ export const ProjectSingle = (props) => {
 			transitionSpeed: data.project.projectMainDetails.transitionSpeed,
 		};
 		let mainFeaturedImg = data.project.featuredImage.node;
-		// console.log(mainFeaturedImg);
 		slideData = data.project;
 		slideData.slideImages =
 			data.project.additionalProjectDetails.featuredImages;
 		if (!slideData.slideImages.includes(mainFeaturedImg)) {
 			slideData.slideImages.unshift(mainFeaturedImg);
 		}
-		console.log(slideData.slideImages);
 		if (data.project.projectMainDetails.showSlideshowOnProjectPage) {
 			options = slideshowOptions;
 		}

@@ -52,7 +52,6 @@ class ProjectBody extends Component {
 
 	getMoreData = () => {
 		const { fetchedMoreData } = this.state;
-		// const { slideIndex } = this.context;
 		const { data, isSingle, context } = this.props;
 		const { slideshow, scroll } = context;
 		const { slideIndex } = slideshow;

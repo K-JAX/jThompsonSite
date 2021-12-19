@@ -60,11 +60,13 @@ const Home = (props) => {
 			<AnimatePresence>
 				{status == "entered" && (
 					<motion.div
-						className="z-1"
+						className="z-1 position-relative"
 						variants={animVariants}
 						initial={{
 							width: `100%`,
-							x: location?.state?.from === "Intro" ? 0 : "100%",
+							x: `${
+								location?.state?.from === "Intro" ? 0 : 1000
+							}`,
 						}}
 						animate="moveIn"
 						exit="moveOut"
