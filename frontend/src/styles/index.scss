@@ -375,9 +375,10 @@ input[type="submit"] {
 
 .overlay-anim-container {
 	position: relative;
-
+	z-index: 2;
 	.anim-overlay {
 		position: absolute;
+		z-index: 2;
 		top: 0;
 		left: 0;
 		width: 100%;

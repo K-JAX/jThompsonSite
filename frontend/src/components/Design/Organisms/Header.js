@@ -28,7 +28,7 @@ const Header = (props) => {
 			setHeaderClass("home");
 		}
 	}, [isHome]);
-	if (loading) return <Loader />;
+	if (loading) return <div>{/*Silent Loading*/}</div>;
 	if (error) return `Error: ${error}`;
 
 	let { title, description } = data.generalSettings;
@@ -39,7 +39,7 @@ const Header = (props) => {
 	};
 
 	const menuVariants = {
-		moveIn: { x: "0%", transition: { type: "tween", delay: 1.7 } },
+		moveIn: { x: "0%", transition: { type: "tween", delay: 1.1 } },
 		moveOut: { x: "-100%", transition: { type: "tween", delay: 0 } },
 	};
 

@@ -24,7 +24,7 @@ import Slideshow, {
 } from "../Organisms/Slideshow";
 
 export const ProjectSingle = (props) => {
-	let { options } = props;
+	let { options, status } = props;
 	const [isSingle, setIsSingle] = useState(
 		props.featured === true ? false : true
 	);
@@ -60,7 +60,7 @@ export const ProjectSingle = (props) => {
 	}
 
 	return (
-		<SlideshowProvider options={options}>
+		<SlideshowProvider options={options} status={status}>
 			<ProjectMain>
 				{isSingle && (
 					<Helmet>

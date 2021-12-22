@@ -1,6 +1,6 @@
 import { useQuery } from "react-apollo";
 import { withBreakpoints } from "react-breakpoints";
-import { useLocation, useNavigate, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,6 +24,7 @@ const Home = (props) => {
 			transition: {
 				type: "tween",
 				delay: location?.state?.from === "Intro" ? 0.5 : 0,
+				duration: 0.35,
 			},
 		},
 		moveOut: {
@@ -65,7 +66,7 @@ const Home = (props) => {
 						initial={{
 							width: `100%`,
 							x: `${
-								location?.state?.from === "Intro" ? 0 : 1000
+								location?.state?.from === "Intro" ? 0 : 1400
 							}`,
 						}}
 						animate="moveIn"
@@ -74,6 +75,7 @@ const Home = (props) => {
 						<ProjectSingle
 							featured={true}
 							options={data.page.sliderTimer}
+							status={status}
 						/>
 					</motion.div>
 				)}

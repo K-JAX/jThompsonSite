@@ -34,7 +34,7 @@ const Headline = (props) => {
 	if (status === "entering") return null;
 	return (
 		<HeadlineH1
-			className={`page-heading ${className} ${size} ${
+			className={`page-heading ${className} ${size} ${status} ${
 				loaded ? "loaded" : ""
 			}`}
 			alignment={alignment}
@@ -105,13 +105,18 @@ const HeadlineH1 = styled.h1`
 	&:before {
 		content: "";
 		position: absolute;
-		width: 100%;
-		${(props) =>
-			props.alignment === "left" ? "width: 100vw; right: 0;" : ""}
-		${(props) =>
-			props.alignment === "right" ? "width: 100vw; left: 0;" : ""}
+		width: 0;
+		${(props) => (props.alignment === "left" ? " right: 0;" : "")}
+		${(props) => (props.alignment === "right" ? " left: 0;" : "")}
 		bottom: 0;
 		border-bottom: 2px solid black;
+		transition: 1s;
+	}
+	&.entered {
+		&:before {
+			width: 100vw;
+			animation: drawIn 1s forwards;
+		}
 	}
 	&.loaded {
 	}
@@ -120,7 +125,6 @@ const HeadlineH1 = styled.h1`
 		display: inline-block;
 	}
 	.box-transition {
-		/* background: gray; */
 		position: absolute;
 		z-index: -1;
 		/* width: 100%; */
@@ -137,6 +141,14 @@ const HeadlineH1 = styled.h1`
 		&.layer-3 {
 			background: #464853;
 			/* transition-delay: 0.5s; */
+		}
+	}
+	@keyframes drawIn {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 100vw;
 		}
 	}
 `;

@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect, createContext } from "react";
 import styled from "styled-components";
+import { motion, AnimatePresence } from "framer-motion";
 
 // components
 import Loader from "../Atoms/Loader";
@@ -13,10 +14,12 @@ import { ScrollHeroContext } from "../../Functional/ScrollHeroCheck";
 export const SlideshowContext = createContext();
 export const SlideshowProvider = (props) => {
 	let [slideIndex, setIndex] = useState(0);
+	const { status } = props;
 	return (
 		<SlideshowContext.Provider
 			value={{
 				props: props.options,
+				status: status,
 				slideIndex: slideIndex,
 				addIndex: (slideNum) =>
 					setIndex(slideIndex === slideNum ? 0 : slideIndex + 1),
@@ -147,10 +150,24 @@ class Slideshow extends Component {
 
 	render() {
 		const { percentage, isPaused, totalSlides } = this.state;
-		const { slideIndex } = this.context;
+		const { slideIndex, status } = this.context;
 		const { transitionSpeed } = this.context.props;
 		const { slides, isSingleEntity, contentType } = this.props;
+
+		const variants = {
+			moveIn: {
+				x: `0%`,
+				opacity: 1,
+				transition: { type: "tween", duration: 1, delay: 0.25 },
+			},
+			moveOut: {
+				x: "10%",
+				opacity: 0,
+				transition: { type: "tween", duration: 1, delay: 0.0 },
+			},
+		};
 		if (slides === undefined) return <Loader />;
+		// console.log(status);
 		return (
 			<SlideshowComponent>
 				<div
@@ -195,16 +212,33 @@ class Slideshow extends Component {
 										: ""
 								}
 							/>
-							<ProjectTitle
-								title={slides.title}
-								subtitle={`${slides.date.slice(0, 4)}, ${
-									slides?.additionalProjectDetails?.location
-										?.city
-								}, ${
-									slides?.additionalProjectDetails?.location
-										?.stateShort
-								}`}
-							/>
+							<AnimatePresence>
+								{status === "entered" && (
+									<ProjectTitleContainer
+										variants={variants}
+										initial={{
+											x: `10%`,
+											opacity: 0,
+										}}
+										animate="moveIn"
+										exit="moveOut"
+									>
+										<ProjectTitle
+											title={slides.title}
+											subtitle={`${slides.date.slice(
+												0,
+												4
+											)}, ${
+												slides?.additionalProjectDetails
+													?.location?.city
+											}, ${
+												slides?.additionalProjectDetails
+													?.location?.stateShort
+											}`}
+										/>
+									</ProjectTitleContainer>
+								)}
+							</AnimatePresence>
 						</>
 					) : (
 						<ScrollHeroContext.Consumer>
@@ -224,6 +258,7 @@ class Slideshow extends Component {
 												slide.node.featuredImage.node
 													.sourceUrl
 											}
+											status={status}
 											percentage={percentage}
 											isPaused={isPaused}
 											titleAttachClass={context}
@@ -249,6 +284,18 @@ class Slideshow extends Component {
 export default Slideshow;
 
 Slideshow.contextType = SlideshowContext;
+
+const ProjectTitleContainer = styled(motion.div)`
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	display: flex;
+	min-width: 500px;
+	padding: 0px 0;
+	text-align: center;
+	justify-content: end;
+`;
 
 const SlideshowComponent = styled.div`
 	width: 100%;

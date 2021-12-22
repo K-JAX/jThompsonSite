@@ -39,6 +39,10 @@ const Puller = styled.div`
 		padding: 0;
 		opacity: 1;
 		transition: right 0s 0.85s, opacity 1s;
+		a {
+			opacity: 0;
+			transition: 0.3s;
+		}
 		.transition {
 			position: absolute;
 			z-index: -2;
@@ -70,7 +74,9 @@ const Puller = styled.div`
 			right: 0;
 			transition: right 0s, opacity 1s;
 			a {
-				margin-left: 10px;
+				/* margin-left: 10px; */
+				opacity: 1;
+				transition: 0.3s 0.5s;
 			}
 			.transition {
 				right: 0;

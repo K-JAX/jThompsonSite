@@ -3,8 +3,6 @@ import { Routes, Router, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, Transition } from "react-transition-group";
 
 // components
-import Header from "../Design/Organisms/Header";
-import Footer from "../Design/Molecules/Footer";
 import Intro from "../Design/Templates/Intro";
 import Home from "../Design/Templates/Home";
 import Portfolio from "../Design/Templates/Portfolio";
@@ -16,7 +14,6 @@ import Contact from "../Design/Templates/Contact";
 import Page from "../Design/Templates/Page";
 import Post from "../Design/Templates/Post";
 import NotFound from "../Design/Templates/404";
-import Search from "../Design/Templates/Search";
 import Category from "../Design/Templates/Category";
 
 // Functions
@@ -66,7 +63,6 @@ const Routing = () => {
 		{ path: "/page/:slug", component: Page },
 		{ path: "/post/:slug", component: Post },
 		{ path: "/category/:slug", component: Category },
-		{ path: "/search", component: Search },
 		{ path: "/*", component: NotFound },
 	];
 
@@ -76,7 +72,7 @@ const Routing = () => {
 				key={key}
 				unmountOnExit
 				classNames="page-route"
-				timeout={1000}
+				timeout={600}
 			>
 				{(status) => (
 					<Routes location={location}>

@@ -19,7 +19,7 @@ const ProjectThumb = (props) => {
 				alt={`View the ${project.node.title} project.`}
 				className="mb-0 pb-0"
 			>
-				<figure className="thumb before border position-relative d-flex justify-content-center align-items-center mb-0">
+				<figure className="thumb before position-relative d-flex justify-content-center align-items-center mb-0">
 					<motion.div
 						className="animated-container"
 						initial={{ width: "0%" }}

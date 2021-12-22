@@ -62,9 +62,9 @@ class SocialMenu extends Component {
 		return (
 			<SocialNavElem
 				className={`social-nav ${className ? className : ""}`}
-				initial={{ y: `100%` }}
+				initial={{ y: `150%` }}
 				animate={{ y: `0%` }}
-				transition={{ delay: 2.5 }}
+				transition={{ delay: 1.3 }}
 			>
 				{menu.menuItems.edges.map((menuItem) => (
 					<SocialIcon

@@ -71,7 +71,7 @@ const About = (props) => {
 	const htmlToReactParser = new HtmlToReactParser();
 	const parsedContent = htmlToReactParser.parse(content);
 	const parsedIntro = htmlToReactParser.parse(aboutDetails.introText);
-
+	// console.log(status);
 	return (
 		<PageDiv
 			className={`container-fluid px-0`}

@@ -1,61 +1,81 @@
-import React, { Component } from "react";
 import styled from "styled-components";
 import ProjectTitle from "./ProjectTitle";
-import PropTypes from "prop-types";
+import { motion, AnimatePresence } from "framer-motion";
 
-class Slide extends Component {
-	render() {
-		if (this.props === undefined) return <p>Loading</p>;
+const Slide = (props) => {
+	if (props === undefined) return <p>Loading</p>;
+	const {
+		title,
+		date,
+		location,
+		img,
+		active,
+		className,
+		status,
+		percentage,
+		isSingleEntity,
+		transitionSpeed,
+		titleAttachClass,
+	} = props;
+	const ProjectTitleVariants = {
+		initial: { y: 128 },
+		moveIn: { y: 0, transition: { delay: 0.9 } },
+		moveOut: { y: 128, transition: { delay: 0 } },
+	};
 
-		const {
-			title,
-			date,
-			location,
-			img,
-			active,
-			className,
-			percentage,
-			isSingleEntity,
-			transitionSpeed,
-			titleAttachClass,
-		} = this.props;
-		const { sourceUrl, srcSet } = img;
-		if (isSingleEntity) {
-			return (
-				<>
-					<SlideComponent
-						className={className}
-						transitionSpeed={transitionSpeed}
-					>
-						<img
-							alt={`${title} project slide image.`}
-							src={img.sourceUrl}
-							srcSet={img.srcSet}
-						/>
-					</SlideComponent>
-				</>
-			);
-		}
+	if (isSingleEntity) {
 		return (
-			<SlideComponent
-				className={className}
-				img={img}
-				transitionSpeed={transitionSpeed}
-			>
-				<ProjectTitle
-					title={title}
-					subtitle={`${date.slice(0, 4)}, ${
-						location && location.city
-					}, ${location && location.stateShort}`}
-					type="slideTitle"
-					active={active}
-					attachmentClass={titleAttachClass}
-					percentage={percentage}
-				/>
-			</SlideComponent>
+			<>
+				<SlideComponent
+					className={className}
+					transitionSpeed={transitionSpeed}
+				>
+					<img
+						alt={`${title} project slide image.`}
+						src={img.sourceUrl}
+						srcSet={img.srcSet}
+					/>
+				</SlideComponent>
+			</>
 		);
 	}
-}
+	return (
+		<SlideComponent
+			className={className}
+			img={img}
+			transitionSpeed={transitionSpeed}
+		>
+			<AnimatePresence>
+				{status === "entered" && (
+					<ProjectTitleContainer
+						className={`titleContainer ${titleAttachClass}`}
+						variants={ProjectTitleVariants}
+						initial="initial"
+						animate="moveIn"
+						exit="moveOut"
+					>
+						<ProjectTitle
+							title={title}
+							subtitle={`${date.slice(0, 4)}${
+								location?.city !== undefined
+									? ", " + location.city + ","
+									: ""
+							} ${
+								location?.stateShort !== undefined
+									? location.stateShort
+									: ""
+							}`}
+							type="slideTitle"
+							active={active}
+							attachmentClass={titleAttachClass}
+							percentage={percentage}
+						/>
+					</ProjectTitleContainer>
+				)}
+			</AnimatePresence>
+		</SlideComponent>
+	);
+};
 
 export default Slide;
 
@@ -75,5 +95,35 @@ const SlideComponent = styled.div`
 	&.activeSlide {
 		opacity: 1;
 		z-index: 1;
+	}
+`;
+
+const ProjectTitleContainer = styled(motion.div)`
+	position: absolute;
+	z-index: 1;
+	min-width: 600px;
+	top: calc(100% - 128px);
+	right: 0;
+	&.floating {
+		position: fixed;
+	}
+	&.hero {
+		position: fixed;
+	}
+	&.feature {
+		position: absolute;
+		top: 100%;
+		bottom: initial;
+	}
+	@media all and (max-width: 1199px) {
+		right: 80px;
+		&.feature {
+			right: 0px;
+		}
+	}
+	@media all and (max-width: 767px) {
+		right: 0;
+		width: 100%;
+		top: calc(100% - 128px);
 	}
 `;

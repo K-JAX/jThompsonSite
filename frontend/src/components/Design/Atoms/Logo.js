@@ -32,7 +32,7 @@ const Logo = (props) => {
 				alt="Logo and Site Title"
 				className={`${headerClass} ${menuActive && "menu-active"}`}
 				initial={{
-					x: `${isHome && paths["prevUrl"] !== "/" ? 0 : -100}%`,
+					x: `${isHome && paths["prevUrl"] !== "/" ? 0 : -150}%`,
 				}}
 				animate={{ x: 0 }}
 				transition={{ type: "Inertia", delay: 1 }}

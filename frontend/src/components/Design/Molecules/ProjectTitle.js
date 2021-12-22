@@ -1,7 +1,5 @@
-import { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 
 // components
@@ -19,24 +17,9 @@ const ProjectTitle = (props) => {
 		className,
 	} = props;
 
-	const variants = {
-		moveIn: {
-			y: `0%`,
-			transition: { delay: 1.5 },
-		},
-		moveOut: {
-			y: "100%",
-			transition: { delay: 0.0 },
-		},
-	};
-
 	return (
 		<ProjectTitleDiv
 			className={`project-title ${type} ${className} ${attachmentClass}`}
-			variants={variants}
-			initial={{ y: "100%" }}
-			animate="moveIn"
-			exit="moveOut"
 		>
 			{type === "slideTitle" && (
 				<div className="scroll-indicator">
@@ -71,14 +54,12 @@ const ProjectTitle = (props) => {
 };
 export default ProjectTitle;
 
-const ProjectTitleDiv = styled(motion.div)`
-	position: absolute;
-	right: 0;
+const ProjectTitleDiv = styled.div`
 	display: flex;
-	min-width: 500px;
-	padding: 0px 0;
 	text-align: center;
 	justify-content: end;
+	min-width: 500px;
+	padding: 0px 0;
 	.bcrumb {
 		color: black;
 		text-decoration: underline;
@@ -87,7 +68,6 @@ const ProjectTitleDiv = styled(motion.div)`
 		margin-top: 2.75em;
 	}
 	&.slideTitle {
-		top: calc(100% - 128px);
 		.title-stack {
 			background: white;
 		}
@@ -97,8 +77,9 @@ const ProjectTitleDiv = styled(motion.div)`
 		top: 0;
 		background: linear-gradient(
 			90deg,
-			rgba(255, 255, 255, 0.04) 0%,
-			rgba(255, 255, 255, 0.75) 50%
+			rgba(255, 255, 255, 0) 0%,
+			rgba(255, 255, 255, 0.6) 10%,
+			rgba(255, 255, 255, 0.85) 50%
 		);
 		.title-stack {
 			padding-left: 1.75em;
@@ -113,7 +94,6 @@ const ProjectTitleDiv = styled(motion.div)`
 		background: white;
 	}
 	&.hero {
-		position: fixed;
 		.scroll-indicator {
 			background: rgba(255, 255, 255, 1);
 			* {
@@ -121,13 +101,7 @@ const ProjectTitleDiv = styled(motion.div)`
 			}
 		}
 	}
-	&.floating {
-		position: fixed;
-	}
 	&.feature {
-		position: absolute;
-		top: 100%;
-		bottom: initial;
 		.title-stack {
 			h2 {
 				opacity: 1;
@@ -185,19 +159,9 @@ const ProjectTitleDiv = styled(motion.div)`
 		max-height: 0px;
 		overflow: hidden;
 	}
-	@media all and (max-width: 1199px) {
-		&.slideTitle {
-			right: 80px;
-		}
-		&.feature {
-			right: 0px;
-		}
-	}
+
 	@media all and (max-width: 992px) {
 		&.slideTitle {
-			.title-stack {
-				/* padding: 0.25em 1em 1.1em; */
-			}
 			.scroll-indicator {
 				width: 60px;
 				padding-left: 1.1em;
@@ -208,12 +172,10 @@ const ProjectTitleDiv = styled(motion.div)`
 		}
 	}
 	@media all and (max-width: 767px) {
-		right: 0;
 		&.slideTitle {
 			width: 100%;
 			flex-direction: column-reverse;
 			align-content: center;
-			top: calc(100% - 128px);
 			.title-stack {
 				min-width: initial;
 				h1 {
@@ -234,7 +196,6 @@ const ProjectTitleDiv = styled(motion.div)`
 			flex-direction: row;
 			align-content: center;
 			.bcrumb {
-				/* position: absolute; */
 				display: flex;
 				align-items: center;
 				white-space: nowrap;
