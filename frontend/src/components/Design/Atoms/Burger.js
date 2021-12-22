@@ -1,61 +1,44 @@
-import React, { Component } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
-class Burger extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isHovered: false,
-		};
+const Burger = (props) => {
+	const [isHovered, setHovered] = useState(false);
+	const { onClick, burgerIsActive } = props;
+
+	let burgerStatus = "";
+	if (burgerIsActive === true) {
+		burgerStatus = "activeBurger";
+	} else if (burgerIsActive === false) {
+		burgerStatus = "cancelBurger";
 	}
 
-	addHover = () => {
-		this.setState({
-			isHovered: true,
-		});
-	};
-
-	removeHover = () => {
-		this.setState({
-			isHovered: false,
-		});
-	};
-
-	render() {
-		const { isHovered } = this.state;
-		const { onClick, burgerIsActive } = this.props;
-
-		let burgerStatus;
-
-		if (burgerIsActive === true) {
-			burgerStatus = "activeBurger";
-		} else if (burgerIsActive === false) {
-			burgerStatus = "cancelBurger";
-		} else {
-			burgerStatus = "";
-		}
-
-		return (
-			<Patty
-				type="button"
-				onMouseEnter={this.addHover}
-				onMouseLeave={this.removeHover}
-				onClick={onClick}
-				className={`burger ${
-					isHovered ? "hovering" : ""
-				} ${burgerStatus}`}
-			>
-				<div className="bread-ham-cheese" />
-			</Patty>
-		);
-	}
-}
+	return (
+		<Patty
+			type="button"
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
+			onClick={onClick}
+			className={`burger ${isHovered && "hovering"} ${burgerStatus}`}
+		>
+			<div className="bread-ham-cheese" />
+		</Patty>
+	);
+};
 export default Burger;
+
+Burger.propTypes = {
+	onClick: PropTypes.func,
+};
+
+Burger.defaultProps = {
+	burgerIsActive: "",
+};
 
 const duration = 1.25;
 
 const Patty = styled.button`
-	opacity: 0;
+	opacity: 1;
 	justify-self: end;
 	align-self: center;
 	position: relative;
@@ -69,6 +52,9 @@ const Patty = styled.button`
 	overflow: hidden;
 	background: transparent;
 	cursor: pointer;
+	animation: ${duration}s moveIn forwards;
+	transition: 1s;
+
 	.bread-ham-cheese {
 		position: absolute;
 		right: 0;
@@ -134,8 +120,29 @@ const Patty = styled.button`
 				border-color: white;
 			}
 		}
+		&.hovering {
+			.bread-ham-cheese {
+				width: 100%;
+				opacity: 0.8;
+				transform: scale(0.8);
+				transition: 0.25s;
+				&:before {
+					width: 45%;
+				}
+				&:after {
+					width: 75%;
+				}
+			}
+		}
 	}
-
+	@keyframes moveIn {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 46px;
+		}
+	}
 	@keyframes showCancel {
 		0% {
 			width: 46px;

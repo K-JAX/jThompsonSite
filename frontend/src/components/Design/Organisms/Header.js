@@ -17,7 +17,7 @@ import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
 const Header = (props) => {
 	const { isHome, breakpoints, currentBreakpoint } = props;
-	const [mobileMenuActive, setMobileMenuActive] = useState(false);
+	const [mobileMenuActive, setMobileMenuActive] = useState("");
 	const [headerClass, setHeaderClass] = useState("");
 
 	const { loading, error, data } = useQuery(SITE_SETTINGS_QUERY);
