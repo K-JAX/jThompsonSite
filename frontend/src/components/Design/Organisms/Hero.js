@@ -38,7 +38,7 @@ class Hero extends Component {
 			const { title, date, location } = data.project;
 			return (
 				<div className="project-title">
-					<h1>{title}asdf</h1>
+					<h1>{title}</h1>
 					<h2>
 						{date}
 						<i>{location}</i>

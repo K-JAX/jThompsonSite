@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import ProjectTitle from "./ProjectTitle";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { EntryStatusContext } from "../../Functional/EntryStatus";
 
 const Slide = (props) => {
 	if (props === undefined) return <p>Loading</p>;
@@ -11,31 +14,46 @@ const Slide = (props) => {
 		img,
 		active,
 		className,
-		status,
 		percentage,
 		isSingleEntity,
 		transitionSpeed,
 		titleAttachClass,
 	} = props;
-	const ProjectTitleVariants = {
-		initial: { y: 128 },
-		moveIn: { y: 0, transition: { delay: 0.9 } },
-		moveOut: { y: 128, transition: { delay: 0 } },
-	};
+	const { status } = useContext(EntryStatusContext);
 
+	const ProjectTitleVariants = {
+		initial: { y: "128%" },
+		moveIn: {
+			y: "0%",
+			transition: { bounce: 80, duration: 0.25 },
+		},
+		moveOut: {
+			y: "128%",
+			transition: { bounce: 0, duration: 0.25 },
+		},
+	};
+	// console.log(img.srcSet);
 	if (isSingleEntity) {
 		return (
 			<>
-				<SlideComponent
-					className={className}
-					transitionSpeed={transitionSpeed}
-				>
-					<img
-						alt={`${title} project slide image.`}
-						src={img.sourceUrl}
-						srcSet={img.srcSet}
-					/>
-				</SlideComponent>
+				<AnimatePresence>
+					{status === "entered" && (
+						<SlideComponent
+							className={className}
+							variants={ProjectTitleVariants}
+							initial="initial"
+							animate="moveIn"
+							exit="moveOut"
+							transitionSpeed={transitionSpeed}
+						>
+							<img
+								alt={`${title} project slide image.`}
+								src={img.sourceUrl}
+								srcSet={img.srcSet}
+							/>
+						</SlideComponent>
+					)}
+				</AnimatePresence>
 			</>
 		);
 	}
@@ -79,7 +97,7 @@ const Slide = (props) => {
 
 export default Slide;
 
-const SlideComponent = styled.div`
+const SlideComponent = styled(motion.div)`
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -91,7 +109,7 @@ const SlideComponent = styled.div`
 		height: 100%;
 		object-fit: cover;
 	}
-	transition: ${(props) => props.transitionSpeed / 10}s;
+	transition: opacity ${(props) => props.transitionSpeed / 10}s;
 	&.activeSlide {
 		opacity: 1;
 		z-index: 1;

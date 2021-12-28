@@ -154,7 +154,18 @@ class Slideshow extends Component {
 		const { transitionSpeed } = this.context.props;
 		const { slides, isSingleEntity, contentType } = this.props;
 
-		const variants = {
+		const slideControlVariants = {
+			moveIn: {
+				y: `0%`,
+				transition: { delay: 0.3 },
+			},
+			moveOut: {
+				y: "150%",
+				transition: { delay: 0.0 },
+			},
+		};
+
+		const titleVariants = {
 			moveIn: {
 				x: `0%`,
 				opacity: 1,
@@ -167,7 +178,6 @@ class Slideshow extends Component {
 			},
 		};
 		if (slides === undefined) return <Loader />;
-		// console.log(status);
 		return (
 			<SlideshowComponent>
 				<div
@@ -203,19 +213,33 @@ class Slideshow extends Component {
 									);
 								})}
 							</div>
-							<SlideControls
-								total={totalSlides}
-								contentType={contentType}
-								images={
-									contentType === "gallery"
-										? slides.slideImages
-										: ""
-								}
-							/>
+							<AnimatePresence>
+								{status === "entered" && (
+									<SlideControlContainer
+										className={`${contentType}`}
+										variants={slideControlVariants}
+										initial={{
+											y: `150%`,
+										}}
+										animate="moveIn"
+										exit="moveOut"
+									>
+										<SlideControls
+											total={totalSlides}
+											contentType={contentType}
+											images={
+												contentType === "gallery"
+													? slides.slideImages
+													: ""
+											}
+										/>
+									</SlideControlContainer>
+								)}
+							</AnimatePresence>
 							<AnimatePresence>
 								{status === "entered" && (
 									<ProjectTitleContainer
-										variants={variants}
+										variants={titleVariants}
 										initial={{
 											x: `10%`,
 											opacity: 0,
@@ -284,6 +308,21 @@ class Slideshow extends Component {
 export default Slideshow;
 
 Slideshow.contextType = SlideshowContext;
+
+const SlideControlContainer = styled(motion.div)`
+	position: absolute;
+	z-index: 3;
+	bottom: 0;
+	&.gallery {
+		position: relative;
+		width: 100%;
+		justify-content: center;
+		@media all and (max-width: 768px) {
+			position: absolute;
+			bottom: 0%;
+		}
+	}
+`;
 
 const ProjectTitleContainer = styled(motion.div)`
 	position: absolute;

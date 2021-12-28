@@ -18,6 +18,7 @@ import {
 	ScrollHeroContext,
 	ScrollHeroProvider,
 } from "../../Functional/ScrollHeroCheck";
+import { EntryStatusProvider } from "../../Functional/EntryStatus";
 import Slideshow, {
 	SlideshowContext,
 	SlideshowProvider,
@@ -60,31 +61,33 @@ export const ProjectSingle = (props) => {
 	}
 
 	return (
-		<SlideshowProvider options={options} status={status}>
-			<ProjectMain>
-				{isSingle && (
-					<Helmet>
-						<title>{data.project.title}</title>
-					</Helmet>
-				)}
-				<ScrollHeroProvider>
-					<SlideshowContext.Consumer>
-						{(slideshow) => (
-							<ScrollHeroContext.Consumer>
-								{(scroll) => (
-									<ProjectBody
-										data={slideData}
-										isSingle={isSingle}
-										isSlider={isSlider}
-										context={{ slideshow, scroll }}
-									/>
-								)}
-							</ScrollHeroContext.Consumer>
-						)}
-					</SlideshowContext.Consumer>
-				</ScrollHeroProvider>
-			</ProjectMain>
-		</SlideshowProvider>
+		<EntryStatusProvider status={status}>
+			<SlideshowProvider options={options} status={status}>
+				<ProjectMain>
+					{isSingle && (
+						<Helmet>
+							<title>{data.project.title}</title>
+						</Helmet>
+					)}
+					<ScrollHeroProvider>
+						<SlideshowContext.Consumer>
+							{(slideshow) => (
+								<ScrollHeroContext.Consumer>
+									{(scroll) => (
+										<ProjectBody
+											data={slideData}
+											isSingle={isSingle}
+											isSlider={isSlider}
+											context={{ slideshow, scroll }}
+										/>
+									)}
+								</ScrollHeroContext.Consumer>
+							)}
+						</SlideshowContext.Consumer>
+					</ScrollHeroProvider>
+				</ProjectMain>
+			</SlideshowProvider>
+		</EntryStatusProvider>
 	);
 };
 export default ProjectSingle;

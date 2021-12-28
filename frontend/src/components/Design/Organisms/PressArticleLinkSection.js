@@ -1,9 +1,26 @@
+import { useContext } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import VisibilitySensor from "react-visibility-sensor";
+
 // components
 import SVGLetter from "../Atoms/SVGLetter";
-import Button from "../Atoms/Button";
+import PressArticleLinkCTA from "../Molecules/PressArticleLinkCTA";
+
+import { EntryStatusContext } from "../../Functional/EntryStatus";
 
 const PressArticleLinkSection = (props) => {
 	let { title, link, alignment, image, ctaText } = props;
+	const { status } = useContext(EntryStatusContext);
+
+	const imgVariants = {
+		initial: { x: alignment === "right" ? -30 : 30, opacity: 0 },
+		moveIn: { x: 0, opacity: 1, transition: { duration: 1 } },
+		moveOut: {
+			x: alignment === "right" ? 30 : -30,
+			opacity: 0,
+			transition: { duration: 1 },
+		},
+	};
 
 	return (
 		<div
@@ -12,15 +29,29 @@ const PressArticleLinkSection = (props) => {
 			}`}
 			style={{ minHeight: "475px" }}
 		>
-			<div className="col-12 col-md-7 d-flex align-items-center">
-				<img src={image?.node.sourceUrl} />
-			</div>
-			<div className="col-12 col-md-5 d-flex align-content-center flex-wrap">
-				<h2 className="w-100">{title}</h2>
-				<a href={link} target="_blank">
-					<Button hover={alignment}>{ctaText}</Button>
-				</a>
-			</div>
+			<VisibilitySensor>
+				{({ isVisible }) => (
+					<div className="col-12 col-md-7 d-flex align-items-center">
+						<AnimatePresence>
+							{status === "entered" && isVisible && (
+								<motion.img
+									variants={imgVariants}
+									initial="initial"
+									animate="moveIn"
+									exit="moveOut"
+									src={image?.node.sourceUrl}
+								/>
+							)}
+						</AnimatePresence>
+					</div>
+				)}
+			</VisibilitySensor>
+			<PressArticleLinkCTA
+				title={title}
+				link={link}
+				alignment={alignment}
+				ctaText={ctaText}
+			/>
 			<div
 				className="position-absolute w-100 h-100"
 				style={{ zIndex: "-1" }}

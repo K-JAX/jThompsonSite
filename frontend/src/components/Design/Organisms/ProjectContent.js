@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { withApollo } from "react-apollo";
 import Config from "../../../config";
@@ -9,6 +9,7 @@ import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
 import StatBox from "../Organisms/StatBox";
 import TitleDescription from "../Molecules/TitleDescription";
 import CTAStrip from "../Molecules/CTA-Strip";
+import { EntryStatusContext } from "../../Functional/EntryStatus";
 
 const ProjectContent = (props) => {
 	const {
@@ -21,7 +22,9 @@ const ProjectContent = (props) => {
 		isSingle,
 	} = props;
 
-	console.log(props.context);
+	// console.log(props.context);
+	const { status } = useContext(EntryStatusContext);
+	// console.log(status);
 
 	return (
 		<ProjectContentSection>
@@ -29,6 +32,7 @@ const ProjectContent = (props) => {
 				rel="stylesheet"
 				href={`${Config.baseUrl}/wp-includes/css/dist/block-library/style.min.css`}
 			/>
+
 			{!isSingle && (
 				<GalleryFeature className="container" features={features} />
 			)}
@@ -44,7 +48,7 @@ const ProjectContent = (props) => {
 							/>
 						)}
 					</div>
-					{/* <OverlayAnim content={content} /> */}
+					{content}
 					{!isSingle && (
 						<CTAStrip
 							text={`See more projects.`}

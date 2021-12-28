@@ -48,12 +48,10 @@ const SlideControls = React.memo((props) => {
 export default SlideControls;
 
 const ControlsDiv = styled.div`
-	position: absolute;
-	z-index: 3;
-	bottom: 0;
 	background: white;
 	display: inline-flex;
-	padding: 20px 4.2em;
+	padding: 20px 5.1em;
+	padding-left: 3em;
 	.control-buttons {
 		display: flex;
 		width: 100%;
@@ -126,13 +124,8 @@ const ControlsDiv = styled.div`
 		}
 	}
 	&.gallery {
-		position: relative;
 		width: 100%;
 		justify-content: center;
-		@media all and (max-width: 768px) {
-			position: absolute;
-			bottom: 0%;
-		}
 	}
 	@media all and (max-width: 768px) {
 		width: 100%;

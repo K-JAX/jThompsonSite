@@ -26,7 +26,7 @@ const SVGLetter = (props) => {
 						initial={{
 							strokeDashoffset: 0,
 							x: `${xPos.start}%`,
-							fill: "rgba(70, 72, 83, 0.05)",
+							fill: "rgba(70, 72, 83, 0.01)",
 							stroke: "rgba(161,211,255, 0)",
 						}}
 						animate={{
@@ -34,7 +34,7 @@ const SVGLetter = (props) => {
 							x: `${isVisible ? xPos.end : xPos.start}%`,
 							fill: isVisible
 								? "rgba(70, 72, 83, 0.5)"
-								: "rgba(70, 72, 83, 0.125)",
+								: "rgba(70, 72, 83, 0.01)",
 							stroke: isVisible
 								? "rgba(161,211,255, 1)"
 								: "rgba(161,211,255, 0)",
