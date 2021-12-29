@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProjectSingle from "./ProjectSingle";
 import Wipes from "../Molecules/Wipes";
 import LoadingMatte from "../Atoms/LoadingMatte";
-import Loader from "../Atoms/Loader";
+import FullPageLoader from "../Molecules/FullPageLoader";
 
 // functions
 import { HOME_QUERY } from "../../Functional/queries";
@@ -46,7 +46,7 @@ const Home = (props) => {
 		return location?.state?.from === "Intro" ? (
 			<LoadingMatte />
 		) : (
-			<Loader />
+			<FullPageLoader />
 		);
 	if (error) return `Error! ${error}`;
 

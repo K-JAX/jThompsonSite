@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Loader = (props) => {
 	const { className } = props;
 	return (
-		<div className="d-flex w-100 h-100 justify-content-center align-content-center">
+		<div className="d-flex w-100 h-100 justify-content-center align-content-center align-items-center loader-container">
 			<LoaderDiv className={`${className}`} />
 		</div>
 	);

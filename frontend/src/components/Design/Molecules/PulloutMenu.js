@@ -92,4 +92,7 @@ const Puller = styled.div`
 			}
 		}
 	}
+	.loader-container {
+		display: none;
+	}
 `;

@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // components
 import Headline from "../Atoms/Headline";
 import Form from "../Organisms/Form";
-import Loader from "../Atoms/Loader";
+import FullPageLoader from "../Molecules/FullPageLoader";
 
 const PAGE_QUERY = gql`
 	query PageQuery {
@@ -55,10 +55,10 @@ const Contact = (props) => {
 	const formResp = useQuery(FORM_QUERY, {
 		onCompleted: (data) => setForm(data.form),
 	});
-	if (pageResp.loading || formResp.loading) return <Loader />;
+	if (pageResp.loading || formResp.loading) return <FullPageLoader />;
 	if (pageResp.error || formResp.error)
 		return `Error! ${pageResp.error} ${formResp.error}`;
-	if (!pageResp.data || !formResp.data) return <Loader />;
+	if (!pageResp.data || !formResp.data) return <FullPageLoader />;
 
 	return (
 		// <p>Test</p>

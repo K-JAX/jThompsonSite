@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 
 // components
-import Loader from "../Atoms/Loader";
+import FullPageLoader from "../Molecules/FullPageLoader";
 import ProjectBody from "../Organisms/ProjectBody";
 
 // Functions
@@ -32,7 +32,7 @@ export const ProjectSingle = (props) => {
 	let query = isSingle ? SINGLE_PROJ_QUERY : FEATURED_PROJ_QUERY;
 	const { slug } = useParams();
 	const { loading, error, data } = useQuery(query, { variables: { slug } });
-	if (loading) return <Loader />;
+	if (loading) return <FullPageLoader />;
 	if (error) return `Error! ${error}`;
 
 	let slideData;

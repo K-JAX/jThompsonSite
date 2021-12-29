@@ -21,6 +21,13 @@ const Logo = (props) => {
 		}
 	}, [isHome]);
 
+	const linkEvent = (e) => {
+		if (isHome) {
+			e.preventDefault();
+		}
+		menuActive && onClick();
+	};
+
 	return (
 		<Link
 			to="/"
@@ -28,7 +35,7 @@ const Logo = (props) => {
 			className={`text-decoration-none black align-self-center align-self-md-start ${
 				menuActive ? "position-relative z-10" : ""
 			}`}
-			onClick={menuActive && onClick}
+			onClick={linkEvent}
 		>
 			<LogoElement
 				alt="Logo and Site Title"

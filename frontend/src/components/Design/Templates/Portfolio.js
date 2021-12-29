@@ -8,7 +8,7 @@ import gql from "graphql-tag";
 // Component
 import Headline from "../Atoms/Headline";
 import ProjectThumb from "../Molecules/ProjectThumb";
-import Loader from "../Atoms/Loader";
+import FullPageLoader from "../Molecules/FullPageLoader";
 import NoDataMessage from "../Atoms/NoDataMessage";
 import GiantLetters from "../Molecules/GiantLetters";
 import SidebarFilter from "../Molecules/SidebarFilter";
@@ -74,7 +74,7 @@ const Portfolio = (props) => {
 	});
 
 	if (pageResp.loading || projResp.loading || projTypeResp.loading)
-		return <Loader />;
+		return <FullPageLoader />;
 	if (pageResp.error || projResp.error || projTypeResp.error)
 		return `Error! ${pageResp.error} ${projResp.error} ${projTypeResp.error} `;
 	page = {

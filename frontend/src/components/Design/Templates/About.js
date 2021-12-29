@@ -10,7 +10,7 @@ import Headline from "../Atoms/Headline";
 import GiantLetters from "../Molecules/GiantLetters";
 import FigureLink from "../Organisms/FigureLink";
 import OverlayAnimDiv from "../Molecules/OverlayAnimDiv";
-import Loader from "../Atoms/Loader";
+import FullPageLoader from "../Molecules/FullPageLoader";
 
 /**
  * GraphQL page query that takes a page slug as a uri
@@ -65,7 +65,7 @@ const About = (props) => {
 			pageBy: { title, content, featuredImage, aboutDetails, seo } = {},
 		} = {},
 	} = useQuery(PAGE_QUERY);
-	if (loading) return <Loader />;
+	if (loading) return <FullPageLoader />;
 	if (error) return `Error! ${error}`;
 
 	const htmlToReactParser = new HtmlToReactParser();

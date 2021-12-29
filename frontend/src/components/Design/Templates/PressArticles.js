@@ -5,6 +5,7 @@ import { useQuery } from "react-apollo";
 // components
 import Headline from "../Atoms/Headline";
 import Loader from "../Atoms/Loader";
+import FullPageLoader from "../Molecules/FullPageLoader";
 import PressArticleLinkSection from "../Organisms/PressArticleLinkSection";
 import { EntryStatusProvider } from "../../Functional/EntryStatus";
 
@@ -17,7 +18,7 @@ const PressArticles = (props) => {
 	const { loading, error, data } = useQuery(PRESS_QUERY, {
 		onCompleted: (data) => setPressArticles(data.pressArticles.edges),
 	});
-	if (loading) return <Loader />;
+	if (loading) return <FullPageLoader />;
 	if (error) return `Error! ${error}`;
 	if (!data) return <p>Not found</p>;
 
