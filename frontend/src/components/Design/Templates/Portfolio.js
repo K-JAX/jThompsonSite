@@ -10,6 +10,7 @@ import Headline from "../Atoms/Headline";
 import ProjectThumb from "../Molecules/ProjectThumb";
 import Loader from "../Atoms/Loader";
 import NoDataMessage from "../Atoms/NoDataMessage";
+import GiantLetters from "../Molecules/GiantLetters";
 import SidebarFilter from "../Molecules/SidebarFilter";
 import {
 	PAGE_QUERY,
@@ -89,8 +90,8 @@ const Portfolio = (props) => {
 
 	return (
 		<PortfolioTemplate className="container-fluid px-4 px-lg-0 pl-lg-5">
-			<div className="d-flex flex-lg-row flex-column flex-lg-nowrap">
-				<div className="sidebar p-3">
+			<div className="d-flex flex-lg-row flex-column flex-lg-nowrap ">
+				<div className="sidebar">
 					<Headline
 						size="small"
 						text={page.title}
@@ -123,7 +124,7 @@ const Portfolio = (props) => {
 								<ProjectThumb
 									key={project.node.id}
 									project={project}
-									className="me-1 me-lg-2 mb-lg-2"
+									className="me-1 me-lg-2 mb-1 mb-lg-2"
 									delay={index / 5}
 									status={status}
 								/>
@@ -141,8 +142,10 @@ export default Portfolio;
 const PortfolioTemplate = styled.main`
 	.sidebar {
 		width: 250px;
+		padding: 3.45em 2.5em;
 		@media all and (max-width: 991px) {
 			width: 100%;
+			padding: 0.75em 1em;
 		}
 		nav {
 			ul {

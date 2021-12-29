@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 
 const GiantLetters = (props) => {
-	const { letters, layout, height, zIndex, status } = props;
+	const { letters, layout, height, zIndex, status, className } = props;
 	let separated = letters.split("");
 
 	if (layout === "cascade")
 		return (
 			<GiantLettersDiv
-				className="cascading"
+				className={`cascading ${className}`}
 				letters={separated}
 				layout={layout}
 				zIndex={zIndex}
