@@ -13,7 +13,7 @@ class StatBox extends Component {
 			.map((entry) => entry[1]);
 
 		return (
-			<StatBoxDiv className="project-stats box col-12 col-md-3">
+			<StatBoxDiv className="project-stats box">
 				<dl className="row">
 					{materials !== undefined ? (
 						<div className="col-5 col-md-12">
@@ -80,11 +80,15 @@ class StatBox extends Component {
 export default withApollo(StatBox);
 
 const StatBoxDiv = styled.div`
-	padding: 1.5em 1.75em;
+	padding: 1.5em 1.9em;
 	&.project-stats{
 		position: relative;
 		background: linear-gradient(180deg, rgba(236,233,233,1) 0%, rgba(245,242,241,1) 100%);
 		box-shadow: 5px 5px 100px -25px rgba(0,0,0,0.25);
+		width: 345px;
+		@media all and (max-width: 767px){
+			width: 100%;
+		}
 		dl{
 			margin: 0;
 			dt{

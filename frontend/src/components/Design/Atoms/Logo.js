@@ -8,7 +8,8 @@ import { motion } from "framer-motion";
 import { getPreviousPath } from "../../Functional/GetPreviousPath";
 
 const Logo = (props) => {
-	const { isHome, breakpoints, currentBreakpoint, menuActive } = props;
+	const { isHome, breakpoints, currentBreakpoint, menuActive, onClick } =
+		props;
 	const paths = getPreviousPath();
 	const [headerClass, setHeaderClass] = useState("");
 
@@ -27,6 +28,7 @@ const Logo = (props) => {
 			className={`text-decoration-none black align-self-center align-self-md-start ${
 				menuActive ? "position-relative z-10" : ""
 			}`}
+			onClick={menuActive && onClick}
 		>
 			<LogoElement
 				alt="Logo and Site Title"

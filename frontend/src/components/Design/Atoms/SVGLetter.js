@@ -34,7 +34,7 @@ const SVGLetter = (props) => {
 							x: `${isVisible ? xPos.end : xPos.start}%`,
 							fill: isVisible
 								? "rgba(70, 72, 83, 0.5)"
-								: "rgba(70, 72, 83, 0.01e)",
+								: "rgba(70, 72, 83, 0.01)",
 							stroke: isVisible
 								? "rgba(161,211,255, 1)"
 								: "rgba(161,211,255, 0)",

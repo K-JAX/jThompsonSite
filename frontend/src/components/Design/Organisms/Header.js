@@ -55,7 +55,11 @@ const Header = (props) => {
 				<link rel="icon" type="image/png" href={faviconUrl} />
 			</Helmet>
 			<div className="d-flex flex flex-fixed black">
-				<Logo isHome={isHome} menuActive={mobileMenuActive} />
+				<Logo
+					isHome={isHome}
+					menuActive={mobileMenuActive}
+					onClick={handleClick}
+				/>
 				<AnimatePresence exitBeforeEnter>
 					{isHome &&
 					breakpoints[currentBreakpoint] > breakpoints.lg ? (

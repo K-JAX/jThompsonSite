@@ -293,6 +293,11 @@ input[type="submit"] {
 		}
 	}
 }
+.project-content .wp-block-cover,
+.project-content .wp-block-cover-image {
+	width: 120%;
+	margin-left: -20%;
+}
 .page {
 	position: relative;
 	width: 100%;

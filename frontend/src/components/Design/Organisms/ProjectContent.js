@@ -38,7 +38,7 @@ const ProjectContent = (props) => {
 			)}
 			{contentType === "descriptive" ? (
 				<div>
-					<div className="row mb-5">
+					<div className="d-flex flex-wrap mb-5">
 						{showStatBox ? <StatBox stats={stats} /> : ""}
 						{summary !== null && (
 							<TitleDescription
@@ -48,7 +48,7 @@ const ProjectContent = (props) => {
 							/>
 						)}
 					</div>
-					{content}
+					<div className="project-content ms-5">{content}</div>
 					{!isSingle && (
 						<CTAStrip
 							text={`See more projects.`}
