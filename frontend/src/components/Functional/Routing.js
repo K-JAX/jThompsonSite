@@ -28,7 +28,7 @@ const Routing = () => {
 	const { pathname, key } = location;
 
 	var visitedCookie = getCookie("visited");
-	deleteCookie("visited");
+	// deleteCookie("visited");
 
 	if (pathname !== "/") {
 		storeVisitedCookie();

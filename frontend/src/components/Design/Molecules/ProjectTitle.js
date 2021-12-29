@@ -172,6 +172,7 @@ const ProjectTitleDiv = styled.div`
 		}
 	}
 	@media all and (max-width: 767px) {
+		min-width: initial;
 		&.slideTitle {
 			width: 100%;
 			flex-direction: column-reverse;

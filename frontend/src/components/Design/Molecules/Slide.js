@@ -142,6 +142,7 @@ const ProjectTitleContainer = styled(motion.div)`
 	@media all and (max-width: 767px) {
 		right: 0;
 		width: 100%;
+		min-width: initial;
 		top: calc(100% - 128px);
 	}
 `;

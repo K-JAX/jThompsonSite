@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // components
 import Arrow from "../Atoms/Arrow";
@@ -18,6 +18,7 @@ const EntryTitle = (props) => {
 			? "Coming Soon"
 			: "Under Maintenance";
 	}
+	let navigate = useNavigate();
 	return (
 		<EntrySignDiv>
 			<h1>

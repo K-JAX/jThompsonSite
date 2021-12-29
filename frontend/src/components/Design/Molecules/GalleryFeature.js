@@ -41,4 +41,11 @@ const GalleryDiv = styled.div`
 		flex-grow: 2;
 		flex-shrink: 0;
 	}
+	@media all and (max-width: 767px) {
+		.tile-0,
+		.tile-1 {
+			flex: 1 1;
+			width: 100%;
+		}
+	}
 `;

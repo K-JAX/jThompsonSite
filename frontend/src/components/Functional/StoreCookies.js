@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 // Just some javascript functions for manipulating cookies
 
 export const storeVisitedCookie = () => {

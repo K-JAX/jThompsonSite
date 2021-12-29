@@ -54,7 +54,11 @@ const StripDiv = styled.div`
 	&:hover {
 		opacity: 1;
 		.side-block {
-			width: 100px;
+			width: 20%;
+			max-width: 100px;
 		}
+	}
+	@media all and (max-width: 767px) {
+		font-size: 1em;
 	}
 `;

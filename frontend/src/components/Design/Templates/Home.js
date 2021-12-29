@@ -15,11 +15,16 @@ import { HOME_QUERY } from "../../Functional/queries";
 
 const Home = (props) => {
 	const { loading, error, data } = useQuery(HOME_QUERY);
-	let { status } = props;
+	let { status, breakpoints, currentBreakpoint } = props;
+
+	const slideWidth =
+		breakpoints[currentBreakpoint] <= breakpoints.lg
+			? `100%`
+			: `calc(100% - ${300}px)`;
 
 	const animVariants = {
 		moveIn: {
-			width: `calc(100% - ${300}px)`,
+			width: slideWidth,
 			x: 0,
 			transition: {
 				type: "tween",
