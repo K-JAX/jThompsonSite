@@ -42,9 +42,10 @@ const GalleryDiv = styled.div`
 		flex-shrink: 0;
 	}
 	@media all and (max-width: 767px) {
+		flex-wrap: wrap;
 		.tile-0,
 		.tile-1 {
-			flex: 1 1;
+			flex: 1 1 auto;
 			width: 100%;
 		}
 	}
