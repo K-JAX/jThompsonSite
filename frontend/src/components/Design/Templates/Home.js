@@ -93,6 +93,8 @@ export default withBreakpoints(Home);
 const PageDiv = styled.div`
 	display: flex;
 	justify-content: end;
+	width: 100%;
+	overflow-x: hidden;
 	${(props) => props.status === "entering" && `z-index: -2;`}
 	${(props) =>
 		(props.status === "exiting" || props.status === "exited") &&
