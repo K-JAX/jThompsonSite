@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import styled from "styled-components";
 import VisibilitySensor from "react-visibility-sensor";
 
 // components
@@ -23,29 +24,30 @@ const PressArticleLinkSection = (props) => {
 	};
 
 	return (
-		<div
-			className={`row position-relative py-5 ${
+		<StyledSection
+			className={`row position-relative py-lg-5 ${
 				alignment === "right" ? "flex-row" : "flex-row-reverse"
 			}`}
-			style={{ minHeight: "475px" }}
 		>
-			<VisibilitySensor>
-				{({ isVisible }) => (
-					<div className="col-12 col-md-7 d-flex align-items-center">
-						<AnimatePresence>
-							{status === "entered" && isVisible && (
-								<motion.img
-									variants={imgVariants}
-									initial="initial"
-									animate="moveIn"
-									exit="moveOut"
-									src={image?.node.sourceUrl}
-								/>
-							)}
-						</AnimatePresence>
-					</div>
-				)}
-			</VisibilitySensor>
+			{image?.node.sourceUrl && (
+				<VisibilitySensor>
+					{({ isVisible }) => (
+						<div className="col-12 col-md-7 d-flex align-items-center">
+							<AnimatePresence>
+								{status === "entered" && isVisible && (
+									<motion.img
+										variants={imgVariants}
+										initial="initial"
+										animate="moveIn"
+										exit="moveOut"
+										src={image?.node.sourceUrl}
+									/>
+								)}
+							</AnimatePresence>
+						</div>
+					)}
+				</VisibilitySensor>
+			)}
 			<PressArticleLinkCTA
 				title={title}
 				link={link}
@@ -62,7 +64,14 @@ const PressArticleLinkSection = (props) => {
 					alignment={alignment}
 				/>
 			</div>
-		</div>
+		</StyledSection>
 	);
 };
 export default PressArticleLinkSection;
+
+const StyledSection = styled.section`
+	min-height: 475px;
+	@media all and (max-width: 767px) {
+		min-height: 250px;
+	}
+`;

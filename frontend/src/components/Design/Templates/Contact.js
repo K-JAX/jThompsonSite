@@ -79,7 +79,7 @@ const Contact = (props) => {
 					)}
 				</AnimatePresence>
 				<div className="title-container col-12 col-md-6">
-					<div className="pa2">
+					<div className="hero pa2">
 						<Headline
 							className="mb-3"
 							alignment="right"
@@ -94,7 +94,7 @@ const Contact = (props) => {
 								animate={{ x: 0, opacity: 1 }}
 								exit={{ x: 50, opacity: 0 }}
 								transition={{ duration: 1 }}
-								className="row"
+								className="row form-container"
 								style={{ marginLeft: "-20px" }}
 							>
 								<Form
@@ -109,107 +109,6 @@ const Contact = (props) => {
 		</PageDiv>
 	);
 };
-
-/**
- * Fetch and display a Page
- */
-class ContactOld extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isLoaded: false,
-			page: {
-				title: "",
-				content: "",
-			},
-			form: {},
-		};
-	}
-
-	componentDidMount() {
-		this.executePageQuery();
-	}
-
-	componentDidUpdate(prevProps) {
-		const { props } = this;
-		if (props.match.params.slug !== prevProps.match.params.slug) {
-			this.executePageQuery();
-		}
-	}
-
-	executePageQuery = async () => {
-		const { match, client } = this.props;
-		let uri = match.params.slug;
-		if (!uri) {
-			uri = "/";
-		}
-		const result = await client.query({
-			query: PAGE_QUERY,
-			variables: { uri },
-		});
-		const page = result.data.pageBy;
-		const formResult = await client.query({
-			query: FORM_QUERY,
-		});
-		const { form } = formResult.data;
-		this.setState({ page, form, isLoaded: true });
-	};
-
-	render() {
-		const { page, form, isLoaded } = this.state;
-		const { status } = this.props;
-
-		// var htmlToReactParser = new HtmlToReactParser();
-		// const parsedContent = htmlToReactParser.parse(page.content);
-		if (!isLoaded) return <p>Loading</p>;
-
-		return (
-			<PageDiv className="container-fluid">
-				<div className="row">
-					<AnimatePresence>
-						{status == "entered" && (
-							<motion.div
-								initial={{ x: -50, opacity: 0 }}
-								animate={{ x: 0, opacity: 1 }}
-								exit={{ x: -50, opacity: 0 }}
-								transition={{ duration: 1 }}
-								className="col-12 col-md-6 featured-img"
-								style={{
-									backgroundImage: `url(${page.featuredImage?.node.sourceUrl})`,
-								}}
-							/>
-						)}
-					</AnimatePresence>
-					<div className="title-container col-12 col-md-6">
-						<div className="pa2">
-							<Headline
-								className="mb-3"
-								alignment="right"
-								status={status}
-								text={page.title}
-							/>
-						</div>
-						<AnimatePresence>
-							{status == "entered" && (
-								<motion.div
-									initial={{ x: 50, opacity: 0 }}
-									animate={{ x: 0, opacity: 1 }}
-									exit={{ x: 50, opacity: 0 }}
-									transition={{ duration: 1 }}
-									className="row"
-									style={{ marginLeft: "-20px" }}
-								>
-									<Form className="col-12" data={form} />
-								</motion.div>
-							)}
-						</AnimatePresence>
-					</div>
-				</div>
-			</PageDiv>
-		);
-	}
-}
-
 export default withApollo(Contact);
 
 const PageDiv = styled.div`
@@ -217,7 +116,15 @@ const PageDiv = styled.div`
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
-	.title-container {
-		margin-left: --20px;
+	.hero {
+		@media all and (max-width: 767px) {
+		}
+	}
+	.form-container {
+		margin-left: -20px;
+		@media all and (max-width: 767px) {
+			margin-left: 0;
+			padding: 0 1.5rem;
+		}
 	}
 `;

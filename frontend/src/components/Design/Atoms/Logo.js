@@ -138,9 +138,7 @@ const LogoElement = styled(motion.div)`
 	}
 
 	@media all and (max-width: 767px) {
-		padding-top: 0;
-		padding-bottom: 0;
-		padding-right: 0;
+		padding: 0 0 0 20px;
 		&.normal-logo {
 			width: auto;
 			.initials {

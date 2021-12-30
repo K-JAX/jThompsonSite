@@ -35,7 +35,7 @@ const Headline = (props) => {
 	return (
 		<HeadlineH1
 			className={`page-heading ${className} ${size} ${status} ${
-				loaded ? "loaded" : ""
+				loaded && "loaded"
 			}`}
 			alignment={alignment}
 			size={size}
@@ -93,10 +93,13 @@ const HeadlineH1 = styled.h1`
 	white-space: nowrap;
 	font-variant: small-caps;
 	${(props) => (props.alignment === "right" ? "padding-right: 12rem;" : "")}
+	@media all and (max-width: 767px) {
+		${(props) => (props.alignment === "right" ? "padding-right: 0;" : "")}
+	}
 	&.large {
 		font-size: 8.25rem;
-		@media all and (max-width: 768px) {
-			font-size: 5rem;
+		@media all and (max-width: 767px) {
+			font-size: 4.25rem;
 		}
 	}
 	&.small {

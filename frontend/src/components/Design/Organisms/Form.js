@@ -65,7 +65,7 @@ const Form = (props) => {
 	if (!data) return <p>Loading</p>;
 	return (
 		<StyledForm
-			className={`${className && className} row py-4`}
+			className={`${className && className}  py-4`}
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			{data.fields.nodes.map((field, i) => {

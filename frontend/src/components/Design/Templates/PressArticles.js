@@ -58,5 +58,8 @@ export default PressArticles;
 const ContainerDiv = styled.div`
 	.hero {
 		justify-content: flex-end;
+		@media all and (max-width: 767px) {
+			justify-content: flex-start;
+		}
 	}
 `;
