@@ -34,6 +34,10 @@ const PressArticles = (props) => {
 							<PressArticleLinkSection
 								key={i}
 								title={article.node.title}
+								source={
+									article.node.mediaSources.edges[0]?.node
+										.name
+								}
 								link={
 									article.node.acf.externalLinkOrPdf ===
 									"external"

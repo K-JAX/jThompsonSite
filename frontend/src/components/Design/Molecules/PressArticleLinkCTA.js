@@ -8,7 +8,7 @@ import Button from "../Atoms/Button";
 import { EntryStatusContext } from "../../Functional/EntryStatus";
 
 const PressArticleLinkCTA = (props) => {
-	let { title, link, alignment, ctaText } = props;
+	let { title, source, link, alignment, ctaText } = props;
 
 	const { status } = useContext(EntryStatusContext);
 
@@ -30,6 +30,11 @@ const PressArticleLinkCTA = (props) => {
 								exit="moveOut"
 							>
 								<h2 className="w-100">{title}</h2>
+								{source && (
+									<p className="text-uppercase fw-bold gray">
+										{source}
+									</p>
+								)}
 								<a href={link} target="_blank">
 									<Button hover={alignment}>{ctaText}</Button>
 								</a>

@@ -202,6 +202,13 @@ export const PRESS_QUERY = gql`
 				node {
 					title
 					link
+					mediaSources {
+						edges {
+							node {
+								name
+							}
+						}
+					}
 					featuredImage {
 						node {
 							altText

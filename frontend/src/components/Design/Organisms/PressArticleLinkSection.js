@@ -10,7 +10,7 @@ import PressArticleLinkCTA from "../Molecules/PressArticleLinkCTA";
 import { EntryStatusContext } from "../../Functional/EntryStatus";
 
 const PressArticleLinkSection = (props) => {
-	let { title, link, alignment, image, ctaText } = props;
+	let { title, source, link, alignment, image, ctaText } = props;
 	const { status } = useContext(EntryStatusContext);
 
 	const imgVariants = {
@@ -50,6 +50,7 @@ const PressArticleLinkSection = (props) => {
 			)}
 			<PressArticleLinkCTA
 				title={title}
+				source={source}
 				link={link}
 				alignment={alignment}
 				ctaText={ctaText}
@@ -59,7 +60,11 @@ const PressArticleLinkSection = (props) => {
 				style={{ zIndex: "-1" }}
 			>
 				<SVGLetter
-					letter={title.slice(0, 1)}
+					letter={
+						source === undefined
+							? title.slice(0, 1)
+							: source.slice(0, 1)
+					}
 					size={350}
 					alignment={alignment}
 				/>
