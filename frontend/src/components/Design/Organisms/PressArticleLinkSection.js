@@ -25,14 +25,14 @@ const PressArticleLinkSection = (props) => {
 
 	return (
 		<StyledSection
-			className={`row position-relative py-lg-5 ${
+			className={`row position-relative py-2 py-lg-5 ${
 				alignment === "right" ? "flex-row" : "flex-row-reverse"
 			}`}
 		>
 			{image?.node.sourceUrl && (
 				<VisibilitySensor>
 					{({ isVisible }) => (
-						<div className="col-12 col-md-7 d-flex align-items-center">
+						<div className="col-12 col-md-7 d-flex align-items-center justify-content-md-center text-md-center my-3">
 							<AnimatePresence>
 								{status === "entered" && isVisible && (
 									<motion.img

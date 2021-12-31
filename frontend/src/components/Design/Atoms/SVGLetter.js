@@ -10,8 +10,8 @@ const SVGLetter = (props) => {
 
 	let dashArraySize = size * 5.9;
 	let xPos = {
-		start: alignment === "left" ? 10 : 80,
-		end: alignment === "left" ? 12 : 78,
+		start: alignment === "left" ? 10 : 88,
+		end: alignment === "left" ? 12 : 86,
 	};
 
 	return (
@@ -72,4 +72,8 @@ SVGLetter.propTypes = {
 const LetterSVG = styled.svg`
 	position: relative;
 	width: 100%;
+	overflow: visible;
+	@media all and (max-width: 767px) {
+		opacity: 0.35;
+	}
 `;

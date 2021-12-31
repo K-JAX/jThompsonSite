@@ -20,7 +20,7 @@ const PressArticleLinkCTA = (props) => {
 	return (
 		<VisibilitySensor>
 			{({ isVisible }) => (
-				<div className="col-12 col-md-5 d-flex align-content-center flex-wrap">
+				<div className="col-12 col-md-5 d-flex align-content-center justify-content-start justify-content-md-center flex-wrap">
 					<AnimatePresence>
 						{status === "entered" && isVisible && (
 							<motion.div
