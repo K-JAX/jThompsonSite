@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { useLocation } from "react-router";
 import gql from "graphql-tag";
 import { Parser as HtmlToReactParser } from "html-to-react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-
+import Rellax from "rellax";
+import AOS from "aos";
+import "aos/dist/aos.css";
 // components
 import Headline from "../Atoms/Headline";
 import GiantLetters from "../Molecules/GiantLetters";
@@ -57,6 +60,13 @@ const About = (props) => {
 	const { pathname } = useLocation();
 	const uri = pathname.replace("/", "");
 	const { status } = props;
+	useEffect(() => {
+		new Rellax(".rellax");
+		AOS.init({
+			// initialise with other settings
+			duration: 2000,
+		});
+	});
 
 	const {
 		loading,
@@ -98,7 +108,7 @@ const About = (props) => {
 							status={status}
 							text={title}
 						/>
-						<div className="intro">
+						<div className="intro rellax">
 							<OverlayAnimDiv
 								content={parsedIntro}
 								status={status}
@@ -121,14 +131,21 @@ const About = (props) => {
 			<div className="container px-4">
 				<div className="row justify-content-center">
 					{aboutDetails.ctaLinks.map((link) => (
-						<FigureLink
-							key={link.image.sourceUrl}
-							alignment={link.alignment}
-							captionTitle={link.titletext}
-							captionDescription={link.description}
-							img={link.image.sourceUrl}
-							link={link.link}
-						/>
+						<div
+							data-aos={`fade-${link.alignment}`}
+							data-aos-offset="200"
+							data-aos-easing="ease-in-sine"
+							data-aos-duration="600"
+						>
+							<FigureLink
+								key={link.image.sourceUrl}
+								alignment={link.alignment}
+								captionTitle={link.titletext}
+								captionDescription={link.description}
+								img={link.image.sourceUrl}
+								link={link.link}
+							/>
+						</div>
 					))}
 				</div>
 			</div>

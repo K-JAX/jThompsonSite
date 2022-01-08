@@ -17,6 +17,7 @@
 	},
 	"dependencies": {
 		"ansi-html": "0.0.7",
+		"aos": "^2.3.4",
 		"apollo-boost": "^0.4.9",
 		"apollo-cache-inmemory": "^1.6.6",
 		"apollo-link-context": "^1.0.20",
@@ -49,6 +50,7 @@
 		"react-transition-group": "^4.4.2",
 		"react-visibility-sensor": "^5.1.1",
 		"recompose": "^0.30.0",
+		"rellax": "^1.12.1",
 		"styled-components": "^5.3.3"
 	},
 	"scripts": {

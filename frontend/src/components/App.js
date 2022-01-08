@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ReactBreakpoints, { Media } from "react-breakpoints";
 import { useQuery } from "react-apollo";
@@ -22,6 +22,7 @@ import { getCookie } from "./Functional/StoreCookies";
 
 export default ({ in: inProp }) => {
 	const { loading, error, data } = useQuery(SITE_STATUS_QUERY);
+
 	const location = useLocation();
 
 	if (loading) return loading;
