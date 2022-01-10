@@ -43,7 +43,7 @@ export default ({ in: inProp }) => {
 	return (
 		<BodyContainer
 			className={`center position-relative ${
-				visitedCookie || !isHome ? "pb-5" : ""
+				visitedCookie || !isHome ? "pb-8" : ""
 			}`}
 		>
 			<ReactBreakpoints breakpoints={breakpoints}>
