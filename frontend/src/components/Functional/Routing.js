@@ -17,11 +17,8 @@ import NotFound from "../Design/Templates/404";
 import Category from "../Design/Templates/Category";
 
 // Functions
-import {
-	storeVisitedCookie,
-	getCookie,
-	deleteCookie,
-} from "../Functional/StoreCookies";
+import ScrollToTop from "./ScrollToTop";
+import { storeVisitedCookie, getCookie, deleteCookie } from "./StoreCookies";
 
 const Routing = () => {
 	const location = useLocation();
@@ -68,6 +65,7 @@ const Routing = () => {
 
 	return (
 		<TransitionGroup component={null}>
+			<ScrollToTop />
 			<Transition
 				key={key}
 				unmountOnExit

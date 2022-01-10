@@ -44,6 +44,7 @@ const Headline = (props) => {
 				return (
 					<motion.span
 						key={`letter-${char}-${i}`}
+						className={`${char === " " ? "blank" : ""}`}
 						initial={{ y: 80, color: "#fff", opacity: 0 }}
 						animate={letterAnim}
 						transition={{
@@ -92,6 +93,7 @@ const HeadlineH1 = styled.h1`
 	margin: 0;
 	white-space: nowrap;
 	font-variant: small-caps;
+
 	${(props) => (props.alignment === "right" ? "padding-right: 12rem;" : "")}
 	@media all and (max-width: 767px) {
 		${(props) => (props.alignment === "right" ? "padding-right: 0;" : "")}
@@ -126,6 +128,9 @@ const HeadlineH1 = styled.h1`
 
 	span {
 		display: inline-block;
+		&.blank {
+			display: inline;
+		}
 	}
 	.box-transition {
 		position: absolute;

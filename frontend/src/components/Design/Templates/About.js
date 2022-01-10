@@ -108,7 +108,12 @@ const About = (props) => {
 							status={status}
 							text={title}
 						/>
-						<div className="intro rellax">
+						<div
+							className="intro rellax"
+							data-rellax-speed="-2"
+							data-rellax-mobile-speed="3"
+							data-rellax-desktop-speed="-2"
+						>
 							<OverlayAnimDiv
 								content={parsedIntro}
 								status={status}
@@ -132,13 +137,13 @@ const About = (props) => {
 				<div className="row justify-content-center">
 					{aboutDetails.ctaLinks.map((link) => (
 						<div
+							key={link.image.sourceUrl}
 							data-aos={`fade-${link.alignment}`}
 							data-aos-offset="200"
 							data-aos-easing="ease-in-sine"
 							data-aos-duration="600"
 						>
 							<FigureLink
-								key={link.image.sourceUrl}
 								alignment={link.alignment}
 								captionTitle={link.titletext}
 								captionDescription={link.description}

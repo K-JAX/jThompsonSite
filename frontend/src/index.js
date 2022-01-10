@@ -20,9 +20,6 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
-// if (document.fonts.check("1em Roboto")) {
-// }
-// document.fonts.ready.then(function () {
 ReactDOM.render(
 	<React.Suspense fallback={<span></span>}>
 		<Router>
@@ -33,5 +30,3 @@ ReactDOM.render(
 	</React.Suspense>,
 	document.getElementById("root")
 );
-// ReactDOM.render(<h1>{Config.baseUrl}</h1>, document.getElementById("root"));
-// });
