@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 
 import { getPreviousPath } from "../../Functional/GetPreviousPath";
 
+import Config from "../../../config";
+
 const Logo = (props) => {
 	const { isHome, breakpoints, currentBreakpoint, menuActive, onClick } =
 		props;

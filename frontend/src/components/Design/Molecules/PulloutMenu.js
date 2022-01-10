@@ -28,6 +28,7 @@ const Puller = styled.div`
 	justify-self: flex-end;
 	align-self: center;
 	margin-left: auto;
+
 	.pullout {
 		position: fixed;
 		display: flex;

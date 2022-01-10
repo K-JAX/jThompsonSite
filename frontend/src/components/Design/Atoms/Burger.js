@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const Burger = (props) => {
 	const [isHovered, setHovered] = useState(false);
+	const [burgerStatus, setBurgerStatus] = useState(false);
 	const { onClick, burgerIsActive } = props;
 
-	let burgerStatus = "";
-	if (burgerIsActive === true) {
-		burgerStatus = "activeBurger";
-	} else if (burgerIsActive === false) {
-		burgerStatus = "cancelBurger";
-	}
+	useEffect(async () => {
+		setBurgerStatus("transitionBurger");
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		setBurgerStatus(
+			burgerIsActive != false ? "activeBurger" : "cancelledBurger"
+		);
+	}, [burgerIsActive]);
 
 	return (
 		<Patty
@@ -35,7 +37,7 @@ Burger.defaultProps = {
 	burgerIsActive: "",
 };
 
-const duration = 1.25;
+const duration = 0.5;
 
 const Patty = styled.button`
 	opacity: 1;
@@ -54,7 +56,6 @@ const Patty = styled.button`
 	cursor: pointer;
 	animation: ${duration}s moveIn forwards;
 	transition: 1s;
-
 	.bread-ham-cheese {
 		position: absolute;
 		right: 0;
@@ -93,31 +94,48 @@ const Patty = styled.button`
 			}
 		}
 	}
-	&.cancelBurger {
-		animation: ${duration}s hideCancel forwards;
+	&.cancelledBurger {
 		.bread-ham-cheese {
+			width: 100%;
 			&:before {
-				animation: ${duration}s reverseBackSlash forwards;
+				transform: rotate(0deg);
+				width: 45%;
 			}
 			&:after {
-				animation: ${duration}s reverseForwardSlash forwards;
+				transform: rotate(0deg);
+				width: 75%;
 			}
 		}
 	}
-
-	&.activeBurger {
-		animation: ${duration}s showCancel forwards;
+	&.transitionBurger {
 		.bread-ham-cheese {
+			width: 0%;
 			border-top: 0 solid black;
-			transition: border 0s ${duration / 3}s;
-
-			&:before {
-				animation: ${duration}s rotateBackSlash forwards;
+			&:before,
+			&:after {
+				transform: rotate(0deg);
+				transition: ${duration}s;
+			}
+		}
+	}
+	&.activeBurger {
+		.bread-ham-cheese {
+			width: 100%;
+			border-top: 0 solid black;
+			transition: border 0s;
+			&:before,
+			&:after {
+				transition: ${duration}s;
+				width: 100%;
+				top: 0;
+				bottom: 0;
 				border-color: white;
 			}
+			&:before {
+				transform: rotate(45deg);
+			}
 			&:after {
-				animation: ${duration}s rotateForwardSlash forwards;
-				border-color: white;
+				transform: rotate(-45deg);
 			}
 		}
 		&.hovering {
@@ -126,12 +144,6 @@ const Patty = styled.button`
 				opacity: 0.8;
 				transform: scale(0.8);
 				transition: 0.25s;
-				&:before {
-					width: 45%;
-				}
-				&:after {
-					width: 75%;
-				}
 			}
 		}
 	}
@@ -143,136 +155,6 @@ const Patty = styled.button`
 			width: 46px;
 		}
 	}
-	@keyframes showCancel {
-		0% {
-			width: 46px;
-		}
-		30% {
-			width: 0;
-			opacity: 1;
-			transform: rotateZ(0);
-		}
-		31% {
-			width: 46px;
-			opacity: 0;
-			transform: rotateY(60deg) rotateX(-60deg);
-		}
-		100% {
-			opacity: 1;
-			transform: rotateY(0deg) rotateX(0deg);
-		}
-	}
-
-	@keyframes hideCancel {
-		0% {
-			width: 46px;
-			opacity: 1;
-		}
-		50% {
-			width: 46px;
-			opacity: 0;
-		}
-		51% {
-			width: 0;
-			opacity: 1;
-		}
-		100% {
-			width: 46px;
-			opacity: 1;
-		}
-	}
-
-	@keyframes rotateBackSlash {
-		0% {
-			transform: rotate(0deg);
-		}
-		30% {
-			width: 45%;
-			transform: rotate(0deg);
-		}
-		31% {
-			top: 0%;
-			bottom: 0;
-			width: 100%;
-			transform: rotate(45deg);
-		}
-		100% {
-			top: 0;
-			bottom: 0;
-			width: 100%;
-			transform: rotate(45deg);
-		}
-	}
-
-	@keyframes reverseBackSlash {
-		0% {
-			top: 0;
-			bottom: 0;
-			width: 100%;
-			transform: rotate(45deg);
-		}
-		50% {
-			top: 0%;
-			bottom: 0;
-			width: 100%;
-			transform: rotate(45deg);
-		}
-		51% {
-			bottom: 2px;
-			width: 0%;
-			transform: rotate(0deg);
-		}
-		100% {
-			width: 45%;
-			transform: rotate(0deg);
-		}
-	}
-
-	@keyframes rotateForwardSlash {
-		0% {
-			transform: rotate(0deg);
-		}
-		30% {
-			width: 45%;
-			transform: rotate(0deg);
-		}
-		31% {
-			width: 100%;
-			top: 0;
-			bottom: 0;
-			transform: rotate(-45deg);
-		}
-		100% {
-			width: 100%;
-			top: 0;
-			bottom: 0;
-			transform: rotate(-45deg);
-		}
-	}
-
-	@keyframes reverseForwardSlash {
-		0% {
-			width: 100%;
-			top: 0%;
-			bottom: 0;
-			transform: rotate(-45deg);
-		}
-		50% {
-			width: 100%;
-			top: 0;
-			bottom: 0;
-			transform: rotate(-45deg);
-		}
-		51% {
-			width: 0%;
-			transform: rotate(0deg);
-		}
-		100% {
-			width: 75%;
-			transform: rotate(0deg);
-		}
-	}
-
 	&:focus {
 		outline: none;
 	}

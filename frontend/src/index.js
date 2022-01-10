@@ -33,4 +33,5 @@ ReactDOM.render(
 	</React.Suspense>,
 	document.getElementById("root")
 );
+// ReactDOM.render(<h1>{Config.baseUrl}</h1>, document.getElementById("root"));
 // });
