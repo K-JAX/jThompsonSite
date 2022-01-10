@@ -23,7 +23,7 @@ const Wipes = (props) => {
 
 	async function wipeSeq() {
 		await setZ(11);
-		await new Promise((resolve) => setTimeout(resolve, delay + 800));
+		await new Promise((resolve) => setTimeout(resolve, delay * 300 + 800));
 		await setZ(-1);
 	}
 	async function wipeOutSeq() {
@@ -56,7 +56,7 @@ const Wipes = (props) => {
 								type: "spring",
 								damping: 30,
 								stiffness: 120,
-								delay: i / 20,
+								delay: i / 20 + delay,
 							}}
 						/>
 					))}

@@ -12,7 +12,6 @@ import Loader from "../Atoms/Loader";
 import SidebarMenu from "../Molecules/SidebarMenu";
 import PulloutMenu from "../Molecules/PulloutMenu";
 
-
 // functions
 import { SITE_SETTINGS_QUERY } from "../../Functional/queries";
 
@@ -40,7 +39,7 @@ const Header = (props) => {
 	};
 
 	const menuVariants = {
-		moveIn: { x: "0%", transition: { type: "tween", delay: 1.1 } },
+		moveIn: { x: "0%", transition: { type: "tween", delay: 1.35 } },
 		moveOut: { x: "-100%", transition: { type: "tween", delay: 0 } },
 	};
 

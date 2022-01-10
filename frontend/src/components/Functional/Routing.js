@@ -70,7 +70,7 @@ const Routing = () => {
 				key={key}
 				unmountOnExit
 				classNames="page-route"
-				timeout={600}
+				timeout={700}
 			>
 				{(status) => (
 					<Routes location={location}>

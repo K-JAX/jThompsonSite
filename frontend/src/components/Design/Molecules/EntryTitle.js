@@ -36,13 +36,12 @@ const EntryTitle = (props) => {
 				>
 					<Button id="entry-button" priority="circular">
 						<span className="mb-2">Click to enter</span>
-						<br />
 						<Arrow direction="up" />
 					</Button>
 				</Link>
 			) : (
 				<Button priority="circular">
-					<span className="mb-2">{userMessage}</span>
+					<span className="mb-0 mb-md-2">{userMessage}</span>
 				</Button>
 			)}
 		</EntrySignDiv>

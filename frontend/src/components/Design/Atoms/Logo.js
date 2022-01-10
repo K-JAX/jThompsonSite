@@ -46,7 +46,7 @@ const Logo = (props) => {
 					x: `${isHome && paths["prevUrl"] !== "/" ? 0 : -150}%`,
 				}}
 				animate={{ x: 0 }}
-				transition={{ type: "Inertia", delay: 1 }}
+				transition={{ type: "Inertia", delay: 1.25 }}
 			>
 				<h1 className="initials">JTA</h1>
 				<div className="title-text">

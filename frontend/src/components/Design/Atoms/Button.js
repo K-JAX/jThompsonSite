@@ -137,8 +137,8 @@ const StyledButton = styled.button`
 			background-color: rgba(255, 255, 255, 0.55);
 			transition: 0.25s;
 			cursor: pointer;
-			span {
-				/* margin-top: 1em; */
+			@media all and (max-width: 767px){
+				
 			}
 		}
 	}

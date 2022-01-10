@@ -13,7 +13,7 @@ const FullPageLoader = (props) => {
 export default FullPageLoader;
 
 const FullPageDiv = styled.div`
-	position: fixed;
+	position: relative;
 	z-index: 3;
 	width: 100vw;
 	height: 100vh;

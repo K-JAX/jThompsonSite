@@ -41,7 +41,11 @@ export default ({ in: inProp }) => {
 	};
 
 	return (
-		<BodyContainer className={`center position-relative`}>
+		<BodyContainer
+			className={`center position-relative ${
+				visitedCookie || !isHome ? "pb-5" : ""
+			}`}
+		>
 			<ReactBreakpoints breakpoints={breakpoints}>
 				{(visitedCookie || location.pathname !== "/") && (
 					<Header location={location} isHome={isHome} />
@@ -70,11 +74,11 @@ export default ({ in: inProp }) => {
 };
 
 const BodyContainer = styled.div`
-	min-height: 105vh;
-	padding-bottom: 5em;
+	min-height: 100vh;
+	/* padding-bottom: 5em; */
 	.page-container-element {
 		@media all and (max-width: 767px) {
-			margin-top: 80px;
+			/* margin-top: 80px; */
 		}
 		&.offset-right {
 			padding-right: 80px;

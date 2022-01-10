@@ -21,6 +21,7 @@ const Home = (props) => {
 		breakpoints[currentBreakpoint] <= breakpoints.lg
 			? `100%`
 			: `calc(100% - ${300}px)`;
+	const location = useLocation();
 
 	const animVariants = {
 		moveIn: {
@@ -28,7 +29,7 @@ const Home = (props) => {
 			x: 0,
 			transition: {
 				type: "tween",
-				delay: location?.state?.from === "Intro" ? 0.5 : 0,
+				delay: location?.state?.from === "Intro" ? 0.75 : 0,
 				duration: 0.35,
 			},
 		},
@@ -41,7 +42,6 @@ const Home = (props) => {
 		},
 	};
 
-	const location = useLocation();
 	if (loading)
 		return location?.state?.from === "Intro" ? (
 			<LoadingMatte />
@@ -60,7 +60,7 @@ const Home = (props) => {
 					from={0}
 					enter={105}
 					leave={-105}
-					delay={300}
+					delay={0.5}
 				/>
 			)}
 			<AnimatePresence>
