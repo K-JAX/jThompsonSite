@@ -152,7 +152,6 @@ class Slideshow extends Component {
 		const { slideIndex, status } = this.context;
 		const { transitionSpeed } = this.context.props;
 		const { slides, isSingleEntity, contentType } = this.props;
-		console.log(slideIndex + "/" + totalSlides);
 		const slideControlVariants = {
 			moveIn: {
 				y: `0%`,
