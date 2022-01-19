@@ -52,8 +52,8 @@ const Routing = () => {
 	const routes = [
 		HomeRoute,
 		{ path: "/about", component: About },
-		{ path: "/press_article", component: PressArticles },
-		{ path: "/press_article/:slug", component: PressArticleSingle },
+		{ path: "/press", component: PressArticles },
+		{ path: "/press/:slug", component: PressArticleSingle },
 		{ path: "/contact", component: Contact },
 		{ path: "/portfolio", component: Portfolio },
 		{ path: "/portfolio/:slug", component: ProjectSingle },
