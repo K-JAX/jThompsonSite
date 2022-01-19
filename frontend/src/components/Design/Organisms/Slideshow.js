@@ -22,7 +22,7 @@ export const SlideshowProvider = (props) => {
 				status: status,
 				slideIndex: slideIndex,
 				addIndex: (slideNum) =>
-					setIndex(slideIndex === slideNum + 1 ? 0 : slideIndex + 1),
+					setIndex(slideIndex === slideNum ? 0 : slideIndex + 1),
 				subtractIndex: (slideNum) =>
 					setIndex(slideIndex === 0 ? slideNum : slideIndex - 1),
 				resetIndex: () => setIndex(slideIndex - slideIndex),
@@ -152,6 +152,7 @@ class Slideshow extends Component {
 		const { slideIndex, status } = this.context;
 		const { transitionSpeed } = this.context.props;
 		const { slides, isSingleEntity, contentType } = this.props;
+
 		const slideControlVariants = {
 			moveIn: {
 				y: `0%`,

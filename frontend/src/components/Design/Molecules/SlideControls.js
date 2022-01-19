@@ -36,7 +36,7 @@ const SlideControls = React.memo((props) => {
 						)}
 						<button
 							className="next arrow"
-							onClick={() => context.addIndex(2)}
+							onClick={() => context.addIndex(props.total)}
 						></button>
 					</div>
 				</ControlsDiv>
