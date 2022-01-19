@@ -75,8 +75,8 @@ const PressArticleLinkSection = (props) => {
 export default PressArticleLinkSection;
 
 const StyledSection = styled.section`
-	min-height: 475px;
+	min-height: 500px;
 	@media all and (max-width: 767px) {
-		min-height: 250px;
+		min-height: 285px;
 	}
 `;
