@@ -22,7 +22,7 @@ export const SlideshowProvider = (props) => {
 				status: status,
 				slideIndex: slideIndex,
 				addIndex: (slideNum) =>
-					setIndex(slideIndex === slideNum ? 0 : slideIndex + 1),
+					setIndex(slideIndex === slideNum + 1 ? 0 : slideIndex + 1),
 				subtractIndex: (slideNum) =>
 					setIndex(slideIndex === 0 ? slideNum : slideIndex - 1),
 				resetIndex: () => setIndex(slideIndex - slideIndex),
@@ -92,7 +92,6 @@ class Slideshow extends Component {
 		let { slideIndex } = this.context;
 		this.setState({ isPaused: false });
 		let counterStep = timeLeft / slideshowTimer / 10; // subtracting timer so it'll be base 0
-
 		let offset = 1.5; // just to give an inch past the finishline
 		let lastCounterStep = (slideshowTimer / 10) * offset;
 		let countTime = counterStep - lastCounterStep; // subtracting 1 step from counttime so it'll show 100% completion
@@ -153,7 +152,7 @@ class Slideshow extends Component {
 		const { slideIndex, status } = this.context;
 		const { transitionSpeed } = this.context.props;
 		const { slides, isSingleEntity, contentType } = this.props;
-
+		console.log(slideIndex + "/" + totalSlides);
 		const slideControlVariants = {
 			moveIn: {
 				y: `0%`,
