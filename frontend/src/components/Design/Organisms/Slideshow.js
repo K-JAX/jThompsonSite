@@ -251,12 +251,33 @@ class Slideshow extends Component {
 											subtitle={`${slides.date.slice(
 												0,
 												4
-											)}, ${
+											)} ${
 												slides?.additionalProjectDetails
-													?.location?.city
-											}, ${
+													?.location?.city !==
+													undefined ||
 												slides?.additionalProjectDetails
-													?.location?.stateShort
+													?.location?.stateShort !==
+													undefined
+													? ", "
+													: ""
+											} ${
+												slides?.additionalProjectDetails
+													?.location?.city !==
+												undefined
+													? slides
+															?.additionalProjectDetails
+															?.location?.city +
+													  ", "
+													: ""
+											} ${
+												slides?.additionalProjectDetails
+													?.location?.stateShort !==
+												undefined
+													? slides
+															?.additionalProjectDetails
+															?.location
+															?.stateShort
+													: ""
 											}`}
 										/>
 									</ProjectTitleContainer>
@@ -333,6 +354,10 @@ const ProjectTitleContainer = styled(motion.div)`
 	padding: 0px 0;
 	text-align: center;
 	justify-content: end;
+	@media all and (max-width: 767px) {
+		min-width: initial;
+		width: 100%;
+	}
 `;
 
 const SlideshowComponent = styled.div`

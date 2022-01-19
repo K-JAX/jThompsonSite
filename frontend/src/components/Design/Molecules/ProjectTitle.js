@@ -16,7 +16,6 @@ const ProjectTitle = (props) => {
 		active,
 		className,
 	} = props;
-
 	return (
 		<ProjectTitleDiv
 			className={`project-title ${type} ${className} ${attachmentClass}`}
