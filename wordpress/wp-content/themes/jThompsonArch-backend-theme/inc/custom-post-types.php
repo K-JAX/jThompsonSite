@@ -92,6 +92,7 @@ function press_article_init() {
         'show_in_graphql'     => true,
         'graphql_single_name' => 'PressArticle',
         'graphql_plural_name' => 'PressArticles',
+        'rewrite'             => array('slug' => 'press'),
         'has_archive'         => "press",
         'hierarchical'        => false,
         'supports'            => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
