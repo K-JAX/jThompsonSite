@@ -5,9 +5,11 @@ const FullScreenStage = (props) => {
 	return (
 		<Modal show={show} fullscreen={fullscreen} onHide={onHide}>
 			<Modal.Header closeButton></Modal.Header>
-			<Modal.Body className="px-0">{props.children}</Modal.Body>
+			<Modal.Body className="px-0 d-flex justify-content-center align-items-center">
+				{props.children}
+			</Modal.Body>
 		</Modal>
 	);
 };
 
-export default FullscreenStage;
+export default FullScreenStage;
