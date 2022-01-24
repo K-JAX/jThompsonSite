@@ -3,14 +3,8 @@ import styled from "styled-components";
 
 class Arrow extends Component {
 	render() {
-		const {
-			isHovered,
-			alignment,
-			color,
-			direction,
-			animate,
-			className,
-		} = this.props;
+		const { isHovered, alignment, color, direction, animate, className } =
+			this.props;
 		let { num } = this.props;
 		if (num === undefined) num = 1;
 
@@ -206,7 +200,7 @@ const ArrowBox = styled.div`
 				width: 7px;
 				height: 7px;
 				top: -1px;
-				bottom: 1px;
+				bottom: 0px;
 				right: 7px;
 				margin: auto;
 				border: 1px solid black;

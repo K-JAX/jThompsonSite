@@ -1,9 +1,12 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import ProjectTitle from "./ProjectTitle";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { EntryStatusContext } from "../../Functional/EntryStatus";
+import Button from "../Atoms/Button";
+import FullScreenStage from "./FullScreenStage";
+import FullScreenIcon from "../Atoms/FullScreenIcon";
 
 const Slide = (props) => {
 	if (props === undefined) return <p>Loading</p>;
@@ -32,10 +35,34 @@ const Slide = (props) => {
 			transition: { bounce: 0, duration: 0.25 },
 		},
 	};
+	const values = [true];
+	const [show, setShow] = useState(false);
+	const [fullscreen, setFullscreen] = useState(true);
+	const [modalMarkup, setModalMarkup] = useState("");
+	const handleClose = () => setShow(false);
+	const handleShow = (breakpoint) => {
+		setFullscreen(breakpoint);
+		setModalMarkup(
+			<img
+				alt={`${title} project slide image.`}
+				src={img.sourceUrl}
+				srcSet={img.srcSet}
+			/>
+		);
+		setShow(true);
+	};
+
 	// console.log(img.srcSet);
 	if (isSingleEntity) {
 		return (
 			<>
+				<FullScreenStage
+					show={show}
+					fullscreen={fullscreen}
+					onHide={() => setShow(false)}
+				>
+					{modalMarkup}
+				</FullScreenStage>
 				<AnimatePresence>
 					{status === "entered" && (
 						<SlideComponent
@@ -51,6 +78,12 @@ const Slide = (props) => {
 								src={img.sourceUrl}
 								srcSet={img.srcSet}
 							/>
+							<Button
+								className="bg-white px-1 py-1 border-0"
+								onClick={() => handleShow(values[0])}
+							>
+								<FullScreenIcon />
+							</Button>
 						</SlideComponent>
 					)}
 				</AnimatePresence>
@@ -104,10 +137,23 @@ const SlideComponent = styled(motion.div)`
 	overflow-y: visible;
 	background: url(${(props) => props.img}) center / cover no-repeat;
 	opacity: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
+		/* width: 35%; */
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100%;
+		/* width: 100%; */
+		/* height: 100%; */
+		object-fit: contain;
+	}
+	button {
+		position: absolute;
+		bottom: 0;
+		right: 0;
 	}
 	transition: opacity ${(props) => props.transitionSpeed / 10}s;
 	&.activeSlide {
