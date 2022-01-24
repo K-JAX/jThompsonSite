@@ -32,10 +32,14 @@ const SlideButton = styled.button`
 	opacity: 0;
 	height: 70px;
 	border: solid black;
-	border-width: 2px;
+	border-width: 0px;
 	background: white;
 	display: inline-block;
 	padding: 0;
+	&:first-of-type,
+	&:last-of-type {
+		border-width: 2px;
+	}
 	&:hover {
 		opacity: 1 !important;
 	}
@@ -44,6 +48,7 @@ const SlideButton = styled.button`
 	}
 	transition: 0.95s;
 	&.visible {
+		display: inline-block;
 		width: 100px;
 		opacity: 0.75;
 		margin: 0 0.75em;
