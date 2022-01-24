@@ -337,10 +337,6 @@ const SlideControlContainer = styled(motion.div)`
 		position: relative;
 		width: 100%;
 		justify-content: center;
-		@media all and (max-width: 768px) {
-			position: absolute;
-			bottom: 0%;
-		}
 	}
 `;
 
