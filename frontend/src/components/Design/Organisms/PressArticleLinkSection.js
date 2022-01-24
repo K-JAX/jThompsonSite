@@ -32,7 +32,7 @@ const PressArticleLinkSection = (props) => {
 			{image?.node.sourceUrl && (
 				<VisibilitySensor>
 					{({ isVisible }) => (
-						<div className="col-12 col-md-7 d-flex align-items-center justify-content-md-center text-md-center my-3">
+						<div className="img-container col-12 col-md-7 d-flex align-items-center justify-content-md-center text-md-center my-3">
 							<AnimatePresence>
 								{status === "entered" && isVisible && (
 									<motion.img
@@ -76,7 +76,10 @@ export default PressArticleLinkSection;
 
 const StyledSection = styled.section`
 	min-height: 500px;
-	@media all and (max-width: 767px) {
-		min-height: 285px;
+	/* @media all and (max-width: 767px) {
+		min-height: 585px;
+	} */
+	.img-container {
+		min-height: 236px;
 	}
 `;

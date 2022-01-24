@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import VisibilitySensor from "react-visibility-sensor";
+import styled from "styled-components";
 
 // components
 import Button from "../Atoms/Button";
@@ -20,7 +21,7 @@ const PressArticleLinkCTA = (props) => {
 	return (
 		<VisibilitySensor>
 			{({ isVisible }) => (
-				<div className="col-12 col-md-5 d-flex align-content-center justify-content-start justify-content-md-center flex-wrap">
+				<ContainerDiv className="col-12 col-md-5 d-flex align-content-center justify-content-start justify-content-md-center flex-wrap">
 					<AnimatePresence>
 						{status === "entered" && isVisible && (
 							<motion.div
@@ -41,10 +42,14 @@ const PressArticleLinkCTA = (props) => {
 							</motion.div>
 						)}
 					</AnimatePresence>
-				</div>
+				</ContainerDiv>
 			)}
 		</VisibilitySensor>
 	);
 };
 
 export default PressArticleLinkCTA;
+
+const ContainerDiv = styled.div`
+	min-height: 230px;
+`;
