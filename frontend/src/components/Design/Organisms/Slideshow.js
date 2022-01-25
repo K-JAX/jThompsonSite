@@ -302,6 +302,7 @@ class Slideshow extends Component {
 												slide.node.featuredImage.node
 													.sourceUrl
 											}
+											slug={slide.node.slug}
 											status={status}
 											percentage={percentage}
 											isPaused={isPaused}

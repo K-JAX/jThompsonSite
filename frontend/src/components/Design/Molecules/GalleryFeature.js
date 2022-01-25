@@ -28,8 +28,18 @@ const GalleryDiv = styled.div`
 	width: 100%;
 	height: 650px;
 	justify-content: flex-start;
+	overflow: hidden;
+	@media all and (max-width: 767px) {
+		height: auto;
+		padding-top: 185px;
+	}
 	img {
 		object-fit: cover;
+		@media all and (max-width: 767px) {
+			margin: 10px 0;
+			max-height: 300px;
+			object-fit: contain;
+		}
 	}
 	/* Tile styling */
 	.tile-0 {

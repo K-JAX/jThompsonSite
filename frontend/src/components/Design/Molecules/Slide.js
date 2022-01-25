@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import styled from "styled-components";
 import ProjectTitle from "./ProjectTitle";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import { EntryStatusContext } from "../../Functional/EntryStatus";
 import Button from "../Atoms/Button";
@@ -15,6 +16,7 @@ const Slide = (props) => {
 		date,
 		location,
 		img,
+		slug,
 		active,
 		className,
 		percentage,
@@ -95,6 +97,7 @@ const Slide = (props) => {
 			className={className}
 			img={img}
 			transitionSpeed={transitionSpeed}
+			isSingle={false}
 		>
 			<AnimatePresence>
 				{status === "entered" && (
@@ -105,22 +108,24 @@ const Slide = (props) => {
 						animate="moveIn"
 						exit="moveOut"
 					>
-						<ProjectTitle
-							title={title}
-							subtitle={`${date.slice(0, 4)}${
-								location?.city !== undefined
-									? ", " + location.city + ","
-									: ""
-							} ${
-								location?.stateShort !== undefined
-									? location.stateShort
-									: ""
-							}`}
-							type="slideTitle"
-							active={active}
-							attachmentClass={titleAttachClass}
-							percentage={percentage}
-						/>
+						<Link to={`/portfolio/${slug}`}>
+							<ProjectTitle
+								title={title}
+								subtitle={`${date.slice(0, 4)}${
+									location?.city !== undefined
+										? ", " + location.city + ","
+										: ""
+								} ${
+									location?.stateShort !== undefined
+										? location.stateShort
+										: ""
+								}`}
+								type="slideTitle"
+								active={active}
+								attachmentClass={titleAttachClass}
+								percentage={percentage}
+							/>
+						</Link>
 					</ProjectTitleContainer>
 				)}
 			</AnimatePresence>
@@ -135,11 +140,16 @@ const SlideComponent = styled(motion.div)`
 	width: 100%;
 	height: 100%;
 	overflow-y: visible;
-	background: url(${(props) => props.img}) center / cover no-repeat;
+	${(props) =>
+		!props.isSingle &&
+		`background: url(${props.img}) center / cover no-repeat;`}
 	opacity: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	@media all and (max-width: 767px) {
+		background-size: contain;
+	}
 	img {
 		/* width: 35%; */
 		width: auto;
@@ -155,6 +165,7 @@ const SlideComponent = styled(motion.div)`
 		bottom: 0;
 		right: 0;
 	}
+
 	transition: opacity ${(props) => props.transitionSpeed / 10}s;
 	&.activeSlide {
 		opacity: 1;
@@ -168,6 +179,9 @@ const ProjectTitleContainer = styled(motion.div)`
 	min-width: 600px;
 	top: calc(100% - 128px);
 	right: 0;
+	a {
+		text-decoration: none;
+	}
 	&.floating {
 		position: fixed;
 	}
