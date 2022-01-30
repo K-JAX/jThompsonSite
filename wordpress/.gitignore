@@ -1,8 +1,8 @@
 #content
 wp-content/uploads
-wp-includes/
-**/wp-includes/**
-wp-admin/
+# wp-includes/
+# **/wp-includes/**
+# wp-admin/
 ai1wm-backups
 wp-content/plugins/
 plugins/**
