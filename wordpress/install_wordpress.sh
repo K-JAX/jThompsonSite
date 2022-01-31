@@ -60,6 +60,5 @@ sudo -i -u www-data bash << EOF
         /var/www/plugins/*.zip
 
     wp server --host=0.0.0.0
-
 EOF
 
