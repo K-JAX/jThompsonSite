@@ -135,23 +135,24 @@ const About = (props) => {
 			</div>
 			<div className="container px-4">
 				<div className="row justify-content-center">
-					{aboutDetails.ctaLinks.map((link) => (
-						<div
-							key={link.image.sourceUrl}
-							data-aos={`fade-${link.alignment}`}
-							data-aos-offset="200"
-							data-aos-easing="ease-in-sine"
-							data-aos-duration="600"
-						>
-							<FigureLink
-								alignment={link.alignment}
-								captionTitle={link.titletext}
-								captionDescription={link.description}
-								img={link.image.sourceUrl}
-								link={link.link}
-							/>
-						</div>
-					))}
+					{aboutDetails.ctaLinks &&
+						aboutDetails.ctaLinks.map((link) => (
+							<div
+								key={link.image.sourceUrl}
+								data-aos={`fade-${link.alignment}`}
+								data-aos-offset="200"
+								data-aos-easing="ease-in-sine"
+								data-aos-duration="600"
+							>
+								<FigureLink
+									alignment={link.alignment}
+									captionTitle={link.titletext}
+									captionDescription={link.description}
+									img={link.image.sourceUrl}
+									link={link.link}
+								/>
+							</div>
+						))}
 				</div>
 			</div>
 		</PageDiv>

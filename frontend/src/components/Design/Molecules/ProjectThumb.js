@@ -34,7 +34,10 @@ const ProjectThumb = (props) => {
 						<div
 							className="thumb-img position-relative w-100 h-100"
 							style={{
-								backgroundImage: `url(${project.node.featuredImage.node.sourceUrl})`,
+								backgroundImage: `url(${
+									project.node.featuredImage &&
+									project.node.featuredImage.node.sourceUrl
+								})`,
 							}}
 						/>
 						<ProjectTitle
