@@ -46,11 +46,14 @@ export const ProjectSingle = (props) => {
 			slideshowTimer: data.project.projectMainDetails.slideshowTimer,
 			transitionSpeed: data.project.projectMainDetails.transitionSpeed,
 		};
-		let mainFeaturedImg = data.project.featuredImage.node;
+		let mainFeaturedImg = data.project?.featuredImage?.node;
 		slideData = data.project;
 		slideData.slideImages =
 			data.project.additionalProjectDetails.featuredImages;
-		if (!slideData.slideImages.includes(mainFeaturedImg)) {
+		if (
+			mainFeaturedImg &&
+			!slideData.slideImages.includes(mainFeaturedImg)
+		) {
 			slideData.slideImages.unshift(mainFeaturedImg);
 		}
 		if (data.project.projectMainDetails.showSlideshowOnProjectPage) {

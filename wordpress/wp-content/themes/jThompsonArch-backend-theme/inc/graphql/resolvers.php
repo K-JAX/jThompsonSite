@@ -4,10 +4,10 @@
  *
  * @package JTA
  */
- 
+
 // check if WPGraphQL plugin is active.
-if ( function_exists( 'register_graphql_field' ) ) {
-	// Add header menu resolver.
+if (function_exists('register_graphql_field')) {
+    // Add header menu resolver.
     // require_once 'resolvers/header-menu.php';
 
     // Add favicon
@@ -15,10 +15,10 @@ if ( function_exists( 'register_graphql_field' ) ) {
 
     // Check Site Mode
     require_once 'resolvers/site-status.php';
-    
+
     // Add project type resolver
     require_once 'resolvers/project-type.php';
-    
+
     // Add project single resolver
     require_once 'resolvers/project-single.php';
 

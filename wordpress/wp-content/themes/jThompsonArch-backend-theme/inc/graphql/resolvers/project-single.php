@@ -78,7 +78,7 @@ function project_meta_graphql_register() {
     // ]);
     register_graphql_field('project', 'defaultFeaturedImage', [
         'type'        => 'String',
-        'description' => __('Where the project was created.'),
+        'description' => __('Default featured image to show when there is none provided.'),
         'resolve'     => function ($post) {
             return wp_upload_dir()['baseurl'] . '/default.jpg';
         },
