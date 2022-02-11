@@ -12,6 +12,10 @@ const ProjectThumb = (props) => {
 
 	useEffect(() => {}, [status]);
 
+	let bg = project.node.featuredImage
+		? `url(${project.node.featuredImage.node.sourceUrl})`
+		: "#464853";
+
 	return (
 		<ThumbLi className={`${className}`}>
 			<Link
@@ -34,12 +38,7 @@ const ProjectThumb = (props) => {
 						<div
 							className="thumb-img position-relative w-100 h-100"
 							style={{
-								backgroundImage: `url(${
-									project.node.featuredImage
-										? project.node.featuredImage.node
-												.sourceUrl
-										: project.node.defaultFeaturedImage
-								})`,
+								background: bg,
 							}}
 						/>
 						<ProjectTitle

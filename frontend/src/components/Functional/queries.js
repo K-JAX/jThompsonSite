@@ -259,7 +259,6 @@ export const PROJ_QUERY = gql`
 					slug
 					title
 					link
-					defaultFeaturedImage
 					featuredImage {
 						node {
 							id
@@ -293,7 +292,6 @@ export const FILTERED_PROJ_QUERY = gql`
 					slug
 					title
 					link
-					defaultFeaturedImage
 					featuredImage {
 						node {
 							id
