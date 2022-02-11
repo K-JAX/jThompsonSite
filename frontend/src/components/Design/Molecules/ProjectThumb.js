@@ -12,12 +12,8 @@ const ProjectThumb = (props) => {
 
 	useEffect(() => {}, [status]);
 
-	let bg = project.node.featuredImage
-		? `url(${project.node.featuredImage.node.sourceUrl})`
-		: "#464853";
-
 	return (
-		<ThumbLi className={`${className}`}>
+		<ThumbLi bg={project.node.featuredImage} className={`${className}`}>
 			<Link
 				to={project.node.link}
 				alt={`View the ${project.node.title} project.`}
@@ -35,12 +31,7 @@ const ProjectThumb = (props) => {
 							delay: `${status === "entered" ? delay : delay}`,
 						}}
 					>
-						<div
-							className="thumb-img position-relative w-100 h-100"
-							style={{
-								background: bg,
-							}}
-						/>
+						<div className="thumb-img position-relative w-100 h-100" />
 						<ProjectTitle
 							title={project.node.title}
 							type="thumbTitle"
@@ -68,7 +59,6 @@ const ThumbLi = styled.li`
 			width: 320px;
 			height: 320px;
 			overflow:hidden;
-			/* background: black; */
 			@media all and (max-width: 991px) {
 				width: 250px;
 				height: 250px;
@@ -82,6 +72,10 @@ const ThumbLi = styled.li`
 				height: 150px;
 			}
 			.thumb-img{
+				${({ bg }) =>
+					bg
+						? `background-image: url(${bg.node.sourceUrl});`
+						: "background-color: #464853;"}
 				background-repeat: no-repeat;
 				background-size: cover;
 				background-position: center;
