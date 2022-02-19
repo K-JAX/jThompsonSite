@@ -48,8 +48,10 @@ export const ProjectSingle = (props) => {
 		};
 		let mainFeaturedImg = data.project?.featuredImage?.node;
 		slideData = data.project;
-		slideData.slideImages =
-			data.project.additionalProjectDetails.featuredImages;
+		slideData.slideImages = data.project.additionalProjectDetails
+			.featuredImages
+			? data.project.additionalProjectDetails.featuredImages
+			: [];
 		if (
 			mainFeaturedImg &&
 			!slideData.slideImages.includes(mainFeaturedImg)

@@ -10,6 +10,7 @@ import { SlideshowContext } from "../Organisms/Slideshow";
 const SlideControls = React.memo((props) => {
 	const { contentType, images } = props;
 	let total = props.total !== undefined ? `/ ${props.total + 1}` : "";
+	if (props.total === 0) return <></>;
 	return (
 		<SlideshowContext.Consumer>
 			{(context) => (
