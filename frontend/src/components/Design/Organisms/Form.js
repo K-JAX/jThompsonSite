@@ -11,6 +11,9 @@ const Form = (props) => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm(); // initialize the hook
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [message, setMessage] = useState("");
 	const recaptchaRef = React.useRef();
 	const [verified, setVerified] = useState(false);
 	const [sendStatus, setSendStatus] = useState({});
@@ -30,28 +33,19 @@ const Form = (props) => {
 	};
 
 	const SEND_MUTATION = gql`
-		mutation SEND_EMAIL(
-			$name: String!
-			$email: String!
-			$message: String!
-		) {
-			submitForm(
+		mutation SEND_EMAIL {
+			sendEmail(
 				input: {
-					formId: 1
-					data: [
-						{ id: 1, value: $name }
-						{ id: 2, value: $email }
-						{ id: 3, value: $message }
-					]
+					body: "body"
+					clientMutationId: "mutationId"
+					from: "kgarubba12@gmail.com"
+					to: "kevingarubba@gmail.com"
+					subject: "ssubject"
 				}
 			) {
-				errors {
-					fieldId
-					message
-					slug
-				}
 				message
-				success
+				origin
+				sent
 			}
 		}
 	`;
@@ -61,82 +55,110 @@ const Form = (props) => {
 	const onChange = (value) => {
 		setVerified(true);
 	};
-	const { data, className } = props;
-	if (!data) return <p>Loading</p>;
+	const { className } = props;
+	// if (!data) return <p>Loading</p>;
 	return (
 		<StyledForm
 			className={`${className && className}  py-4`}
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			{data.fields.nodes.map((field, i) => {
-				let type = field.type === "textbox" ? "text" : field.type;
-				return (
-					<div
-						key={`field-${field.label.toLowerCase()}`}
-						className={`my-3 ${
-							field.type === "submit" ? "col-4" : "col-12"
-						}`}
-					>
-						<label
-							className={`col-12 ${
-								errors[field.label.toLowerCase()] && "error"
-							}`}
-						>
-							{field.name && "Name field required"}
-							<div className="col-12 mb-1">
-								<b>{field.label !== "Submit" && field.label}</b>
-								{field.required && (
-									<span className="text-danger">*</span>
-								)}
-							</div>
-							{field.type !== "textarea" &&
-								field.type !== "submit" && (
-									<>
-										<input
-											name={field.label.toLowerCase()}
-											className="col-12 pt-2 pb-3"
-											placeholder={field.label}
-											{...register(
-												field.label.toLowerCase(),
-												{
-													required: field.required,
-												}
-											)}
-										/>
-										{errors[field.label.toLowerCase()] &&
-											`${field.label} is required.`}
-									</>
-								)}
-							{field.type === "textarea" && (
-								<>
-									<textarea
-										name={field.label.toLowerCase()}
-										className="col-12 py-3"
-										rows={6}
-										placeholder={"Type here..."}
-										{...register(
-											field.label.toLowerCase(),
-											{
-												required: field.required,
-											}
-										)}
-									></textarea>
-									{errors[field.label.toLowerCase()] &&
-										`${field.label} is required.`}
-								</>
-							)}
-							{field.type === "submit" && (
-								<input
-									className="theme-btn"
-									type="submit"
-									value="Submit"
-									disabled={!verified}
-								/>
-							)}
-						</label>
+			{/* <div
+				key={`field-${field.label.toLowerCase()}`}
+				className={`my-3 ${
+					field.type === "submit" ? "col-4" : "col-12"
+				}`}
+			>
+				<label
+					className={`col-12 ${
+						errors[field.label.toLowerCase()] && "error"
+					}`}
+				>
+					{field.name && "Name field required"}
+					<div className="col-12 mb-1">
+						<b>{field.label !== "Submit" && field.label}</b>
+						{field.required && (
+							<span className="text-danger">*</span>
+						)}
 					</div>
-				);
-			})}
+					{field.type !== "textarea" && field.type !== "submit" && (
+						<>
+							<input
+								name={field.label.toLowerCase()}
+								className="col-12 pt-2 pb-3"
+								placeholder={field.label}
+								{...register(field.label.toLowerCase(), {
+									required: field.required,
+								})}
+							/>
+							{errors[field.label.toLowerCase()] &&
+								`${field.label} is required.`}
+						</>
+					)}
+					{field.type === "textarea" && (
+						<>
+							<textarea
+								name={field.label.toLowerCase()}
+								className="col-12 py-3"
+								rows={6}
+								placeholder={"Type here..."}
+								{...register(field.label.toLowerCase(), {
+									required: field.required,
+								})}
+							></textarea>
+							{errors[field.label.toLowerCase()] &&
+								`${field.label} is required.`}
+						</>
+					)}
+					{field.type === "submit" && (
+						<input
+							className="theme-btn"
+							type="submit"
+							value="Submit"
+							disabled={!verified}
+						/>
+					)}
+				</label>
+			</div> */}
+			<div className={`my-3 col-12"`}>
+				<label htmlFor="name">Your name</label>
+				<input
+					className="col-12 pt-2 pb-3"
+					name="name"
+					type="text"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+					required
+				/>
+			</div>
+			<div>
+				<label htmlFor="email">Your email</label>
+				<input
+					className="col-12 pt-2 pb-3"
+					name="email"
+					type="email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					required
+				/>
+			</div>
+
+			<div>
+				<label htmlFor="message">Your message</label>
+				<textarea
+					name="message"
+					className="col-12 py-3"
+					cols="30"
+					rows="6"
+					value={message}
+					onChange={(e) => setMessage(e.target.value)}
+				></textarea>
+			</div>
+			<input
+				type="submit"
+				value="Submit"
+				className="theme-btn"
+				disabled={!verified}
+			/>
 			<div className="col-6 pb-5 mt-1 mb-5">
 				<ReCAPTCHA
 					ref={recaptchaRef}

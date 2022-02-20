@@ -52,13 +52,12 @@ const Contact = (props) => {
 	const pageResp = useQuery(PAGE_QUERY, {
 		onCompleted: (data) => setPage(data.pageBy),
 	});
-	const formResp = useQuery(FORM_QUERY, {
-		onCompleted: (data) => setForm(data.form),
-	});
-	if (pageResp.loading || formResp.loading) return <FullPageLoader />;
-	if (pageResp.error || formResp.error)
-		return `Error! ${pageResp.error} ${formResp.error}`;
-	if (!pageResp.data || !formResp.data) return <FullPageLoader />;
+	// const formResp = useQuery(FORM_QUERY, {
+	// 	onCompleted: (data) => setForm(data.form),
+	// });
+	if (pageResp.loading) return <FullPageLoader />;
+	if (pageResp.error) return `Error! ${pageResp.error}`;
+	if (!pageResp.data) return <FullPageLoader />;
 
 	return (
 		// <p>Test</p>
@@ -97,10 +96,7 @@ const Contact = (props) => {
 								className="row form-container"
 								style={{ marginLeft: "-20px" }}
 							>
-								<Form
-									className="col-12"
-									data={formResp.data.form}
-								/>
+								<Form className="col-12" />
 							</motion.div>
 						)}
 					</AnimatePresence>
