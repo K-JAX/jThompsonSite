@@ -8,3 +8,4 @@ wp-content/plugins/
 wp-content/cache/
 plugins/**
 wp-content/upgrade/wp-migrate-db-pro-media*
+wp-content/wflogs

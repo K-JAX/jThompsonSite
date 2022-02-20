@@ -10,8 +10,14 @@ import { ScrollHeroContext } from "../../Functional/ScrollHeroCheck";
 
 class Hero extends Component {
 	render() {
-		const { data, isSingle, isSlider, contentType } = this.props;
+		const { isSingle, isSlider, contentType } = this.props;
+		let { data } = this.props;
 		// let isSlider = !isSingle ? true : false;
+		if (Array.isArray(data)) {
+			data = data.filter(
+				(slide) => slide.node.featuredImage != undefined
+			);
+		}
 		if (isSlider) {
 			return (
 				<>

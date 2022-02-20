@@ -62,7 +62,7 @@ const SlideStrip = React.memo((props) => {
 										<SlideThumb
 											active={activeStatus}
 											visible={visibleStatus}
-											key={thumb.id}
+											key={i + thumb.id}
 											num={i}
 											image={thumb}
 											onItemClick={context.switchToIndex}

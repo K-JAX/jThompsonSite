@@ -35,6 +35,7 @@ const SlideControls = React.memo((props) => {
 						{contentType === "gallery" && (
 							<SlideStrip thumbs={images} />
 						)}
+
 						<button
 							className="next arrow"
 							onClick={() => context.addIndex(props.total)}

@@ -152,6 +152,10 @@ class Slideshow extends Component {
 		const { slideIndex, status } = this.context;
 		const { transitionSpeed } = this.context.props;
 		const { slides, isSingleEntity, contentType } = this.props;
+		// console.log(slides);
+		// let filteredSlides = slides.filter(
+		// 	(slide) => slide.node.featuredImage != undefined
+		// );
 
 		const slideControlVariants = {
 			moveIn: {
@@ -194,7 +198,7 @@ class Slideshow extends Component {
 								{slides.slideImages.map((image, i) => {
 									return (
 										<Slide
-											key={image.id}
+											key={i + image.id}
 											location={
 												slides.additionalProjectDetails
 													.location
