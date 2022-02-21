@@ -33,14 +33,16 @@ const Form = (props) => {
 	};
 
 	const SEND_MUTATION = gql`
-		mutation SEND_EMAIL {
+		mutation SEND_EMAIL(
+			$name: String!
+			$email: String!
+			$message: String!
+		) {
 			sendEmail(
 				input: {
-					body: "body"
-					clientMutationId: "mutationId"
-					from: "kgarubba12@gmail.com"
-					to: "kevingarubba@gmail.com"
-					subject: "ssubject"
+					body: $message
+					to: $email
+					subject: "Contact message from jthompsonarch.com"
 				}
 			) {
 				message
