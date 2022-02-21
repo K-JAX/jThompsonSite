@@ -25,7 +25,7 @@ const Form = (props) => {
 		const { client } = props;
 		const result = await client.mutate({
 			mutation: SEND_MUTATION,
-			variables: { name, email, message },
+			variables: { email, message: `Message from ${name}: ${message}` },
 		});
 		setSendStatus(result);
 		console.log(result);
@@ -33,11 +33,7 @@ const Form = (props) => {
 	};
 
 	const SEND_MUTATION = gql`
-		mutation SEND_EMAIL(
-			$name: String!
-			$email: String!
-			$message: String!
-		) {
+		mutation SEND_EMAIL($email: String!, $message: String!) {
 			sendEmail(
 				input: {
 					body: $message
