@@ -16,7 +16,7 @@ const Form = (props) => {
 	const [message, setMessage] = useState("");
 	const recaptchaRef = React.useRef();
 	const [verified, setVerified] = useState(false);
-	const [sendStatus, setSendStatus] = useState({});
+	const [sendStatus, setSendStatus] = useState();
 
 	const onSubmit = async (data) => {
 		const recaptchaValue = recaptchaRef.current.getValue();
@@ -30,7 +30,7 @@ const Form = (props) => {
 				message: `Message from ${name}: <br/> ${message}`,
 			},
 		});
-		setSendStatus(result);
+		setSendStatus(result.data.sendEmail.sent);
 		console.log(result);
 		recaptchaRef.current.reset();
 	};
@@ -137,7 +137,7 @@ const Form = (props) => {
 				<input
 					className="col-12 pt-2 pb-3"
 					name="email"
-					type="text"
+					type="email"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					required
@@ -148,7 +148,7 @@ const Form = (props) => {
 				<label htmlFor="message">Your message</label>
 				<textarea
 					name="message"
-					className="col-12 py-3"
+					className="col-12 pt-2 py-3"
 					cols="30"
 					rows="6"
 					value={message}
@@ -159,8 +159,20 @@ const Form = (props) => {
 				type="submit"
 				value="Submit"
 				className="theme-btn"
-				disabled={!verified}
+				disabled={!verified || sendStatus}
 			/>
+			<div>
+				<p
+					className={`message ${sendStatus === undefined && "d-none"}
+						${sendStatus === true && "success-message"} ${
+						sendStatus === false && "error-message"
+					}`}
+				>
+					{sendStatus === true && "Thank you! Message sent!"}
+					{sendStatus === false &&
+						"Error sending message. Please try again soon!"}
+				</p>
+			</div>
 			<div className="col-6 pb-5 mt-1 mb-5">
 				<ReCAPTCHA
 					ref={recaptchaRef}
