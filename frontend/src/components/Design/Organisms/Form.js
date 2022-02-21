@@ -25,7 +25,10 @@ const Form = (props) => {
 		const { client } = props;
 		const result = await client.mutate({
 			mutation: SEND_MUTATION,
-			variables: { email, message: `Message from ${name}: ${message}` },
+			variables: {
+				email,
+				message: `Message from ${name}: <br/> ${message}`,
+			},
 		});
 		setSendStatus(result);
 		console.log(result);
@@ -37,7 +40,7 @@ const Form = (props) => {
 			sendEmail(
 				input: {
 					from: $email
-					to: "kevingarubba@gmail.com"
+					to: "joe@jthompsonarch.com, kevingarubba@gmail.com"
 					body: $message
 					subject: "Contact message from jthompsonarch.com"
 				}
