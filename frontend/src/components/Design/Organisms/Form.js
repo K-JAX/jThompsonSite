@@ -21,7 +21,7 @@ const Form = (props) => {
 	const onSubmit = async (data) => {
 		const recaptchaValue = recaptchaRef.current.getValue();
 
-		const { name, email, message } = data;
+		// const { name, email, message } = data;
 		const { client } = props;
 		const result = await client.mutate({
 			mutation: SEND_MUTATION,
@@ -36,8 +36,9 @@ const Form = (props) => {
 		mutation SEND_EMAIL($email: String!, $message: String!) {
 			sendEmail(
 				input: {
+					from: $email
+					to: "kevingarubba@gmail.com"
 					body: $message
-					to: $email
 					subject: "Contact message from jthompsonarch.com"
 				}
 			) {
@@ -133,7 +134,7 @@ const Form = (props) => {
 				<input
 					className="col-12 pt-2 pb-3"
 					name="email"
-					type="email"
+					type="text"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					required
