@@ -6,3 +6,6 @@ data/
 data/*
 plugins
 wordpress/wp-content/plugins/
+wordpress/wp-content/uploads/
+wordpress/wp-content/wflogs/
+wordpress/wp-content/ai1wm-backups/
